@@ -7,6 +7,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 ### Added
 
 - Menambahkan mode draft lokal dengan `New`, `Load`, `Save`, `Save as New`, dan `Refresh`; draft disimpan di IndexedDB dengan fallback localStorage.
+- Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
 - Memindahkan History ke panel `History & Activity` di sebelah kanan dan menambahkan sheet `Activity` pada workbook, termasuk catatan delete.
 - Menambahkan peringatan perubahan belum disimpan saat reload atau menutup tab; status bersih kembali setelah `Save changes / Replace` berhasil.
 - Membatasi tampilan `Done requests` menjadi 10 item per batch dengan tombol `Load more done works`.

@@ -53,7 +53,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 
 ### XLSX
 
-- `Open file` memuat workbook yang dipilih; REQORD membaca sheet `Request List`, `Ongoing Requests`, `Done Requests`, dan `Daily Tasks`.
+- `Load` memuat workbook yang dipilih; REQORD membaca sheet `Request List`, `Ongoing Requests`, `Done Requests`, dan `Daily Tasks`.
 - Setelah file berhasil dimuat di Chrome/Edge, `Save changes` menulis kembali ke file XLSX yang sama.
 - `Save changes` disabled sebelum file dibuka agar tidak membuat download baru tanpa sengaja.
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
@@ -61,7 +61,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
 - `New` membuat draft lokal baru; data draft disimpan ke IndexedDB dengan fallback localStorage sehingga tetap ada setelah F5.
 - `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka, sedangkan `Save as New` membuat workbook baru.
-- `Refresh` membaca ulang workbook yang sedang dibuka dan meminta konfirmasi sebelum menimpa perubahan lokal.
+- Nama file aktif selalu ditampilkan di samping tombol aksi; mode draft menampilkan `Draft lokal`.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save changes / Replace`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
