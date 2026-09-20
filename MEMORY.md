@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Unsaved changes warning)
+
+- Agent/model: OpenCode.
+- Permintaan: ingatkan pengguna menyimpan perubahan sebelum F5 karena autosave langsung ke Excel tidak memungkinkan tanpa izin browser.
+- Perubahan: menambahkan dirty-state dan `beforeunload` warning; save berhasil menghapus status belum tersimpan.
+- Validasi: pemeriksaan sintaks JavaScript dan whitespace dijalankan setelah edit.
+
 ### 2026-09-20 (Done request pagination)
 
 - Agent/model: OpenCode.
