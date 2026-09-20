@@ -48,7 +48,7 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 - Agent/model: OpenCode.
 - Masalah: template tanpa baris data ditolak sebagai workbook kosong; browser fallback tidak dapat menulis kembali file yang dipilih.
-- Perubahan: template sekarang berisi baris contoh yang dapat dihapus, dan `Save changes` mengunduh workbook baru bila File System Access API tidak tersedia.
+- Perubahan: `Save changes / Replace` meminta handle save bila belum tersedia lalu menulis workbook ke file tujuan; fallback download hanya dipakai jika browser tidak mendukung file picker.
 - Validasi: `node --check app.js` dan `git diff --check` dijalankan.
 
 ### 2026-09-20 (Table template)
