@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Menghapus sheet default `Sheet1`/`Sheet 2`/`Sheet 3` saat Save agar workbook hanya berisi sheet REQORD.
 - Mengganti footer menjadi `budife.psd` dengan modal `Meet the maker` berisi tab `Profile` dan `Changelog`.
 - Menambahkan mode draft lokal dengan `New`, `Load`, `Save`, `Save as New`, dan `Refresh`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
