@@ -14,5 +14,12 @@ assert.match(source, /loadMoreDoneButton/);
 assert.match(source, /priorityFilter/);
 assert.match(source, /sortFilter/);
 assert.match(markup, /daily-progress/);
+assert.match(source, /hasUnsavedChanges/);
+assert.match(source, /Perubahan belum disimpan akan diganti/);
+assert.match(source, /downloadWorkbook/);
+assert.match(source, /removeDefaultSheets/);
+assert.match(source, /loadActivitiesFromFile/);
+assert.match(markup, /activeFileName/);
+assert.match(markup, /saveState/);
 
 console.log('REQORD smoke checks passed');
