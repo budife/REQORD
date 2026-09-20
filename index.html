@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REQORD | Request work orders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">R</span><span>REQORD</span></a>
+      <div class="workspace"><span class="workspace-dot"></span> REQORD <b>/</b> <strong>Work order manager</strong></div>
+      <div class="top-actions"><button class="profile-trigger settings-trigger" id="profileButton" aria-label="Buka settings"><span class="settings-icon" aria-hidden="true">⚙</span><span class="profile-trigger-text"><strong>Settings</strong><small>REQORD</small></span></button></div>
+    </header>
+
+    <section class="intro"><div><div class="eyebrow">WORK ORDER MANAGER</div><h1>Request work orders</h1><p>Tambah request dan lihat progresnya dalam tiga tabel sederhana.</p></div><div class="intro-actions"><button class="secondary-button" id="importButton">Open file</button><button class="secondary-button save-button" id="exportButton" disabled title="Open file terlebih dahulu untuk mengaktifkan penyimpanan">Save changes</button><input id="fileInput" type="file" accept=".xlsx,.xls,.csv" hidden></div></section>
+
+    <section class="add-panel glass">
+      <div class="add-heading"><div><span class="step">+</span><h2>Add work order</h2></div><span class="hint">NEW PROJECT TASK</span></div>
+      <form id="workOrderForm" class="add-form"><label class="title-field">Title pekerjaan<input id="titleInput" name="title" required placeholder="Contoh: Update landing page untuk campaign Oktober"></label><label class="requestor-field">Requestor<input id="requestorInput" name="requestor" required autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="requestorSuggestions" aria-expanded="false" placeholder="Nama requestor"><div id="requestorSuggestions" class="requestor-suggestions" role="listbox" hidden></div></label><label>Priority<select name="priority"><option value="normal" selected>Normal</option><option value="high">High</option><option value="low">Low</option></select></label><label>Tanggal & jam request<input id="requestDateInput" name="requestDate" type="datetime-local"></label><button class="primary-button" type="submit"><span>+</span> Add work order</button></form>
+    </section>
+
+    <section class="toolbar"><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search work orders..."></div><span class="result-count" id="resultCount">0 work orders</span></section>
+
+    <section class="table-stack">
+      <article class="table-panel glass"><div class="table-heading"><div><span class="table-marker marker-list"></span><h2>Request list</h2><span class="table-count" id="listCount">0</span><p>Semua request yang baru masuk</p></div><span class="table-state">LIST</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="listTable"></tbody></table></div><div class="table-empty" id="listEmpty">Belum ada request list.</div></article>
+      <article class="table-panel glass daily-panel"><div class="table-heading"><div><span class="table-marker marker-daily"></span><h2>Daily tasks</h2><span class="table-count" id="dailyCount">0</span><p>Request yang dipindahkan menjadi pekerjaan rutin</p></div><span class="table-state daily-state">DAILY</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="dailyTable"></tbody></table></div><div class="table-empty" id="dailyEmpty">Belum ada daily task.</div></article>
+      <article class="table-panel glass"><div class="table-heading"><div><span class="table-marker marker-ongoing"></span><h2>Ongoing requests</h2><span class="table-count" id="ongoingCount">0</span><p>Request yang sedang dikerjakan</p></div><span class="table-state ongoing-state">ACTIVE</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="ongoingTable"></tbody></table></div><div class="table-empty" id="ongoingEmpty">Belum ada ongoing request.</div></article>
+      <article class="table-panel glass"><div class="table-heading"><div><span class="table-marker marker-done"></span><h2>Done requests</h2><span class="table-count" id="doneCount">0</span><p>Request yang sudah selesai</p></div><span class="table-state done-state">DONE</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="doneTable"></tbody></table></div><div class="table-empty" id="doneEmpty">Belum ada done request.</div></article>
+    </section>
+    <footer><span><i class="sync-dot"></i> Tersimpan otomatis di perangkat ini</span><span class="mono">REQORD · REQUEST WORK ORDERS</span><span class="credit">Made thoughtfully by Budi Indra Ilham · <a href="https://www.linkedin.com/in/budife/" target="_blank" rel="noreferrer">LinkedIn</a></span></footer>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <dialog id="deleteDialog" class="delete-dialog">
+    <div class="delete-modal-head"><span class="delete-warning">!</span><div><span class="eyebrow">PERMANENT ACTION</span><h2>Delete request?</h2></div><button class="modal-close" id="closeDeleteButton" aria-label="Tutup konfirmasi delete">×</button></div>
+    <p class="delete-copy">Request ini akan dihapus permanen dan tidak bisa dikembalikan.</p>
+    <p class="delete-confirm-label">Ketik <strong>saya sudah pikirin</strong> untuk melanjutkan.</p>
+    <input id="deleteConfirmInput" class="delete-confirm-input" autocomplete="off" placeholder="saya sudah pikirin" aria-label="Konfirmasi delete">
+    <div class="delete-actions"><button class="secondary-button" id="cancelDeleteButton">Cancel</button><button class="delete-confirm-button" id="confirmDeleteButton" disabled>Delete permanently</button></div>
+  </dialog>
+  <dialog id="profileDialog" class="profile-dialog">
+    <div class="profile-modal-head"><div><span class="eyebrow">REQORD</span><h2>Settings</h2></div><button class="modal-close" id="closeProfileButton" aria-label="Tutup settings">×</button></div>
+    <div class="profile-identity"><span class="profile-avatar profile-avatar-large">BI</span><div><h3>Budi Indra Ilham</h3><a href="https://www.linkedin.com/in/budife/" target="_blank" rel="noreferrer">linkedin.com/in/budife/ ↗</a></div></div>
+    <div class="profile-workspace"><span class="workspace-dot"></span><div><small>WORKSPACE</small><strong>REQORD / Work order manager</strong></div></div>
+    <nav class="profile-nav" aria-label="Profile menu"><button data-profile-view="changelog"><span>↗</span><div><strong>Changelog</strong><small>What's new in REQORD</small></div><b>›</b></button><button data-profile-view="history"><span>◷</span><div><strong>History</strong><small>Recent request activity</small></div><b>›</b></button></nav>
+    <div class="profile-footer"><span><i class="sync-dot"></i> Autosaved locally</span><span>REQORD v0.1</span></div>
+  </dialog>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script><script src="app.js"></script>
+</body>
+</html>
