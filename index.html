@@ -25,7 +25,7 @@
       <form id="workOrderForm" class="add-form"><label class="title-field">Title pekerjaan<input id="titleInput" name="title" required placeholder="Contoh: Update landing page untuk campaign Oktober"></label><label class="requestor-field">Requestor<input id="requestorInput" name="requestor" required autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="requestorSuggestions" aria-expanded="false" placeholder="Nama requestor"><div id="requestorSuggestions" class="requestor-suggestions" role="listbox" hidden></div></label><label>Priority<select name="priority"><option value="normal" selected>Normal</option><option value="high">High</option><option value="low">Low</option></select></label><label>Tanggal & jam request<input id="requestDateInput" name="requestDate" type="datetime-local"></label><button class="primary-button" type="submit"><span>+</span> Add work order</button></form>
     </section>
 
-    <section class="toolbar"><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search work orders..."></div><span class="result-count" id="resultCount">0 work orders</span></section>
+    <section class="toolbar"><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search work orders..."></div><span class="result-count" id="resultCount">0 work orders · Open file untuk memuat data</span></section>
 
     <section class="table-stack">
       <article class="table-panel glass"><div class="table-heading"><div><span class="table-marker marker-list"></span><h2>Request list</h2><span class="table-count" id="listCount">0</span><p>Semua request yang baru masuk</p></div><span class="table-state">LIST</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="listTable"></tbody></table></div><div class="table-empty" id="listEmpty">Belum ada request list.</div></article>
@@ -33,7 +33,7 @@
       <article class="table-panel glass"><div class="table-heading"><div><span class="table-marker marker-ongoing"></span><h2>Ongoing requests</h2><span class="table-count" id="ongoingCount">0</span><p>Request yang sedang dikerjakan</p></div><span class="table-state ongoing-state">ACTIVE</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="ongoingTable"></tbody></table></div><div class="table-empty" id="ongoingEmpty">Belum ada ongoing request.</div></article>
       <article class="table-panel glass"><div class="table-heading"><div><span class="table-marker marker-done"></span><h2>Done requests</h2><span class="table-count" id="doneCount">0</span><p>Request yang sudah selesai</p></div><span class="table-state done-state">DONE</span></div><div class="table-scroll"><table><thead><tr><th>Title</th><th>Requestor</th><th>Status</th><th>Priority</th><th>Request date</th><th>Target done</th><th>Actions</th></tr></thead><tbody id="doneTable"></tbody></table></div><div class="table-empty" id="doneEmpty">Belum ada done request.</div></article>
     </section>
-    <footer><span><i class="sync-dot"></i> Tersimpan otomatis di perangkat ini</span><span class="mono">REQORD · REQUEST WORK ORDERS</span><span class="credit">Made thoughtfully by Budi Indra Ilham · <a href="https://www.linkedin.com/in/budife/" target="_blank" rel="noreferrer">LinkedIn</a></span></footer>
+    <footer><span><i class="sync-dot"></i> Open file terlebih dahulu · Save changes ke file yang sama</span><span class="mono">REQORD · REQUEST WORK ORDERS</span><span class="credit">Made thoughtfully by Budi Indra Ilham · <a href="https://www.linkedin.com/in/budife/" target="_blank" rel="noreferrer">LinkedIn</a></span></footer>
   </main>
   <div id="toast" class="toast" role="status"></div>
   <dialog id="deleteDialog" class="delete-dialog">
@@ -48,7 +48,7 @@
     <div class="profile-identity"><span class="profile-avatar profile-avatar-large">BI</span><div><h3>Budi Indra Ilham</h3><a href="https://www.linkedin.com/in/budife/" target="_blank" rel="noreferrer">linkedin.com/in/budife/ ↗</a></div></div>
     <div class="profile-workspace"><span class="workspace-dot"></span><div><small>WORKSPACE</small><strong>REQORD / Work order manager</strong></div></div>
     <nav class="profile-nav" aria-label="Profile menu"><button data-profile-view="changelog"><span>↗</span><div><strong>Changelog</strong><small>What's new in REQORD</small></div><b>›</b></button><button data-profile-view="history"><span>◷</span><div><strong>History</strong><small>Recent request activity</small></div><b>›</b></button></nav>
-    <div class="profile-footer"><span><i class="sync-dot"></i> Autosaved locally</span><span>REQORD v0.1</span></div>
+    <div class="profile-footer"><span><i class="sync-dot"></i> Tidak tersimpan sebelum Open file</span><span>REQORD v0.1</span></div>
   </dialog>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script><script src="app.js"></script>
 </body>

@@ -7,13 +7,13 @@ const seedItems = [
   { id: 3, title: 'Review proposal dari tim desain', requestor: 'AR', type: 'project', status: 'ongoing', priority: 'normal', requestDate: '', date: '' },
   { id: 4, title: 'Kirim invoice project September', requestor: 'Saya', type: 'project', status: 'done', priority: 'low', requestDate: '', date: '' }
 ];
-let items = loadItems();
+let items = [];
 let openedFileHandle = null;
 let openedFileName = '';
 const tableMap = { list: document.querySelector('#listTable'), ongoing: document.querySelector('#ongoingTable'), done: document.querySelector('#doneTable') };
 
 function loadItems() { try { const current = JSON.parse(localStorage.getItem(STORAGE_KEY)); if (Array.isArray(current)) return current.map(normalizeItem); const legacy = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY)); if (Array.isArray(legacy)) { const migrated = legacy.map(normalizeItem); localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated)); return migrated; } return seedItems.map(normalizeItem); } catch { return seedItems.map(normalizeItem); } }
-function saveItems() { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
+function saveItems() { return items; }
 function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char])); }
 function normalizeItem(item) { return { ...item, requestor: String(item.requestor || item.owner || 'Tidak diketahui'), type: item.type === 'daily' || item.status === 'daily' ? 'daily' : 'project', status: normalizeStatus(item.status), priority: normalizePriority(item.priority), requestDate: normalizeDateValue(item.requestDate), date: normalizeDateValue(item.date || item.targetDone), done: Boolean(item.done) }; }
 function normalizeStatus(value) { const text = String(value || '').toLowerCase(); if (text.includes('daily')) return 'daily'; if (text.includes('ongoing') || text.includes('progress') || text.includes('kerja')) return 'ongoing'; if (text.includes('done') || text.includes('selesai') || text.includes('complete')) return 'done'; return 'list'; }

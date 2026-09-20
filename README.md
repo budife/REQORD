@@ -58,7 +58,8 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
 - Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done.
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
-- Data lokal tersimpan otomatis di browser.
+- Data tidak disimpan ke browser; sebelum `Open file`, list selalu kosong dan perubahan hanya berada di memori halaman.
+- `Save changes` hanya aktif setelah workbook dibuka dan menyimpan kembali ke file yang sama.
 
 ### UI
 

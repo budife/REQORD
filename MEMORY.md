@@ -44,6 +44,14 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (File-first storage)
+
+- Agent/model: OpenCode.
+- Permintaan: list tidak boleh muncul atau tersimpan sebelum pengguna membuka workbook.
+- Perubahan: `app.js` memulai dengan list kosong dan tidak lagi menulis perubahan ke `localStorage`; label UI menjelaskan bahwa `Open file` harus dilakukan sebelum `Save changes`.
+- Validasi: `node --check app.js` berhasil.
+- Keputusan: data setelah `Open file` hanya berada di memori halaman sampai `Save changes` menulis kembali ke workbook yang dibuka.
+
 ### 2026-09-20
 
 - Agent/model: OpenCode.
