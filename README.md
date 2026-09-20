@@ -62,6 +62,8 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Data tidak disimpan ke browser; sebelum `Open file`, list selalu kosong dan perubahan hanya berada di memori halaman.
 - `Save changes` hanya aktif setelah workbook dibuka dan menyimpan kembali ke file yang sama.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
+- `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
+- Saat `Save changes / Replace`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
 - Template menyertakan satu baris contoh agar dapat dibuka langsung; hapus baris bertanda contoh sebelum mengisi data.
 - `Save changes / Replace` menulis kembali ke file yang dibuka; jika izin tulis belum tersedia, aplikasi meminta pengguna memilih file tujuan melalui save picker.
 - Jika ada perubahan yang belum disimpan, aplikasi memberi peringatan saat F5 atau tab ditutup; autosave langsung ke Excel tidak dapat dilakukan tanpa izin tulis browser.

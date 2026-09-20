@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Memindahkan History ke panel `History & Activity` di sebelah kanan dan menambahkan sheet `Activity` pada workbook, termasuk catatan delete.
 - Menambahkan peringatan perubahan belum disimpan saat reload atau menutup tab; status bersih kembali setelah `Save changes / Replace` berhasil.
 - Membatasi tampilan `Done requests` menjadi 10 item per batch dengan tombol `Load more done works`.
 - Daily task kini memakai label `Today` dan `Done today`; tanggal mengikuti hari berjalan, judul dicoret saat checkbox selesai hari ini aktif, dan status reset pada hari berikutnya.

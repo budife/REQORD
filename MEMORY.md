@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (History and activity panel)
+
+- Agent/model: OpenCode.
+- Permintaan: History dipindah dari Settings ke sisi kanan, digabung dengan activity, dan delete dicatat ke sheet.
+- Perubahan: menambahkan panel topbar `History & Activity`, activity tracking untuk aksi utama, serta sheet `Activity` saat export workbook.
+- Validasi: pemeriksaan sintaks JavaScript dan whitespace dijalankan setelah edit.
+
 ### 2026-09-20 (Unsaved changes warning)
 
 - Agent/model: OpenCode.
