@@ -41,6 +41,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Tombol `▶ Saya kerjain` pada Request list memindahkan request ke Ongoing requests.
 - Tombol `↻` pada Done requests mengembalikan request ke Ongoing requests untuk revisi.
 - Tombol tong sampah menghapus request setelah konfirmasi `Delete, beneran?`.
+- `Done requests` menampilkan maksimal 10 item dan menyediakan `Load more done works` untuk menambah 10 item berikutnya.
 
 ### Daily Tasks
 

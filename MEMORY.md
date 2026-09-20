@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Done request pagination)
+
+- Agent/model: OpenCode.
+- Permintaan: Done requests dibatasi 10 item dan bertambah 10 item lewat load more.
+- Perubahan: menambahkan limit tampilan `Done requests` dan tombol `Load more done works`; data internal/export tetap lengkap.
+- Validasi: pemeriksaan sintaks JavaScript dan whitespace dijalankan setelah edit.
+
 ### 2026-09-20 (Daily task recurrence)
 
 - Agent/model: OpenCode.
