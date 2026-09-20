@@ -19,6 +19,10 @@ assert.match(source, /Perubahan belum disimpan akan diganti/);
 assert.match(source, /downloadWorkbook/);
 assert.match(source, /removeDefaultSheets/);
 assert.match(source, /loadActivitiesFromFile/);
+assert.match(source, /Details/);
+assert.match(source, /Workbook di-load/);
+assert.match(source, /Workbook disimpan/);
+assert.doesNotMatch(source, /activities = activities\.slice\(0, 100\)/);
 assert.match(markup, /activeFileName/);
 assert.match(markup, /saveState/);
 

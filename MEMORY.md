@@ -44,6 +44,12 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-21 (Complete activity audit log)
+
+- Permintaan: History & Activity harus benar-benar lengkap.
+- Perubahan: menghapus limit 100 item, mempertahankan detail activity dari workbook, menambahkan kolom `Details`, dan mencatat New, Load, Save, Save as New, edit, status, priority, daily done, delete, serta Undo.
+- Validasi: `node --check app.js`, smoke test, dan `git diff --check` dijalankan.
+
 ### 2026-09-21 (XLSX zero-byte safeguard)
 
 - Masalah: proses `createWritable()` dapat men-truncate file sebelum `XLSX.write()` gagal, meninggalkan file 0 byte.
