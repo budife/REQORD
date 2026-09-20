@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Mengganti footer menjadi `budife.psd` dengan modal `Meet the maker` berisi tab `Profile` dan `Changelog`.
 - Menambahkan mode draft lokal dengan `New`, `Load`, `Save`, `Save as New`, dan `Refresh`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
 - Memindahkan History ke panel `History & Activity` di sebelah kanan dan menambahkan sheet `Activity` pada workbook, termasuk catatan delete.

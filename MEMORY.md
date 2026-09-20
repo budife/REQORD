@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Maker modal)
+
+- Agent/model: OpenCode.
+- Permintaan: footer memakai `budife.psd`, hover `Meet the maker`, klik membuka modal/sidebar dengan tab Profile dan Changelog.
+- Perubahan: mengganti credit footer menjadi trigger maker dan menambahkan maker modal dua tab.
+- Validasi: pemeriksaan sintaks JavaScript dan whitespace dijalankan setelah edit.
+
 ### 2026-09-20 (Draft and workbook modes)
 
 - Agent/model: OpenCode.
