@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Template save fix)
+
+- Agent/model: OpenCode.
+- Masalah: template tanpa baris data ditolak sebagai workbook kosong; browser fallback tidak dapat menulis kembali file yang dipilih.
+- Perubahan: template sekarang berisi baris contoh yang dapat dihapus, dan `Save changes` mengunduh workbook baru bila File System Access API tidak tersedia.
+- Validasi: `node --check app.js` dan `git diff --check` dijalankan.
+
 ### 2026-09-20 (Table template)
 
 - Agent/model: OpenCode.

@@ -61,6 +61,8 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Data tidak disimpan ke browser; sebelum `Open file`, list selalu kosong dan perubahan hanya berada di memori halaman.
 - `Save changes` hanya aktif setelah workbook dibuka dan menyimpan kembali ke file yang sama.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
+- Template menyertakan satu baris contoh agar dapat dibuka langsung; hapus baris bertanda contoh sebelum mengisi data.
+- Jika browser tidak mendukung izin tulis langsung, `Save changes` mengunduh file Excel baru berisi perubahan.
 
 ### UI
 
