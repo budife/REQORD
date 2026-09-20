@@ -44,6 +44,12 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-21 (XLSX zero-byte safeguard)
+
+- Masalah: proses `createWritable()` dapat men-truncate file sebelum `XLSX.write()` gagal, meninggalkan file 0 byte.
+- Perubahan: hasil serialisasi workbook sekarang divalidasi sebelum writer file dibuat; download juga memakai guard byte yang sama.
+- Validasi: `node --check app.js`, smoke test, dan `git diff --check` dijalankan.
+
 ### 2026-09-21 (MVP reliability pass)
 
 - Agent/model: OpenCode.
