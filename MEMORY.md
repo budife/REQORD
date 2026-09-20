@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Daily task recurrence)
+
+- Agent/model: OpenCode.
+- Permintaan: Daily tasks selesai per hari dan reset ketika tanggal berganti.
+- Perubahan: menambahkan `dailyDoneDate`, action `Today done`, dan pengecekan tanggal hari ini saat render/export.
+- Validasi: pemeriksaan sintaks JavaScript dan whitespace dijalankan setelah edit.
+
 ### 2026-09-20 (Template save fix)
 
 - Agent/model: OpenCode.

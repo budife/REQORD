@@ -47,7 +47,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Daily tasks tampil di atas Request list.
 - Semua item baru dari form `Add work order` otomatis masuk ke `Request list`.
 - Request yang statusnya diubah menjadi `Daily task` otomatis berpindah ke tabel Daily.
-- Daily task memakai kolom, dropdown status/priority, target done, dan action buttons yang sama dengan tabel request.
+- Daily task memakai kolom dan dropdown status/priority yang sama, tetapi action-nya `Today done`; penyelesaian berlaku untuk tanggal hari ini dan otomatis reset saat tanggal berganti.
 - Daily dan request memakai satu penyimpanan data agar perpindahan tetap konsisten.
 
 ### XLSX
@@ -56,7 +56,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Setelah file berhasil dimuat di Chrome/Edge, `Save changes` menulis kembali ke file XLSX yang sama.
 - `Save changes` disabled sebelum file dibuka agar tidak membuat download baru tanpa sengaja.
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
-- Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done.
+- Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done; `Done` merepresentasikan penyelesaian pada hari saat file disimpan.
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
 - Data tidak disimpan ke browser; sebelum `Open file`, list selalu kosong dan perubahan hanya berada di memori halaman.
 - `Save changes` hanya aktif setelah workbook dibuka dan menyimpan kembali ke file yang sama.
