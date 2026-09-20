@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Table template)
+
+- Agent/model: OpenCode.
+- Permintaan: menyediakan template table yang dapat diunduh dari `Settings`.
+- Perubahan: menambahkan tombol `Download table template` dan workbook kosong dengan sheet request, `Daily Tasks`, serta `Read me`.
+- Validasi: perubahan memakai library SheetJS yang sudah tersedia; validasi sintaks dijalankan setelah edit.
+
 ### 2026-09-20 (File-first storage)
 
 - Agent/model: OpenCode.

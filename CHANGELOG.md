@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Menambahkan tombol `Download table template` di `Settings` untuk mengunduh workbook Excel kosong dengan seluruh sheet REQORD.
 - Mengubah penyimpanan menjadi file-first: list kosong sebelum `Open file`, tanpa autosave ke `localStorage`, dan `Save changes` hanya aktif setelah workbook dibuka.
 
 - Menambahkan dokumentasi dasar untuk AI agent dan handoff antar-model.

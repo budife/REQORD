@@ -60,6 +60,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
 - Data tidak disimpan ke browser; sebelum `Open file`, list selalu kosong dan perubahan hanya berada di memori halaman.
 - `Save changes` hanya aktif setelah workbook dibuka dan menyimpan kembali ke file yang sama.
+- `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 
 ### UI
 
