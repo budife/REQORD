@@ -44,6 +44,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-20 (Draft and workbook modes)
+
+- Agent/model: OpenCode.
+- Permintaan: data dapat dibuat sebelum load, tersimpan lokal, lalu workbook dapat di-load dan di-replace atau disimpan sebagai file baru.
+- Perubahan: menambahkan aksi `New`, `Load`, `Save`, `Save as New`, `Refresh`, persistence IndexedDB/localStorage, dan mode replace workbook.
+- Validasi: pemeriksaan sintaks JavaScript dan whitespace dijalankan setelah edit.
+
 ### 2026-09-20 (History and activity panel)
 
 - Agent/model: OpenCode.

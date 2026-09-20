@@ -59,8 +59,9 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
 - Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done; `Done` merepresentasikan penyelesaian pada hari saat file disimpan.
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
-- Data tidak disimpan ke browser; sebelum `Open file`, list selalu kosong dan perubahan hanya berada di memori halaman.
-- `Save changes` hanya aktif setelah workbook dibuka dan menyimpan kembali ke file yang sama.
+- `New` membuat draft lokal baru; data draft disimpan ke IndexedDB dengan fallback localStorage sehingga tetap ada setelah F5.
+- `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka, sedangkan `Save as New` membuat workbook baru.
+- `Refresh` membaca ulang workbook yang sedang dibuka dan meminta konfirmasi sebelum menimpa perubahan lokal.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save changes / Replace`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
