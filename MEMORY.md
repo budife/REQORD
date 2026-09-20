@@ -52,6 +52,12 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Validasi: `node --check app.js` dan `git diff --check` dijalankan.
 - Pekerjaan lanjutan: pengujian browser nyata, validasi import parsial, dan pemecahan `app.js` ke modul kecil masih perlu dilanjutkan.
 
+### 2026-09-21 (MVP reliability checkpoints)
+
+- Implemented: save-state indicator, priority filter, sorting, quick Title/Requestor editing, Undo delete toast, Daily progress counter, Load confirmation, mobile table/toolbar layout, SheetJS unavailable banner, safer local persistence error handling, and Node smoke checks.
+- Commits: `99f1750` and `62b47c2`, both pushed to `origin/main`.
+- Not yet fully verified: real browser File System Access permission flows, partial/invalid workbook row reporting, full Activity merge semantics, bundled SheetJS/offline operation, and complete `app.js` modular refactor.
+
 ### 2026-09-20 (Maker modal)
 
 - Agent/model: OpenCode.
