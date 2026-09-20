@@ -62,6 +62,9 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - `New` membuat draft lokal baru; data draft disimpan ke IndexedDB dengan fallback localStorage sehingga tetap ada setelah F5.
 - `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka, sedangkan `Save as New` membuat workbook baru.
 - Nama file aktif selalu ditampilkan di samping tombol aksi; mode draft menampilkan `Draft lokal`.
+- Toolbar menampilkan status `Draft lokal`, `Unsaved changes`, atau `Saved to workbook`.
+- Tabel mendukung filter priority, sorting, dan edit cepat Title/Requestor; delete menyediakan Undo selama beberapa detik.
+- Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Changelog`.
 - Tab `Changelog` di modal maker menampilkan seluruh milestone utama REQORD.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.

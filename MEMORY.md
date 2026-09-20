@@ -44,6 +44,14 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-21 (MVP reliability pass)
+
+- Agent/model: OpenCode.
+- Permintaan: mengerjakan seluruh daftar improvement MVP.
+- Perubahan tahap ini: save-state indicator, filter/sort, edit cepat Title/Requestor, Undo delete, progress Daily, konfirmasi Load, dan fallback pesan saat SheetJS CDN gagal.
+- Validasi: `node --check app.js` dan `git diff --check` dijalankan.
+- Pekerjaan lanjutan: pengujian browser nyata, validasi import parsial, dan pemecahan `app.js` ke modul kecil masih perlu dilanjutkan.
+
 ### 2026-09-20 (Maker modal)
 
 - Agent/model: OpenCode.
