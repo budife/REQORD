@@ -63,6 +63,12 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Save helper `writeWorkbookToHandle` sekarang mengembalikan byte count dan melakukan abort saat penulisan gagal.
 - Residual risk: browser E2E untuk File System Access dan validasi row import parsial masih membutuhkan runtime browser.
 
+### 2026-09-21 (Audit follow-up)
+
+- Audit ulang: syntax check, smoke test, dan diff check lulus.
+- Perubahan lokal `index.html` berupa stylesheet Font Awesome yang dibutuhkan oleh icon square-check; perubahan tersebut kemudian dicatat/di-commit agar working tree bersih.
+- Residual risk tetap: browser E2E File System Access dan validasi import parsial belum dapat diverifikasi tanpa runtime browser.
+
 ### 2026-09-21 (Complete activity audit log)
 
 - Permintaan: History & Activity harus benar-benar lengkap.
