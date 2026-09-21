@@ -28,5 +28,6 @@ assert.match(markup, /saveState/);
 assert.match(source, /writeWorkbookToHandle/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);
 assert.match(source, /abort\(\)/);
+assert.doesNotMatch(source, /writable\.write\(XLSX\.write/);
 
 console.log('REQORD smoke checks passed');
