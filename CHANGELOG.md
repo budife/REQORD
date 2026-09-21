@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Menghapus kolom dan tombol Actions dari Request list; Actions tetap tersedia pada tabel Ongoing, Done, dan Daily.
 - Mengganti label Daily task menjadi `Selesai hari ini` dan progress `X selesai hari ini`.
 - Menggabungkan kolom Today dan Selesai hari ini menjadi `Status hari ini` dengan label belum/sudah dikerjakan.
 - Memperbaiki format tanggal dan jam saat export Excel agar separator `T` diganti spasi.
