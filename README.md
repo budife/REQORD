@@ -48,7 +48,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Daily tasks tampil di atas Request list.
 - Semua item baru dari form `Add work order` otomatis masuk ke `Request list`.
 - Request yang statusnya diubah menjadi `Daily task` otomatis berpindah ke tabel Daily.
-- Daily task memakai satu kolom `Status hari ini`: `Belum dikerjakan hari ini` atau `Sudah selesai hari ini`; tanggal tampil sebagai konteks kecil, judul dicoret setelah selesai, dan status otomatis reset saat tanggal berganti.
+- Daily task memakai satu kolom `Hari ini`: `Belum selesai` atau `Selesai`; tanggal tampil sebagai konteks kecil, judul dicoret setelah selesai, dan status otomatis reset saat tanggal berganti.
 - Daily dan request memakai satu penyimpanan data agar perpindahan tetap konsisten.
 
 ### XLSX
