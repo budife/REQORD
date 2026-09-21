@@ -69,6 +69,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Changelog`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
+- Tab `Recent changes` juga menampilkan seluruh commit repository dengan hash, tanggal, dan message.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save changes / Replace`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.

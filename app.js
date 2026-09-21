@@ -86,6 +86,58 @@ profileDialog.addEventListener('click', event => { if (event.target === profileD
 document.querySelectorAll('[data-maker-tab]').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('[data-maker-tab]').forEach(button => button.classList.toggle('active', button === tab)); document.querySelectorAll('[data-maker-content]').forEach(content => { content.hidden = content.dataset.makerContent !== tab.dataset.makerTab; }); }));
 document.querySelector('[data-maker-content="recent"] .maker-changelog h3').insertAdjacentHTML('afterend', '<div class="changelog-meta"><strong>v0.1.0</strong><span>Updated · 21 Sep 2026</span></div>');
 document.querySelector('.profile-footer span').innerHTML = '<i class="sync-dot"></i> REQORD v0.1.0';
+const recentCommits = [
+  ['eb65fc8', '2026-09-21', 'Show recent changes in maker modal'],
+  ['e509b67', '2026-09-21', 'Align primary button icon text'],
+  ['f119ebf', '2026-09-21', 'Reduce add work order button text size'],
+  ['22bedaf', '2026-09-21', 'Ensure add work order icon visibility'],
+  ['7f22eb9', '2026-09-21', 'Center add work order button content'],
+  ['55fa92a', '2026-09-21', 'Refine add work order controls'],
+  ['d518aaa', '2026-09-21', 'Reset daily checkboxes at midnight'],
+  ['3fd8ba1', '2026-09-21', 'Standardize thin focus states'],
+  ['7283274', '2026-09-21', 'Add modal editing for work orders'],
+  ['d37d116', '2026-09-21', 'Complete history and activity audit log'],
+  ['ebaf49b', '2026-09-21', 'Prevent zero-byte workbook saves'],
+  ['defa611', '2026-09-21', 'Record MVP reliability checkpoint status'],
+  ['62b47c2', '2026-09-21', 'Harden draft storage and regression checks'],
+  ['99f1750', '2026-09-21', 'Improve MVP reliability and editing flow'],
+  ['e5ad452', '2026-09-21', 'Widen maker changelog modal'],
+  ['57e5364', '2026-09-21', 'Add version and commit date to changelog'],
+  ['d9d221d', '2026-09-21', 'Show complete changelog in maker modal'],
+  ['2be435a', '2026-09-21', 'Match maker credit font'],
+  ['202a30a', '2026-09-21', 'Make only maker name interactive'],
+  ['20f2f53', '2026-09-21', 'Refine maker footer credit'],
+  ['1a87863', '2026-09-21', 'Format activity timestamps locally'],
+  ['6fc5f54', '2026-09-21', 'Remove default Excel sheets on save'],
+  ['9d15acb', '2026-09-21', 'Add maker profile and changelog modal'],
+  ['1599353', '2026-09-21', 'Simplify settings panel'],
+  ['8b4ff76', '2026-09-21', 'Fix save picker handle assignment'],
+  ['a00eb6c', '2026-09-21', 'Make save and save-as-new reliable'],
+  ['c80c617', '2026-09-21', 'Request workbook write permission before save'],
+  ['daf002c', '2026-09-21', 'Show saved draft filename'],
+  ['bb7eb49', '2026-09-21', 'Show active workbook name in toolbar'],
+  ['5910349', '2026-09-21', 'Fix workbook load activity reader'],
+  ['6003d49', '2026-09-21', 'Add local drafts and workbook save modes'],
+  ['0d53ae6', '2026-09-21', 'Load activity history from workbook'],
+  ['3af0153', '2026-09-21', 'Add history activity panel and export log'],
+  ['0a3188b', '2026-09-20', 'Warn before losing unsaved workbook changes'],
+  ['cd9f800', '2026-09-20', 'Respect hidden state for load more button'],
+  ['42df10d', '2026-09-20', 'Hide done load more when unnecessary'],
+  ['a251d74', '2026-09-20', 'Paginate done requests list'],
+  ['46ad929', '2026-09-20', 'Refine daily checkbox stroke weight'],
+  ['8504410', '2026-09-20', 'Rename daily task date columns'],
+  ['e8afdd6', '2026-09-20', 'Reset daily task dates each day'],
+  ['bc2db81', '2026-09-20', 'Clarify daily task completion state'],
+  ['a0bf74e', '2026-09-20', 'Use icon for daily task completion'],
+  ['85f178a', '2026-09-20', 'Make daily tasks reset each day'],
+  ['480d4be', '2026-09-20', 'Enable replacing opened Excel workbooks'],
+  ['426bcb2', '2026-09-20', 'Fix template loading and save fallback'],
+  ['e36900a', '2026-09-20', 'Add downloadable Excel table template'],
+  ['db06391', '2026-09-20', 'Require opening workbook before saving data'],
+  ['4394723', '2026-09-20', 'Initial REQORD work order prototype']
+];
+const recentGroup = document.querySelector('[data-maker-content="recent"] .changelog-group');
+if (recentGroup) recentGroup.innerHTML = `<strong>All commits</strong><ul class="commit-list">${recentCommits.map(([hash, date, message]) => `<li><code>${hash}</code><span>${escapeHtml(date)}</span><b>${escapeHtml(message)}</b></li>`).join('')}</ul>`;
 const activityPanel = document.querySelector('#activityPanel');
 document.querySelector('#activityButton').addEventListener('click', () => { activityPanel.classList.add('open'); activityPanel.setAttribute('aria-hidden', 'false'); });
 document.querySelector('#closeActivityButton').addEventListener('click', () => { activityPanel.classList.remove('open'); activityPanel.setAttribute('aria-hidden', 'true'); });
