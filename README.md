@@ -69,6 +69,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Saat mengetik Title, REQORD menampilkan work order yang judulnya mirip untuk membantu mencegah data duplikat.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
+- Daily task memakai label `Selesai hari ini` agar status checklist lebih jelas.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Recent changes`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
 - Tab `Recent changes` juga menampilkan seluruh commit repository dengan hash, tanggal, dan message.
@@ -88,7 +89,6 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Tampilan flat minimal REQORD dengan palet hijau matcha, garis tipis samar, dan aksen seperlunya.
 - Menu `Settings` menyediakan profile maker, LinkedIn, changelog, dan history aktivitas.
 - Responsive untuk desktop dan mobile.
-- Input tanggal dan jam memakai accent matcha; popup kalender detail tetap mengikuti native browser/OS.
 
 ## Status Saat Ini
 
