@@ -88,6 +88,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Tampilan flat minimal REQORD dengan palet hijau matcha, garis tipis samar, dan aksen seperlunya.
 - Menu `Settings` menyediakan profile maker, LinkedIn, changelog, dan history aktivitas.
 - Responsive untuk desktop dan mobile.
+- Input tanggal dan jam memakai accent matcha; popup kalender detail tetap mengikuti native browser/OS.
 
 ## Status Saat Ini
 

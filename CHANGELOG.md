@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Menyamakan accent date/time picker dengan palet matcha REQORD.
 - Menambahkan rekomendasi judul work order yang mirip saat input Title untuk mencegah duplikasi request.
 - Menambahkan reset Daily task otomatis tepat saat pergantian hari; checkbox kembali tidak tercentang dan strikethrough hilang.
 - Mengganti edit langsung Title/Requestor menjadi icon edit di Actions dengan modal `Edit work order`.
