@@ -66,6 +66,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Tabel mendukung filter priority, sorting, dan edit cepat Title/Requestor; delete menyediakan Undo selama beberapa detik.
 - Title dan Requestor sekarang diedit melalui icon edit di Actions dan modal `Edit work order`.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
+- Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Changelog`.
 - Tab `Changelog` di modal maker menampilkan seluruh milestone utama REQORD.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.

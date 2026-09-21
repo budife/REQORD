@@ -55,6 +55,11 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Preferensi UI: semua field focus memakai garis tipis konsisten, tanpa outline/ring tebal atau shadow besar.
 - Perubahan: menyamakan focus state dropdown tabel, search, dan input modal edit menjadi outline 1px tanpa box-shadow.
 
+### 2026-09-21 (Automatic daily reset)
+
+- Permintaan: checkbox Daily task harus reset tidak tercentang pada hari berikutnya.
+- Perubahan: menambahkan timer pergantian hari yang menghapus `dailyDoneDate`, merender ulang checkbox/strikethrough, dan memperbarui progress harian.
+
 ### 2026-09-21 (XLSX zero-byte safeguard)
 
 - Masalah: proses `createWritable()` dapat men-truncate file sebelum `XLSX.write()` gagal, meninggalkan file 0 byte.
