@@ -94,6 +94,14 @@ document.querySelectorAll('[data-maker-tab]').forEach(tab => tab.addEventListene
 document.querySelector('[data-maker-content="recent"] .maker-changelog h3').insertAdjacentHTML('afterend', '<div class="changelog-meta"><strong>v0.1.0</strong><span>Updated · 21 Sep 2026</span></div>');
 document.querySelector('.profile-footer span').innerHTML = '<i class="sync-dot"></i> REQORD v0.1.0';
 const recentCommits = [
+  ['3876cd2', '2026-09-21', 'Clarify daily completion labels'],
+  ['54b26ce', '2026-09-21', 'Suggest similar work order titles'],
+  ['b2956fb', '2026-09-21', 'Fix duplicate delete icon'],
+  ['56bcd58', '2026-09-21', 'Increase request table typography'],
+  ['df693c5', '2026-09-21', 'Improve add button readability'],
+  ['c61b6d3', '2026-09-21', 'Use canonical workbook writer'],
+  ['77a2ba1', '2026-09-21', 'Harden repository and workbook save flow'],
+  ['c27d931', '2026-09-21', 'Add REQORD monogram favicon'],
   ['eb65fc8', '2026-09-21', 'Show recent changes in maker modal'],
   ['e509b67', '2026-09-21', 'Align primary button icon text'],
   ['f119ebf', '2026-09-21', 'Reduce add work order button text size'],

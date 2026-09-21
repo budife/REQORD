@@ -73,6 +73,11 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Permintaan: checkbox Daily task harus reset tidak tercentang pada hari berikutnya.
 - Perubahan: menambahkan timer pergantian hari yang menghapus `dailyDoneDate`, merender ulang checkbox/strikethrough, dan memperbarui progress harian.
 
+### 2026-09-21 (Daily completion wording)
+
+- Perubahan: label `Done today` diganti menjadi `Selesai hari ini`, dan progress memakai format `X selesai hari ini`.
+- Catatan: Recent changes diperbarui dengan commit-commit terbaru.
+
 ### 2026-09-21 (XLSX zero-byte safeguard)
 
 - Masalah: proses `createWritable()` dapat men-truncate file sebelum `XLSX.write()` gagal, meninggalkan file 0 byte.
