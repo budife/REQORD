@@ -63,6 +63,11 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Perubahan: menghapus limit 100 item, mempertahankan detail activity dari workbook, menambahkan kolom `Details`, dan mencatat New, Load, Save, Save as New, edit, status, priority, daily done, delete, serta Undo.
 - Validasi: `node --check app.js`, smoke test, dan `git diff --check` dijalankan.
 
+### 2026-09-21 (Daily status column)
+
+- Permintaan: kolom Today dan Selesai hari ini redundant.
+- Perubahan: digabung menjadi `Status hari ini` dengan label `Belum dikerjakan hari ini` atau `Sudah selesai hari ini`, plus tanggal sebagai konteks.
+
 ### 2026-09-21 (Focus style rule)
 
 - Preferensi UI: semua field focus memakai garis tipis konsisten, tanpa outline/ring tebal atau shadow besar.

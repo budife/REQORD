@@ -48,7 +48,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Daily tasks tampil di atas Request list.
 - Semua item baru dari form `Add work order` otomatis masuk ke `Request list`.
 - Request yang statusnya diubah menjadi `Daily task` otomatis berpindah ke tabel Daily.
-- Daily task memakai kolom dan dropdown status/priority yang sama, tetapi kolomnya memakai label `Today` dan `Done today`; keduanya selalu mengikuti hari ini, judul dicoret setelah selesai, dan status otomatis reset saat tanggal berganti.
+- Daily task memakai satu kolom `Status hari ini`: `Belum dikerjakan hari ini` atau `Sudah selesai hari ini`; tanggal tampil sebagai konteks kecil, judul dicoret setelah selesai, dan status otomatis reset saat tanggal berganti.
 - Daily dan request memakai satu penyimpanan data agar perpindahan tetap konsisten.
 
 ### XLSX
@@ -69,7 +69,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Saat mengetik Title, REQORD menampilkan work order yang judulnya mirip untuk membantu mencegah data duplikat.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
-- Daily task memakai label `Selesai hari ini` agar status checklist lebih jelas.
+- Daily task memakai label `Status hari ini` agar kondisi belum/sudah dikerjakan lebih jelas.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Recent changes`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
 - Tab `Recent changes` juga menampilkan seluruh commit repository dengan hash, tanggal, dan message.
