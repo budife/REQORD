@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>REQORD</title>
+  <rect width="64" height="64" rx="14" fill="#55783d"/>
+  <path d="M15 47V17h14.2c8.1 0 12.8 4.1 12.8 10.4 0 4.5-2.5 7.8-6.9 9.3L43 47h-8.2l-6.5-9.9h-5.8V47H15Zm7.5-16.2h6c3.7 0 5.8-1.7 5.8-4.5s-2.1-4.4-5.8-4.4h-6v8.9Z" fill="#fff"/>
+  <path d="M43.5 43.5 49 49" stroke="#dce9cf" stroke-width="4" stroke-linecap="round"/>
+</svg>
