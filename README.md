@@ -60,7 +60,8 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
 - Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done; `Done` merepresentasikan penyelesaian pada hari saat file disimpan.
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
-- `New` membuat draft lokal baru; data draft disimpan ke IndexedDB dengan fallback localStorage sehingga tetap ada setelah F5.
+- `New` membuat draft lokal baru; draft lokal dibersihkan saat F5/reload sehingga aplikasi selalu mulai dari kondisi kosong.
+- Simpan ke workbook sebelum F5 jika ingin mempertahankan perubahan.
 - `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka, sedangkan `Save as New` membuat workbook baru.
 - Nama file aktif selalu ditampilkan di samping tombol aksi; mode draft menampilkan `Draft lokal`.
 - Toolbar menampilkan status `Draft lokal`, `Unsaved changes`, atau `Saved to workbook`.

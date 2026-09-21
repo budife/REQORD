@@ -44,6 +44,12 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-21 (Reload clean reset)
+
+- Permintaan: saat tekan F5, aplikasi harus clean/reset cache dan list kembali kosong.
+- Perubahan: localStorage draft dibersihkan saat startup; object store IndexedDB draft di-clear saat database siap; file handle dan activity tidak dipertahankan.
+- Risiko yang diterima: perubahan yang belum di-Save hilang saat F5/reload.
+
 ### 2026-09-21 (Recent changes maker tab)
 
 - Permintaan: tab maker tidak menampilkan seluruh changelog; gunakan `Recent changes`, sedangkan changelog lengkap tetap di GitHub.
