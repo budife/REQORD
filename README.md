@@ -64,6 +64,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Nama file aktif selalu ditampilkan di samping tombol aksi; mode draft menampilkan `Draft lokal`.
 - Toolbar menampilkan status `Draft lokal`, `Unsaved changes`, atau `Saved to workbook`.
 - Tabel mendukung filter priority, sorting, dan edit cepat Title/Requestor; delete menyediakan Undo selama beberapa detik.
+- Title dan Requestor sekarang diedit melalui icon edit di Actions dan modal `Edit work order`.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Changelog`.
 - Tab `Changelog` di modal maker menampilkan seluruh milestone utama REQORD.

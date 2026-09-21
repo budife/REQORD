@@ -6,6 +6,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Mengganti edit langsung Title/Requestor menjadi icon edit di Actions dengan modal `Edit work order`.
 - Melengkapi History & Activity menjadi audit log tanpa batas 100 item dengan lifecycle workbook, detail aksi, dan kolom `Details` pada sheet Activity.
 - Memperbaiki risiko file XLSX menjadi 0 byte dengan memvalidasi hasil serialisasi sebelum membuka writer file.
 - Menambahkan save-state indicator, filter priority, sorting, inline edit Title/Requestor, Undo delete, dan progress Daily tasks.
