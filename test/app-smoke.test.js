@@ -27,6 +27,7 @@ assert.match(markup, /activeFileName/);
 assert.match(markup, /saveState/);
 assert.match(source, /renderTitleSuggestions/);
 assert.match(markup, /titleSuggestions/);
+assert.match(fs.readFileSync('styles.css', 'utf8'), /action-menu\[hidden\]\{display:none!important\}/);
 assert.match(source, /writeWorkbookToHandle/);
 assert.match(source, /normalizeWorkbookDateCells/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);
