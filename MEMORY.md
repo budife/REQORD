@@ -50,6 +50,13 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Perubahan: mengganti tab `Changelog` menjadi `Recent changes` dan menyisakan ringkasan perubahan terbaru di modal maker.
 - Aturan lanjutan: setiap fitur/perubahan baru harus menambahkan item ringkas ke daftar Recent changes dan entri lengkap ke `CHANGELOG.md`.
 
+### 2026-09-21 (Repository audit hardening)
+
+- Audit menemukan folder environment `viserys-agent-main/` untracked di workspace; folder tidak dihapus dan tidak di-commit.
+- Perubahan: menambahkan `.gitignore` untuk mengecualikan folder tersebut dari repository aplikasi.
+- Save helper `writeWorkbookToHandle` sekarang mengembalikan byte count dan melakukan abort saat penulisan gagal.
+- Residual risk: browser E2E untuk File System Access dan validasi row import parsial masih membutuhkan runtime browser.
+
 ### 2026-09-21 (Complete activity audit log)
 
 - Permintaan: History & Activity harus benar-benar lengkap.

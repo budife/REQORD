@@ -54,8 +54,9 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 ### XLSX
 
 - `Load` memuat workbook yang dipilih; REQORD membaca sheet `Request List`, `Ongoing Requests`, `Done Requests`, dan `Daily Tasks`.
-- Setelah file berhasil dimuat di Chrome/Edge, `Save changes` menulis kembali ke file XLSX yang sama.
-- `Save changes` disabled sebelum file dibuka agar tidak membuat download baru tanpa sengaja.
+- Draft lokal tidak mengganggu file environment di workspace; artefak agent dikecualikan lewat `.gitignore`.
+- Setelah file berhasil dimuat di Chrome/Edge, `Save` menulis kembali ke file XLSX yang sama.
+- `Save` dapat menyimpan draft atau replace workbook; `Save as New` membuat workbook baru.
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
 - Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done; `Done` merepresentasikan penyelesaian pada hari saat file disimpan.
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
@@ -67,18 +68,18 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Title dan Requestor sekarang diedit melalui icon edit di Actions dan modal `Edit work order`.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
-- Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Changelog`.
+- Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Recent changes`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
 - Tab `Recent changes` juga menampilkan seluruh commit repository dengan hash, tanggal, dan message.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
-- Saat `Save changes / Replace`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
+- Saat `Save`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
 - `History & Activity` menyimpan audit log lengkap tanpa batas 100 item, termasuk lifecycle New/Load/Save/Save as New, edit, status, priority, daily done, delete, dan Undo.
 - Sheet `Activity` memiliki kolom `Date`, `Action`, `Title`, `Requestor`, dan `Details`.
 - Sheet default Excel seperti `Sheet1`, `Sheet 2`, dan `Sheet 3` dibuang saat workbook disimpan.
 - Workbook diserialisasi dan divalidasi sebelum file dibuka untuk ditulis, sehingga kegagalan export tidak mengosongkan file sumber menjadi 0 byte.
 - Template menyertakan satu baris contoh agar dapat dibuka langsung; hapus baris bertanda contoh sebelum mengisi data.
-- `Save changes / Replace` menulis kembali ke file yang dibuka; jika izin tulis belum tersedia, aplikasi meminta pengguna memilih file tujuan melalui save picker.
+- `Save` menulis kembali ke file yang dibuka; jika izin tulis belum tersedia, aplikasi meminta pengguna memilih file tujuan melalui save picker.
 - Jika ada perubahan yang belum disimpan, aplikasi memberi peringatan saat F5 atau tab ditutup; autosave langsung ke Excel tidak dapat dilakukan tanpa izin tulis browser.
 
 ### UI

@@ -25,5 +25,8 @@ assert.match(source, /Workbook disimpan/);
 assert.doesNotMatch(source, /activities = activities\.slice\(0, 100\)/);
 assert.match(markup, /activeFileName/);
 assert.match(markup, /saveState/);
+assert.match(source, /writeWorkbookToHandle/);
+assert.match(source, /Workbook kosong atau gagal dibuat/);
+assert.match(source, /abort\(\)/);
 
 console.log('REQORD smoke checks passed');

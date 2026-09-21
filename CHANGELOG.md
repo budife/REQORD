@@ -16,6 +16,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Mengisi tab `Changelog` pada modal maker dengan seluruh milestone utama REQORD.
 - Mengganti tab modal maker menjadi `Recent changes`; changelog lengkap tetap dipelihara di repository GitHub.
 - Menampilkan seluruh commit repository di tab `Recent changes` beserta hash, tanggal, dan message.
+- Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
 - Menambahkan mode draft lokal dengan `New`, `Load`, `Save`, `Save as New`, dan `Refresh`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
 - Memindahkan History ke panel `History & Activity` di sebelah kanan dan menambahkan sheet `Activity` pada workbook, termasuk catatan delete.
