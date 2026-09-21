@@ -50,6 +50,11 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Perubahan: menghapus limit 100 item, mempertahankan detail activity dari workbook, menambahkan kolom `Details`, dan mencatat New, Load, Save, Save as New, edit, status, priority, daily done, delete, serta Undo.
 - Validasi: `node --check app.js`, smoke test, dan `git diff --check` dijalankan.
 
+### 2026-09-21 (Focus style rule)
+
+- Preferensi UI: semua field focus memakai garis tipis konsisten, tanpa outline/ring tebal atau shadow besar.
+- Perubahan: menyamakan focus state dropdown tabel, search, dan input modal edit menjadi outline 1px tanpa box-shadow.
+
 ### 2026-09-21 (XLSX zero-byte safeguard)
 
 - Masalah: proses `createWritable()` dapat men-truncate file sebelum `XLSX.write()` gagal, meninggalkan file 0 byte.
