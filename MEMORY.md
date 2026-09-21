@@ -44,6 +44,12 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Handoff Log
 
+### 2026-09-21 (Recent changes maker tab)
+
+- Permintaan: tab maker tidak menampilkan seluruh changelog; gunakan `Recent changes`, sedangkan changelog lengkap tetap di GitHub.
+- Perubahan: mengganti tab `Changelog` menjadi `Recent changes` dan menyisakan ringkasan perubahan terbaru di modal maker.
+- Aturan lanjutan: setiap fitur/perubahan baru harus menambahkan item ringkas ke daftar Recent changes dan entri lengkap ke `CHANGELOG.md`.
+
 ### 2026-09-21 (Complete activity audit log)
 
 - Permintaan: History & Activity harus benar-benar lengkap.

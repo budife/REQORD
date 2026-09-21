@@ -84,7 +84,7 @@ document.querySelector('#makerButton').addEventListener('click', () => profileDi
 document.querySelector('#closeProfileButton').addEventListener('click', () => profileDialog.close());
 profileDialog.addEventListener('click', event => { if (event.target === profileDialog) profileDialog.close(); });
 document.querySelectorAll('[data-maker-tab]').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('[data-maker-tab]').forEach(button => button.classList.toggle('active', button === tab)); document.querySelectorAll('[data-maker-content]').forEach(content => { content.hidden = content.dataset.makerContent !== tab.dataset.makerTab; }); }));
-document.querySelector('[data-maker-content="changelog"] .maker-changelog h3').insertAdjacentHTML('afterend', '<div class="changelog-meta"><strong>v0.1.0</strong><span>Commit date · 21 Sep 2026</span></div>');
+document.querySelector('[data-maker-content="recent"] .maker-changelog h3').insertAdjacentHTML('afterend', '<div class="changelog-meta"><strong>v0.1.0</strong><span>Updated · 21 Sep 2026</span></div>');
 document.querySelector('.profile-footer span').innerHTML = '<i class="sync-dot"></i> REQORD v0.1.0';
 const activityPanel = document.querySelector('#activityPanel');
 document.querySelector('#activityButton').addEventListener('click', () => { activityPanel.classList.add('open'); activityPanel.setAttribute('aria-hidden', 'false'); });
