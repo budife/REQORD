@@ -8,8 +8,8 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 - Mengganti label Daily task menjadi `Selesai hari ini` dan progress `X selesai hari ini`.
 - Menggabungkan kolom Today dan Selesai hari ini menjadi `Status hari ini` dengan label belum/sudah dikerjakan.
+- Menghapus highlight row merah/kuning berdasarkan countdown Target done.
 - Menghapus action `Tandai selesai` dari Request list agar alur selesai berjalan dari Ongoing requests.
-- Memindahkan Edit work order dan Delete request ke menu `⋯` di kolom Actions.
 - Memperbaiki format tanggal dan jam saat export Excel agar separator `T` diganti spasi.
 - Menambahkan rekomendasi judul work order yang mirip saat input Title untuk mencegah duplikasi request.
 - Mengubah label Daily task menjadi `Selesai hari ini` dan menambahkan commit terbaru ke Recent changes.
