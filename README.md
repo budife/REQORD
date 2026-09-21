@@ -71,6 +71,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
 - Daily task memakai label `Status hari ini` agar kondisi belum/sudah dikerjakan lebih jelas.
 - Request list tidak lagi menampilkan action `Tandai selesai`; pindahkan status ke Ongoing terlebih dahulu, lalu selesaikan dari Ongoing.
+- Edit dan Delete dipindahkan ke menu `⋯` agar kolom Actions tetap ringkas.
 - Tanggal dan jam di Excel memakai spasi (`YYYY-MM-DD HH:mm`), bukan separator `T`.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Recent changes`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
