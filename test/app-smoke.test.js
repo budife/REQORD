@@ -27,6 +27,7 @@ assert.match(markup, /activeFileName/);
 assert.match(markup, /saveState/);
 assert.match(source, /renderTitleSuggestions/);
 assert.match(markup, /titleSuggestions/);
+assert.match(markup, /datetime-local/);
 assert.match(source, /writeWorkbookToHandle/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);
 assert.match(source, /abort\(\)/);
