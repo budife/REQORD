@@ -4,6 +4,12 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-21
+
+### Changed
+
+- Menetapkan versi aplikasi menjadi `v0.2.0` setelah penambahan fitur workbook, draft, activity, Daily tasks, responsive layout, dan maker panel.
+
 ### Added
 
 - Mengubah perilaku F5/reload menjadi clean reset: localStorage dan IndexedDB draft dibersihkan, sehingga aplikasi mulai kosong.

@@ -55,6 +55,7 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Permintaan: tab maker tidak menampilkan seluruh changelog; gunakan `Recent changes`, sedangkan changelog lengkap tetap di GitHub.
 - Perubahan: mengganti tab `Changelog` menjadi `Recent changes` dan menyisakan ringkasan perubahan terbaru di modal maker.
 - Aturan lanjutan: setiap fitur/perubahan baru harus menambahkan item ringkas ke daftar Recent changes dan entri lengkap ke `CHANGELOG.md`.
+- Versi aplikasi dinaikkan dari `v0.1.0` menjadi `v0.2.0` karena kumpulan fitur baru bersifat additive/non-breaking.
 
 ### 2026-09-21 (Repository audit hardening)
 
