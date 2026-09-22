@@ -32,6 +32,8 @@ assert.match(fs.readFileSync('styles.css', 'utf8'), /td\.row-actions\{display:ta
 assert.match(source, /writeWorkbookToHandle/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);
 assert.match(source, /importReportMessage/);
+assert.match(source, /async function parseWorkbook/);
+assert.match(source, /skippedEmpty/);
 assert.match(source, /isSaving/);
 assert.match(source, /normalizeWorkbookDateCells/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);
