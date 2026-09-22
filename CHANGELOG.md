@@ -39,6 +39,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Mengganti kolom `Target done` di tabel menjadi `Estimasi`.
 - Mengubah Estimasi menjadi `Waktu pengerjaan` aktual yang dihitung saat request diselesaikan.
 - Mengganti label kolom waktu pengerjaan di Done requests menjadi `Est.`.
+- Menambahkan edit `Est.` pada modal Done request.
 - Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
 - Menambahkan mode draft lokal dengan `New`, `Load`, dan `Save`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.

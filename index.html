@@ -47,7 +47,7 @@
   </dialog>
   <dialog id="editDialog" class="delete-dialog edit-dialog">
     <div class="delete-modal-head"><span class="delete-warning edit-warning">✎</span><div><span class="eyebrow">EDIT REQUEST</span><h2>Edit work order</h2></div><button class="modal-close" id="closeEditButton" aria-label="Tutup edit">×</button></div>
-     <form id="editForm"><label class="edit-field">Title<input id="editTitleInput" required></label><label class="edit-field">Requestor<input id="editRequestorInput" required></label><div class="delete-actions"><button class="secondary-button" id="cancelEditButton" type="button">Cancel</button><button class="primary-button" type="submit">Save changes</button></div></form>
+     <form id="editForm"><label class="edit-field">Title<input id="editTitleInput" required></label><label class="edit-field">Requestor<input id="editRequestorInput" required></label><label class="edit-field duration-edit-field" id="editDurationField" hidden>Est.<div class="estimate-input"><input id="editDurationValue" type="number" min="0" step="any"><select id="editDurationUnit" aria-label="Satuan waktu pengerjaan"><option value="minutes">minutes</option><option value="jam">jam</option></select></div></label><div class="delete-actions"><button class="secondary-button" id="cancelEditButton" type="button">Cancel</button><button class="primary-button" type="submit">Save changes</button></div></form>
   </dialog>
   <dialog id="profileDialog" class="profile-dialog">
     <div class="profile-modal-head"><div><span class="eyebrow">BUDIFE.PSD</span><h2>Meet the maker</h2></div><button class="modal-close" id="closeProfileButton" aria-label="Tutup maker panel">×</button></div>

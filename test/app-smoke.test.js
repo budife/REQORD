@@ -29,6 +29,8 @@ assert.match(source, /renderTitleSuggestions/);
 assert.match(markup, /titleSuggestions/);
 assert.match(source, /completionDuration/);
 assert.match(source, /completedAt/);
+assert.match(source, /setCompletedAtFromDuration/);
+assert.match(markup, /editDurationValue/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /\.table-scroll thead\{display:none\}/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /td\.row-actions\{display:table-cell/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /table-layout:fixed/);
