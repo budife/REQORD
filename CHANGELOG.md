@@ -42,6 +42,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Menambahkan edit `Est.` pada modal Done request.
 - Menambahkan note/catatan per work order dengan icon dan popup modal.
 - Menyimpan catatan request ke sheet `Notes` saat workbook disimpan.
+- Menampilkan Catatan sebagai kolom di setiap tabel request.
 - Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
 - Menambahkan mode draft lokal dengan `New`, `Load`, dan `Save`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
