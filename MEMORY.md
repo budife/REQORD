@@ -66,6 +66,8 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Checklist E2E terdokumentasi di `test/browser-e2e-checklist.md`; Chrome/Edge tidak tersedia di environment ini.
 - Recent changes sekarang membaca `recent-changes.json` dengan fallback embedded; `scripts/generate-recent-changes.js` menghasilkan data dari Git.
 - Bundling lokal SheetJS/Font Awesome belum dilakukan karena project belum memiliki package/build pipeline dan asset vendor lokal.
+- Estimate field ditambahkan sebagai angka bebas + satuan `minutes`/`jam`; renderer tabel dan modal edit sudah menampilkan value/unit.
+- Konsep estimate kemudian diganti: field estimasi awal dihapus; `Done requests` menghitung `Waktu pengerjaan` dari Request date sampai `completedAt`.
 
 ### 2026-09-21 (Audit follow-up)
 
