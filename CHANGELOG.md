@@ -12,6 +12,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ### Added
 
+- Menghapus kolom Estimasi dari Daily tasks.
 - Mengubah perilaku F5/reload menjadi clean reset: localStorage dan IndexedDB draft dibersihkan, sehingga aplikasi mulai kosong.
 - Mengganti label Daily task menjadi `Selesai hari ini` dan progress `X selesai hari ini`.
 - Menggabungkan kolom Today dan Selesai hari ini menjadi `Status hari ini` dengan label belum/sudah dikerjakan.
