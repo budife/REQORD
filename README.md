@@ -63,6 +63,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - `New` membuat draft lokal baru; draft lokal dibersihkan saat F5/reload sehingga aplikasi selalu mulai dari kondisi kosong.
 - Simpan ke workbook sebelum F5 jika ingin mempertahankan perubahan.
 - `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka, sedangkan `Save as New` membuat workbook baru.
+- Setelah Load, aplikasi menampilkan ringkasan row yang berhasil dimuat.
 - Nama file aktif selalu ditampilkan di samping tombol aksi; mode draft menampilkan `Draft lokal`.
 - Toolbar menampilkan status `Draft lokal`, `Unsaved changes`, atau `Saved to workbook`.
 - Tabel mendukung filter priority, sorting, dan edit cepat Title/Requestor; delete menyediakan Undo selama beberapa detik.
