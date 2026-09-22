@@ -30,6 +30,8 @@ assert.match(markup, /titleSuggestions/);
 assert.match(source, /completionDuration/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /\.table-scroll thead\{display:none\}/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /td\.row-actions\{display:table-cell/);
+assert.match(fs.readFileSync('styles.css', 'utf8'), /table-layout:fixed/);
+assert.match(fs.readFileSync('styles.css', 'utf8'), /table-scroll table\{width:100%/);
 assert.match(source, /writeWorkbookToHandle/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);
 assert.match(source, /importReportMessage/);
