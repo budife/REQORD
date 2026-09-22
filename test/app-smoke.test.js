@@ -33,6 +33,7 @@ assert.match(source, /openNoteDialog/);
 assert.match(source, /subitemDialog/);
 assert.match(source, /Subitem ditambahkan/);
 assert.match(source, /renderSubitemCells/);
+assert.match(source, /item\.subitems = Array\.isArray/);
 assert.match(source, /Note/);
 assert.match(source, /has-note/);
 assert.match(markup, /noteDialog/);
