@@ -41,6 +41,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Mengganti label kolom waktu pengerjaan di Done requests menjadi `Est.`.
 - Menambahkan edit `Est.` pada modal Done request.
 - Menambahkan note/catatan per work order dengan icon dan popup modal.
+- Mengubah workflow menjadi status-only tanpa kolom Actions, dengan tabel On revision dan Preview — Waiting for requester review.
 - Menyimpan catatan request ke sheet `Notes` saat workbook disimpan.
 - Menampilkan Catatan sebagai kolom di setiap tabel request.
 - Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
