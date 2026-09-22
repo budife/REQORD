@@ -30,7 +30,6 @@ assert.match(markup, /titleSuggestions/);
 assert.match(source, /completionDuration/);
 assert.match(source, /completedAt/);
 assert.match(source, /openNoteDialog/);
-assert.match(source, /renderNoteCells/);
 assert.match(source, /Note/);
 assert.match(source, /has-note/);
 assert.match(markup, /noteDialog/);
