@@ -34,6 +34,8 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Menampilkan seluruh commit repository di tab `Recent changes` beserta hash, tanggal, dan message.
 - Menambahkan generator `scripts/generate-recent-changes.js` dan data `recent-changes.json` untuk menjaga Recent changes tetap mudah diperbarui.
 - Menambahkan browser E2E checklist dan dokumentasi batasan runtime/CDN prototype.
+- Estimate field tersedia di form, modal edit, dan renderer request dengan angka bebas plus unit `minutes`/`jam`.
+- Mengganti kolom `Target done` di tabel menjadi `Estimasi`.
 - Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
 - Menambahkan mode draft lokal dengan `New`, `Load`, dan `Save`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
