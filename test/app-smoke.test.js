@@ -34,6 +34,7 @@ assert.match(source, /subitemDialog/);
 assert.match(source, /Subitem ditambahkan/);
 assert.match(source, /renderSubitemCells/);
 assert.match(source, /renderInlineSubitems/);
+assert.match(source, /subitem-inline/);
 assert.match(source, /item\.subitems = Array\.isArray/);
 assert.match(source, /Note/);
 assert.match(source, /has-note/);
