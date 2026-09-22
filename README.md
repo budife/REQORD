@@ -73,6 +73,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Done request dapat mengubah `Est.` melalui modal Edit work order.
 - Catatan disimpan di workbook dan dibuka melalui klik Title yang memiliki note, lalu diedit dari modal Edit work order; kolom Catatan tidak ditampilkan di tabel.
 - Subitems tersedia sebagai checklist kosong ala Monday.com; ketik subitem lalu tekan Enter untuk menambahkannya.
+- Subitems disimpan ke sheet `Subitems` dengan ParentID, WorkOrder, Subitem, Done, dan Order, lalu dipulihkan saat Load.
 - Catatan request ikut disimpan ke workbook pada sheet `Notes`.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.

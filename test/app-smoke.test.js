@@ -32,6 +32,8 @@ assert.match(source, /completedAt/);
 assert.match(source, /openNoteDialog/);
 assert.match(source, /subitemDialog/);
 assert.match(source, /Subitem ditambahkan/);
+assert.match(source, /ParentID/);
+assert.match(source, /subitemSheet/);
 assert.doesNotMatch(markup, /subitemList/);
 assert.match(source, /renderSubitemCells/);
 assert.match(source, /renderInlineSubitems/);

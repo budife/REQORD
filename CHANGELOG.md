@@ -48,6 +48,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Menampilkan Catatan sebagai kolom di setiap tabel request.
 - Menghapus kolom Catatan dari tampilan tabel; note tetap tersedia lewat Title/modal dan tersimpan di workbook.
 - Menambahkan checklist Subitems dengan input Enter-to-create dan checkbox progress.
+- Menambahkan persistence Subitems ke workbook melalui sheet `Subitems`.
 - Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
 - Menambahkan mode draft lokal dengan `New`, `Load`, dan `Save`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.
