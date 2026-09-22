@@ -97,7 +97,7 @@ profileDialog.addEventListener('click', event => { if (event.target === profileD
 document.querySelectorAll('[data-maker-tab]').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('[data-maker-tab]').forEach(button => button.classList.toggle('active', button === tab)); document.querySelectorAll('[data-maker-content]').forEach(content => { content.hidden = content.dataset.makerContent !== tab.dataset.makerTab; }); }));
 document.querySelector('[data-maker-content="recent"] .maker-changelog h3').insertAdjacentHTML('afterend', '<div class="changelog-meta"><strong>v0.2.0</strong><span>Updated · 21 Sep 2026</span></div>');
 document.querySelector('.profile-footer span').innerHTML = '<i class="sync-dot"></i> REQORD v0.2.0';
-const recentCommits = [
+const fallbackRecentCommits = [
   ['3876cd2', '2026-09-21', 'Clarify daily completion labels'],
   ['54b26ce', '2026-09-21', 'Suggest similar work order titles'],
   ['b2956fb', '2026-09-21', 'Fix duplicate delete icon'],
@@ -156,7 +156,9 @@ const recentCommits = [
   ['4394723', '2026-09-20', 'Initial REQORD work order prototype']
 ];
 const recentGroup = document.querySelector('[data-maker-content="recent"] .changelog-group');
-if (recentGroup) recentGroup.innerHTML = `<strong>All commits</strong><ul class="commit-list">${recentCommits.map(([hash, date, message]) => `<li><code>${hash}</code><span>${escapeHtml(date)}</span><b>${escapeHtml(message)}</b></li>`).join('')}</ul>`;
+function renderRecentCommits(commits) { if (recentGroup) recentGroup.innerHTML = `<strong>All commits</strong><ul class="commit-list">${commits.map(([hash, date, message]) => `<li><code>${escapeHtml(hash)}</code><span>${escapeHtml(date)}</span><b>${escapeHtml(message)}</b></li>`).join('')}</ul>`; }
+renderRecentCommits(fallbackRecentCommits);
+fetch('recent-changes.json', { cache: 'no-store' }).then(response => response.ok ? response.json() : Promise.reject()).then(renderRecentCommits).catch(() => {});
 const activityPanel = document.querySelector('#activityPanel');
 document.querySelector('#activityButton').addEventListener('click', () => { activityPanel.classList.add('open'); activityPanel.setAttribute('aria-hidden', 'false'); });
 document.querySelector('#closeActivityButton').addEventListener('click', () => { activityPanel.classList.remove('open'); activityPanel.setAttribute('aria-hidden', 'true'); });

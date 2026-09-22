@@ -31,6 +31,8 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Mengisi tab `Changelog` pada modal maker dengan seluruh milestone utama REQORD.
 - Mengganti tab modal maker menjadi `Recent changes`; changelog lengkap tetap dipelihara di repository GitHub.
 - Menampilkan seluruh commit repository di tab `Recent changes` beserta hash, tanggal, dan message.
+- Menambahkan generator `scripts/generate-recent-changes.js` dan data `recent-changes.json` untuk menjaga Recent changes tetap mudah diperbarui.
+- Menambahkan browser E2E checklist dan dokumentasi batasan runtime/CDN prototype.
 - Menambahkan `.gitignore` untuk mengecualikan artefak environment agent dari repository aplikasi.
 - Menambahkan mode draft lokal dengan `New`, `Load`, dan `Save`; draft disimpan di IndexedDB dengan fallback localStorage.
 - Menghapus tombol `Refresh` dari toolbar utama dan menampilkan nama file aktif di sebelah kontrol workbook.

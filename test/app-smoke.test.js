@@ -34,6 +34,7 @@ assert.match(source, /Workbook kosong atau gagal dibuat/);
 assert.match(source, /importReportMessage/);
 assert.match(source, /async function parseWorkbook/);
 assert.match(source, /skippedEmpty/);
+assert.match(source, /recent-changes\.json/);
 assert.match(source, /isSaving/);
 assert.match(source, /normalizeWorkbookDateCells/);
 assert.match(source, /Workbook kosong atau gagal dibuat/);

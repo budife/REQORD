@@ -75,9 +75,13 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Deadline request tetap menampilkan tanggal dan konteks waktu tanpa highlight row merah/kuning.
 - Request list tidak lagi menampilkan action `Tandai selesai`; pindahkan status ke Ongoing terlebih dahulu, lalu selesaikan dari Ongoing.
 - Tanggal dan jam di Excel memakai spasi (`YYYY-MM-DD HH:mm`), bukan separator `T`.
+- Browser E2E checklist tersedia di `test/browser-e2e-checklist.md`; runtime browser diperlukan untuk memverifikasi permission File System Access dan OneDrive sync.
+- SheetJS dan Font Awesome masih menggunakan CDN pada prototype; bundling lokal perlu dilakukan saat build/deployment pipeline tersedia.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Recent changes`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
 - Tab `Recent changes` juga menampilkan seluruh commit repository dengan hash, tanggal, dan message.
+- Commit list dapat digenerate dengan `node scripts/generate-recent-changes.js`; outputnya `recent-changes.json`.
+- Saat dijalankan melalui web server, Recent changes membaca `recent-changes.json` dan memakai fallback jika file belum tersedia.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.

@@ -63,6 +63,9 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 - Perubahan: menambahkan `.gitignore` untuk mengecualikan folder tersebut dari repository aplikasi.
 - Save helper `writeWorkbookToHandle` sekarang mengembalikan byte count dan melakukan abort saat penulisan gagal.
 - Residual risk: browser E2E untuk File System Access dan validasi row import parsial masih membutuhkan runtime browser.
+- Checklist E2E terdokumentasi di `test/browser-e2e-checklist.md`; Chrome/Edge tidak tersedia di environment ini.
+- Recent changes sekarang membaca `recent-changes.json` dengan fallback embedded; `scripts/generate-recent-changes.js` menghasilkan data dari Git.
+- Bundling lokal SheetJS/Font Awesome belum dilakukan karena project belum memiliki package/build pipeline dan asset vendor lokal.
 
 ### 2026-09-21 (Audit follow-up)
 
