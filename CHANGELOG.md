@@ -19,6 +19,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Menghapus action `Tandai selesai` dari Request list agar alur selesai berjalan dari Ongoing requests.
 - Memperbaiki format tanggal dan jam saat export Excel agar separator `T` diganti spasi.
 - Menambahkan rekomendasi judul work order yang mirip saat input Title untuk mencegah duplikasi request.
+- Menambahkan field `Estimasi` berupa angka bebas dengan dropdown satuan `minutes`/`jam`.
 - Mengubah label Daily task menjadi `Selesai hari ini` dan menambahkan commit terbaru ke Recent changes.
 - Menambahkan reset Daily task otomatis tepat saat pergantian hari; checkbox kembali tidak tercentang dan strikethrough hilang.
 - Mengganti edit langsung Title/Requestor menjadi icon edit di Actions dengan modal `Edit work order`.

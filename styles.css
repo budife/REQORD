@@ -157,3 +157,4 @@ td{border-bottom:1px solid var(--line-soft)!important}
 .add-form label:has(#requestDateInput),.add-form label:has(#requestDateInput):focus-within{outline:none!important}.add-form #requestDateInput:focus{outline:none!important;outline-offset:0!important;box-shadow:none!important}
 .add-form label:has(#requestDateInput)::before,.add-form label:has(#requestDateInput)::after{outline:none!important;box-shadow:none!important}.add-form #requestDateInput::-webkit-datetime-edit,.add-form #requestDateInput::-webkit-datetime-edit-fields-wrapper,.add-form #requestDateInput::-webkit-calendar-picker-indicator{outline:none!important;box-shadow:none!important}
 .app-version{color:var(--faint);font-size:9px;font-weight:700;white-space:nowrap}
+.estimate-input{display:flex;gap:5px}.estimate-input input{min-width:0;flex:1}.estimate-input select{width:92px}.add-panel{min-width:0}.add-form{min-width:0}
