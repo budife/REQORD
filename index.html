@@ -56,6 +56,11 @@
     <div class="note-content"><p id="noteDialogBody">Belum ada catatan untuk work order ini.</p></div>
     <div class="delete-actions"><button class="secondary-button" id="editNoteButton" type="button">Edit note</button></div>
   </dialog>
+  <dialog id="subitemDialog" class="delete-dialog subitem-dialog">
+    <div class="delete-modal-head"><span class="delete-warning subitem-warning">☷</span><div><span class="eyebrow">WORK ORDER</span><h2 id="subitemDialogTitle">Subitems</h2></div><button class="modal-close" id="closeSubitemButton" aria-label="Tutup subitems">×</button></div>
+    <div id="subitemList" class="subitem-list"></div>
+    <input id="subitemInput" class="subitem-input" placeholder="Add subitem... lalu tekan Enter" autocomplete="off" aria-label="Tambah subitem">
+  </dialog>
   <dialog id="profileDialog" class="profile-dialog">
     <div class="profile-modal-head"><div><span class="eyebrow">BUDIFE.PSD</span><h2>Meet the maker</h2></div><button class="modal-close" id="closeProfileButton" aria-label="Tutup maker panel">×</button></div>
     <nav class="maker-tabs" aria-label="Maker menu"><button class="maker-tab active" data-maker-tab="profile">Profile</button><button class="maker-tab" data-maker-tab="recent">Recent changes</button></nav>
