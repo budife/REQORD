@@ -72,6 +72,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Request list dan Ongoing requests hanya menampilkan Request date; saat request selesai, Done requests menampilkan `Est.` dari Request date sampai selesai.
 - Done request dapat mengubah `Est.` melalui modal Edit work order.
 - Setiap request memiliki icon catatan; klik untuk membuka popup note, dan note bisa diedit dari modal Edit work order.
+- Catatan request ikut disimpan ke workbook pada sheet `Notes`.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
 - Daily task memakai label `Status hari ini` agar kondisi belum/sudah dikerjakan lebih jelas.
