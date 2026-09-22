@@ -15,9 +15,9 @@ let openedFileName = '';
 let hasUnsavedChanges = false;
 let activities = [];
 let storageDatabase = null;
-let saveAsRequested = false;
 let isLoadingWorkbook = false;
 let isSaving = false;
+const saveAsRequested = false;
 let lastImportReport = { loaded: 0, skippedEmpty: 0, skippedInvalid: 0 };
 let deletedItem = null;
 let priorityFilter = 'all';
@@ -79,7 +79,6 @@ document.querySelector('#priorityFilter').addEventListener('change', event => { 
 document.querySelector('#sortFilter').addEventListener('change', event => { sortFilter = event.target.value; render(); });
 document.querySelector('#loadMoreDoneButton').addEventListener('click', () => { doneVisibleLimit += 10; render(); });
 document.querySelector('#newButton').addEventListener('click', () => { if (hasUnsavedChanges && !window.confirm('Perubahan belum disimpan. Buat draft baru?')) return; addActivity('New draft dibuat', {}, 'Workspace dikosongkan untuk draft baru'); items = []; openedFileHandle = null; openedFileName = ''; hasUnsavedChanges = false; persistDraft(); renderActiveFile(); renderActivities(); render(); showToast('Draft baru dibuat'); });
-document.querySelector('#saveAsButton').addEventListener('click', () => { saveAsRequested = true; addActivity('Save as New dimulai', {}, 'Membuat workbook baru'); document.querySelector('#exportButton').click(); });
 document.querySelector('#exportButton').addEventListener('click', event => { if (isSaving) { event.stopImmediatePropagation(); return; } isSaving = true; event.currentTarget.disabled = true; });
 let editTargetId = null;
 const editDialog = document.querySelector('#editDialog');

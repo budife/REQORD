@@ -56,13 +56,13 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - `Load` memuat workbook yang dipilih; REQORD membaca sheet `Request List`, `Ongoing Requests`, `Done Requests`, dan `Daily Tasks`.
 - Draft lokal tidak mengganggu file environment di workspace; artefak agent dikecualikan lewat `.gitignore`.
 - Setelah file berhasil dimuat di Chrome/Edge, `Save` menulis kembali ke file XLSX yang sama.
-- `Save` dapat menyimpan draft atau replace workbook; `Save as New` membuat workbook baru.
+- `Save` dapat menyimpan draft atau replace workbook yang sudah di-Load.
 - Setiap sheet project memiliki tabel sendiri dengan header yang sama, filter Excel, dan kolom yang sudah diatur lebarnya.
 - Workbook juga memiliki sheet `Daily Tasks` dengan kolom Task, Requestor, Date, Priority, dan Done; `Done` merepresentasikan penyelesaian pada hari saat file disimpan.
 - Kolom workbook: `Title`, `Status`, `Requestor`, `RequestDate` (tanggal dan jam), `TargetDone`, dan `Priority`; tanggal Excel serial juga dinormalisasi saat dibuka.
 - `New` membuat draft lokal baru; draft lokal dibersihkan saat F5/reload sehingga aplikasi selalu mulai dari kondisi kosong.
 - Simpan ke workbook sebelum F5 jika ingin mempertahankan perubahan.
-- `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka, sedangkan `Save as New` membuat workbook baru.
+- `Load` memuat workbook dan mengganti data aktif; `Save` me-replace workbook yang sedang dibuka.
 - Setelah Load, aplikasi menampilkan ringkasan row yang berhasil dimuat.
 - Nama file aktif selalu ditampilkan di samping tombol aksi; mode draft menampilkan `Draft lokal`.
 - Toolbar menampilkan status `Draft lokal`, `Unsaved changes`, atau `Saved to workbook`.
@@ -81,7 +81,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
-- `History & Activity` menyimpan audit log lengkap tanpa batas 100 item, termasuk lifecycle New/Load/Save/Save as New, edit, status, priority, daily done, delete, dan Undo.
+- `History & Activity` menyimpan audit log lengkap tanpa batas 100 item, termasuk lifecycle New/Load/Save, edit, status, priority, daily done, delete, dan Undo.
 - Sheet `Activity` memiliki kolom `Date`, `Action`, `Title`, `Requestor`, dan `Details`.
 - Sheet default Excel seperti `Sheet1`, `Sheet 2`, dan `Sheet 3` dibuang saat workbook disimpan.
 - Workbook diserialisasi dan divalidasi sebelum file dibuka untuk ditulis, sehingga kegagalan export tidak mengosongkan file sumber menjadi 0 byte.
