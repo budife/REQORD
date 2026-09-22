@@ -69,8 +69,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Tabel mendukung filter priority, sorting, dan edit cepat Title/Requestor; delete menyediakan Undo selama beberapa detik.
 - Title dan Requestor sekarang diedit melalui icon edit di Actions dan modal `Edit work order`.
 - Saat mengetik Title, REQORD menampilkan work order yang judulnya mirip untuk membantu mencegah data duplikat.
-- Work order memakai kolom `Estimasi` sebagai pengganti `Target done`, berupa angka bebas dengan satuan `minutes` atau `jam`.
-- Field `Estimasi` tersedia di Add work order dan modal Edit work order; data lama tanpa estimasi tetap menampilkan `—`.
+- Request list dan Ongoing requests hanya menampilkan Request date; saat request selesai, Done requests menampilkan Waktu pengerjaan dari Request date sampai selesai.
 - Daily tasks menampilkan jumlah task yang selesai hari ini.
 - Checkbox Daily task otomatis kembali tidak tercentang saat tanggal berganti, termasuk jika halaman tetap terbuka.
 - Daily task memakai label `Status hari ini` agar kondisi belum/sudah dikerjakan lebih jelas.
