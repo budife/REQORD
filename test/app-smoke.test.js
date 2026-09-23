@@ -44,6 +44,7 @@ assert.match(source, /Note/);
 assert.match(source, /has-note/);
 assert.match(markup, /noteDialog/);
 assert.match(markup, /editNoteInput/);
+assert.match(markup, /deleteFromEditButton/);
 assert.match(markup, /On revision/);
 assert.match(markup, /Waiting for requester review/);
 assert.match(source, /normalizeStatusSelects/);

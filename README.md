@@ -81,6 +81,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Status flow tabel: Request list, Ongoing request, Preview, On revision, Done request, lalu Daily tasks.
 - Urutan kolom tabel: Title, Requestor, Status, Date/Day, Priority; Done requests menambahkan Est.
 - Perpindahan request dilakukan melalui dropdown Status; row tidak lagi memiliki kolom Actions.
+- Delete request tersedia di modal Edit work order agar tabel tetap bersih.
 - Deadline request tetap menampilkan tanggal dan konteks waktu tanpa highlight row merah/kuning.
 - Request list tidak lagi menampilkan action `Tandai selesai`; pindahkan status ke Ongoing terlebih dahulu, lalu selesaikan dari Ongoing.
 - Tanggal dan jam di Excel memakai spasi (`YYYY-MM-DD HH:mm`), bukan separator `T`.
