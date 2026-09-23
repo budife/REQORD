@@ -46,6 +46,8 @@ assert.match(markup, /editNoteInput/);
 assert.match(markup, /On revision/);
 assert.match(markup, /Waiting for requester review/);
 assert.match(source, /normalizeStatusSelects/);
+assert.match(source, /text.includes\('preview'\)/);
+assert.match(source, /text.includes\('revision'\)/);
 assert.match(source, /reorderTableColumns/);
 assert.match(source, /removeActionCells/);
 assert.match(source, /setCompletedAtFromDuration/);
