@@ -53,6 +53,7 @@ assert.match(source, /reorderTableColumns/);
 assert.match(source, /removeActionCells/);
 assert.match(source, /setCompletedAtFromDuration/);
 assert.match(markup, /editDurationValue/);
+assert.match(markup, /Progress/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /#editDurationUnit/);
 assert.match(source, /item\.type === 'project' && item\.status === 'done'/);
 assert.match(fs.readFileSync('styles.css', 'utf8'), /\.table-scroll thead\{display:none\}/);
