@@ -44,6 +44,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Mengubah workflow menjadi status-only tanpa kolom Actions, dengan tabel On revision dan Preview — Waiting for requester review.
 - Menetapkan urutan final tabel: Request list, Ongoing request, Preview, On revision, Done requests, Daily tasks.
 - Memindahkan Delete request ke modal Edit work order tanpa mengembalikan kolom Actions.
+- Mengubah modal menjadi `Work order details`; Delete tersedia untuk semua status.
 - Mengubah label dropdown Preview menjadi `Preview` dan menukar posisi Date/Day sebelum Priority.
 - Menyimpan catatan request ke sheet `Notes` saat workbook disimpan.
 - Menampilkan Catatan sebagai kolom di setiap tabel request.
