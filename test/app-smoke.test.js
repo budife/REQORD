@@ -36,6 +36,7 @@ assert.match(source, /ParentID/);
 assert.match(source, /subitemSheet/);
 assert.doesNotMatch(markup, /subitemList/);
 assert.match(source, /renderSubitemCells/);
+assert.match(source, /normalizeDailyProgressCells/);
 assert.match(source, /renderInlineSubitems/);
 assert.match(source, /subitem-inline/);
 assert.match(source, /item\.subitems = Array\.isArray/);
