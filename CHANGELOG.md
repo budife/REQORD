@@ -4,6 +4,8 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ## [Unreleased]
 
+- Mengganti semua prompt browser (`New`, `Load`, hapus request, hapus subitem) dengan modal konfirmasi gaya REQORD.
+
 ## [0.2.0] - 2026-09-21
 
 ### Changed
