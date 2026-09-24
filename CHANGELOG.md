@@ -4,6 +4,13 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-09-25
+
+### Added
+
+- Merombak tab `Recent changes`: dropdown tanggal + ringkasan manusiawi per versi dari `release-notes.json`.
+- Menggabungkan subitems ke modal `Work order details`; Title diklik membuka detail penuh.
+- Menormalisasi ukuran baris subitem + tombol × hapus pakai konfirmasi modal.
 - Mengganti semua prompt browser (`New`, `Load`, hapus request, hapus subitem) dengan modal konfirmasi gaya REQORD.
 
 ## [0.2.0] - 2026-09-21

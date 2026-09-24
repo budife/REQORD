@@ -1,15 +1,41 @@
 [
   {
+    "version": "v0.4.0",
+    "date": "2026-09-25",
+    "dateLabel": "25 Sep 2026",
+    "title": "Work order details + konfirmasi modal",
+    "highlights": [
+      "Klik Title membuka satu modal Work order details gabungan (edit + subitems)",
+      "Semua prompt browser diganti modal konfirmasi gaya REQORD",
+      "Subitem bisa dihapus via tombol × + konfirmasi, ukuran baris dinormalisasi",
+      "Tab Recent changes jadi manusiawi: dropdown tanggal + ringkasan per versi"
+    ]
+  },
+  {
     "version": "v0.3.0",
     "date": "2026-09-23",
     "dateLabel": "23 Sep 2026",
-    "title": "Subitems, status baru & konfirmasi modal",
+    "title": "Subitems inline & status Preview/Revision",
     "highlights": [
-      "Subitems ala Monday.com: muncul inline di bawah tiap request, tambah via klik Title + Enter",
-      "Kolom Est. untuk waktu pengerjaan aktual + ikon edit manual",
-      "Alur status baru: Preview dan On revision, pindah full via dropdown",
-      "Semua konfirmasi (hapus, Load, New) diganti modal gaya REQORD",
-      "Catatan tersimpan per tabel + Daily reset otomatis tiap hari"
+      "Subitems ala Monday.com: tampil inline di bawah tiap request + checklist modal",
+      "Tambah, centang, dan hapus subitem; tersimpan ke sheet Subitems + restore saat Load",
+      "Status baru Preview dan On revision, pindah full via dropdown",
+      "Delete pindah ke modal edit + undo; kolom Est. bisa diedit manual",
+      "Progress Daily = tanggal + checkbox; subitem selalu ikut tabel parentnya"
+    ]
+  },
+  {
+    "version": "v0.3.0",
+    "date": "2026-09-22",
+    "dateLabel": "22 Sep 2026",
+    "title": "Durasi, catatan & rapikan tabel",
+    "highlights": [
+      "Estimasi diganti waktu pengerjaan aktual (Est.) yang dihitung saat request selesai",
+      "Catatan per work order: kolom Catatan, popup, dan tersimpan di Excel",
+      "Urutan tabel final + kolom Date/Priority diselaraskan + grid seragam tanpa scrollbar",
+      "Validasi baris saat import + laporan hasil Load; workbook kosong tetap bisa dibuka",
+      "Save as New dihapus; alur jadi Load → Edit → Save (aman buat OneDrive)",
+      "F5 = reset bersih; tanggal Excel tanpa huruf T; tombol/icon actions dirapikan"
     ]
   },
   {
@@ -18,21 +44,26 @@
     "dateLabel": "21 Sep 2026",
     "title": "Draft lokal, activity & tampilan baru",
     "highlights": [
-      "Mode draft lokal (New/Load/Save) dengan autosave IndexedDB",
-      "Panel History & Activity + sheet Activity di workbook",
-      "Filter, sorting, pagination Done, undo delete, dan subitem progress",
-      "Modal maker budife.psd, favicon RQ, dan layout responsif"
+      "Mode draft lokal (New/Load/Save) + autosave + nama file aktif + status unsaved",
+      "Panel History & Activity + sheet Activity di workbook + timestamp lokal",
+      "Alur status lengkap + modal edit + hapus pakai konfirmasi + undo",
+      "Daily: label/kolom tanggal, reset tengah malam, strikethrough, checkbox jelas",
+      "Ikon actions dirapikan + tipografi tabel + fokus tipis + date picker matcha",
+      "Save anti file 0 byte + izin tulis + banner kalau library Excel gagal dimuat",
+      "Tab Recent changes di modal maker + judul mirip anti-duplikat + favicon RQ"
     ]
   },
   {
     "version": "v0.1.0",
     "date": "2026-09-20",
     "dateLabel": "20 Sep 2026",
-    "title": "Prototype awal",
+    "title": "Prototype spreadsheet work order",
     "highlights": [
-      "Tiga tabel work order dengan import/export XLSX",
-      "Target done otomatis + indikator urgency",
-      "Daily tasks, requestor suggestions, dan template workbook"
+      "Spreadsheet work order pertama: tiga tabel Request/Ongoing/Done",
+      "Buka file Excel dulu baru bisa simpan; template workbook bisa diunduh",
+      "Save menimpa file yang sama + template kosong tetap bisa dibuka",
+      "Daily task reset tiap hari + Done tampil 10 per batch + tombol load more",
+      "Peringatan kalau ada perubahan belum disimpan"
     ]
   }
 ]
