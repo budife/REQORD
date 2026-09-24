@@ -35,6 +35,8 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Mengisi tab `Changelog` pada modal maker dengan seluruh milestone utama REQORD.
 - Mengganti tab modal maker menjadi `Recent changes`; changelog lengkap tetap dipelihara di repository GitHub.
 - Menampilkan seluruh commit repository di tab `Recent changes` beserta hash, tanggal, dan message.
+- Merombak tab `Recent changes` menjadi dropdown tanggal (maks 5 baris, scroll kalau lebih) + ringkasan manusiawi per versi dari `release-notes.json`.
+- Menetapkan versi aplikasi menjadi `v0.3.0`.
 - Menambahkan generator `scripts/generate-recent-changes.js` dan data `recent-changes.json` untuk menjaga Recent changes tetap mudah diperbarui.
 - Menambahkan browser E2E checklist dan dokumentasi batasan runtime/CDN prototype.
 - Estimate field tersedia di form, modal edit, dan renderer request dengan angka bebas plus unit `minutes`/`jam`.

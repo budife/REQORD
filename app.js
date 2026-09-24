@@ -117,70 +117,20 @@ document.querySelector('#makerButton').addEventListener('click', () => profileDi
 document.querySelector('#closeProfileButton').addEventListener('click', () => profileDialog.close());
 profileDialog.addEventListener('click', event => { if (event.target === profileDialog) profileDialog.close(); });
 document.querySelectorAll('[data-maker-tab]').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('[data-maker-tab]').forEach(button => button.classList.toggle('active', button === tab)); document.querySelectorAll('[data-maker-content]').forEach(content => { content.hidden = content.dataset.makerContent !== tab.dataset.makerTab; }); }));
-document.querySelector('[data-maker-content="recent"] .maker-changelog h3').insertAdjacentHTML('afterend', '<div class="changelog-meta"><strong>v0.2.0</strong><span>Updated · 21 Sep 2026</span></div>');
-document.querySelector('.profile-footer span').innerHTML = '<i class="sync-dot"></i> REQORD v0.2.0';
-const fallbackRecentCommits = [
-  ['3876cd2', '2026-09-21', 'Clarify daily completion labels'],
-  ['54b26ce', '2026-09-21', 'Suggest similar work order titles'],
-  ['b2956fb', '2026-09-21', 'Fix duplicate delete icon'],
-  ['56bcd58', '2026-09-21', 'Increase request table typography'],
-  ['df693c5', '2026-09-21', 'Improve add button readability'],
-  ['c61b6d3', '2026-09-21', 'Use canonical workbook writer'],
-  ['77a2ba1', '2026-09-21', 'Harden repository and workbook save flow'],
-  ['c27d931', '2026-09-21', 'Add REQORD monogram favicon'],
-  ['eb65fc8', '2026-09-21', 'Show recent changes in maker modal'],
-  ['e509b67', '2026-09-21', 'Align primary button icon text'],
-  ['f119ebf', '2026-09-21', 'Reduce add work order button text size'],
-  ['22bedaf', '2026-09-21', 'Ensure add work order icon visibility'],
-  ['7f22eb9', '2026-09-21', 'Center add work order button content'],
-  ['55fa92a', '2026-09-21', 'Refine add work order controls'],
-  ['d518aaa', '2026-09-21', 'Reset daily checkboxes at midnight'],
-  ['3fd8ba1', '2026-09-21', 'Standardize thin focus states'],
-  ['7283274', '2026-09-21', 'Add modal editing for work orders'],
-  ['d37d116', '2026-09-21', 'Complete history and activity audit log'],
-  ['ebaf49b', '2026-09-21', 'Prevent zero-byte workbook saves'],
-  ['defa611', '2026-09-21', 'Record MVP reliability checkpoint status'],
-  ['62b47c2', '2026-09-21', 'Harden draft storage and regression checks'],
-  ['99f1750', '2026-09-21', 'Improve MVP reliability and editing flow'],
-  ['e5ad452', '2026-09-21', 'Widen maker changelog modal'],
-  ['57e5364', '2026-09-21', 'Add version and commit date to changelog'],
-  ['d9d221d', '2026-09-21', 'Show complete changelog in maker modal'],
-  ['2be435a', '2026-09-21', 'Match maker credit font'],
-  ['202a30a', '2026-09-21', 'Make only maker name interactive'],
-  ['20f2f53', '2026-09-21', 'Refine maker footer credit'],
-  ['1a87863', '2026-09-21', 'Format activity timestamps locally'],
-  ['6fc5f54', '2026-09-21', 'Remove default Excel sheets on save'],
-  ['9d15acb', '2026-09-21', 'Add maker profile and changelog modal'],
-  ['1599353', '2026-09-21', 'Simplify settings panel'],
-  ['8b4ff76', '2026-09-21', 'Fix save picker handle assignment'],
-  ['a00eb6c', '2026-09-21', 'Make save and save-as-new reliable'],
-  ['c80c617', '2026-09-21', 'Request workbook write permission before save'],
-  ['daf002c', '2026-09-21', 'Show saved draft filename'],
-  ['bb7eb49', '2026-09-21', 'Show active workbook name in toolbar'],
-  ['5910349', '2026-09-21', 'Fix workbook load activity reader'],
-  ['6003d49', '2026-09-21', 'Add local drafts and workbook save modes'],
-  ['0d53ae6', '2026-09-21', 'Load activity history from workbook'],
-  ['3af0153', '2026-09-21', 'Add history activity panel and export log'],
-  ['0a3188b', '2026-09-20', 'Warn before losing unsaved workbook changes'],
-  ['cd9f800', '2026-09-20', 'Respect hidden state for load more button'],
-  ['42df10d', '2026-09-20', 'Hide done load more when unnecessary'],
-  ['a251d74', '2026-09-20', 'Paginate done requests list'],
-  ['46ad929', '2026-09-20', 'Refine daily checkbox stroke weight'],
-  ['8504410', '2026-09-20', 'Rename daily task date columns'],
-  ['e8afdd6', '2026-09-20', 'Reset daily task dates each day'],
-  ['bc2db81', '2026-09-20', 'Clarify daily task completion state'],
-  ['a0bf74e', '2026-09-20', 'Use icon for daily task completion'],
-  ['85f178a', '2026-09-20', 'Make daily tasks reset each day'],
-  ['480d4be', '2026-09-20', 'Enable replacing opened Excel workbooks'],
-  ['426bcb2', '2026-09-20', 'Fix template loading and save fallback'],
-  ['e36900a', '2026-09-20', 'Add downloadable Excel table template'],
-  ['db06391', '2026-09-20', 'Require opening workbook before saving data'],
-  ['4394723', '2026-09-20', 'Initial REQORD work order prototype']
+document.querySelector('.profile-footer span').innerHTML = '<i class="sync-dot"></i> REQORD v0.3.0';
+const fallbackReleaseNotes = [
+  { version: 'v0.3.0', date: '2026-09-23', dateLabel: '23 Sep 2026', title: 'Subitems, status baru & konfirmasi modal', highlights: ['Subitems ala Monday.com: tampil inline di bawah tiap request, tambah via klik Title + Enter', 'Kolom Est. untuk waktu pengerjaan aktual + ikon edit manual', 'Alur status baru: Preview dan On revision, pindah full via dropdown', 'Semua konfirmasi (hapus, Load, New) diganti modal gaya REQORD', 'Catatan tersimpan per tabel + Daily reset otomatis tiap hari'] },
+  { version: 'v0.2.0', date: '2026-09-21', dateLabel: '21 Sep 2026', title: 'Draft lokal, activity & tampilan baru', highlights: ['Mode draft lokal (New/Load/Save) dengan autosave IndexedDB', 'Panel History & Activity + sheet Activity di workbook', 'Filter, sorting, pagination Done, undo delete, dan subitem progress', 'Modal maker budife.psd, favicon RQ, dan layout responsif'] },
+  { version: 'v0.1.0', date: '2026-09-20', dateLabel: '20 Sep 2026', title: 'Prototype awal', highlights: ['Tiga tabel work order dengan import/export XLSX', 'Target done otomatis + indikator urgency', 'Daily tasks, requestor suggestions, dan template workbook'] }
 ];
-const recentGroup = document.querySelector('[data-maker-content="recent"] .changelog-group');
-function renderRecentCommits(commits) { if (recentGroup) recentGroup.innerHTML = `<strong>All commits</strong><ul class="commit-list">${commits.map(([hash, date, message]) => `<li><code>${escapeHtml(hash)}</code><span>${escapeHtml(date)}</span><b>${escapeHtml(message)}</b></li>`).join('')}</ul>`; }
-renderRecentCommits(fallbackRecentCommits);
-fetch('recent-changes.json', { cache: 'no-store' }).then(response => response.ok ? response.json() : Promise.reject()).then(renderRecentCommits).catch(() => {});
+let releaseNotesData = [];
+const recentDateSelect = document.querySelector('#recentDateSelect');
+const recentReleaseDetail = document.querySelector('#recentReleaseDetail');
+const recentMeta = document.querySelector('[data-maker-content="recent"] .changelog-meta');
+function renderReleaseDetail(date) { const entry = releaseNotesData.find(note => note.date === date) || releaseNotesData[0]; if (!entry || !recentReleaseDetail) return; if (recentMeta) recentMeta.innerHTML = `<strong>${escapeHtml(entry.version)}</strong><span>Updated · ${escapeHtml(entry.dateLabel)}</span>`; recentReleaseDetail.innerHTML = `<strong>${escapeHtml(entry.version)} · ${escapeHtml(entry.title)}</strong><ul>${entry.highlights.map(point => `<li>${escapeHtml(point)}</li>`).join('')}</ul>`; }
+function renderReleaseDateOptions(notes) { releaseNotesData = Array.isArray(notes) ? notes : []; if (!recentDateSelect) return; recentDateSelect.innerHTML = releaseNotesData.map(note => `<option value="${escapeHtml(note.date)}">${escapeHtml(note.dateLabel)} · ${escapeHtml(note.version)}</option>`).join(''); recentDateSelect.size = Math.min(Math.max(releaseNotesData.length, 1), 5); renderReleaseDetail(recentDateSelect.value || releaseNotesData[0]?.date); }
+function loadReleaseNotes() { fetch('release-notes.json', { cache: 'no-store' }).then(response => response.ok ? response.json() : Promise.reject()).then(renderReleaseDateOptions).catch(() => renderReleaseDateOptions(fallbackReleaseNotes)); }
+if (recentDateSelect) { recentDateSelect.addEventListener('change', event => renderReleaseDetail(event.target.value)); loadReleaseNotes(); }
 const activityPanel = document.querySelector('#activityPanel');
 document.querySelector('#activityButton').addEventListener('click', () => { activityPanel.classList.add('open'); activityPanel.setAttribute('aria-hidden', 'false'); });
 document.querySelector('#closeActivityButton').addEventListener('click', () => { activityPanel.classList.remove('open'); activityPanel.setAttribute('aria-hidden', 'true'); });

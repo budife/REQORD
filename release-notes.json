@@ -1,0 +1,38 @@
+[
+  {
+    "version": "v0.3.0",
+    "date": "2026-09-23",
+    "dateLabel": "23 Sep 2026",
+    "title": "Subitems, status baru & konfirmasi modal",
+    "highlights": [
+      "Subitems ala Monday.com: muncul inline di bawah tiap request, tambah via klik Title + Enter",
+      "Kolom Est. untuk waktu pengerjaan aktual + ikon edit manual",
+      "Alur status baru: Preview dan On revision, pindah full via dropdown",
+      "Semua konfirmasi (hapus, Load, New) diganti modal gaya REQORD",
+      "Catatan tersimpan per tabel + Daily reset otomatis tiap hari"
+    ]
+  },
+  {
+    "version": "v0.2.0",
+    "date": "2026-09-21",
+    "dateLabel": "21 Sep 2026",
+    "title": "Draft lokal, activity & tampilan baru",
+    "highlights": [
+      "Mode draft lokal (New/Load/Save) dengan autosave IndexedDB",
+      "Panel History & Activity + sheet Activity di workbook",
+      "Filter, sorting, pagination Done, undo delete, dan subitem progress",
+      "Modal maker budife.psd, favicon RQ, dan layout responsif"
+    ]
+  },
+  {
+    "version": "v0.1.0",
+    "date": "2026-09-20",
+    "dateLabel": "20 Sep 2026",
+    "title": "Prototype awal",
+    "highlights": [
+      "Tiga tabel work order dengan import/export XLSX",
+      "Target done otomatis + indikator urgency",
+      "Daily tasks, requestor suggestions, dan template workbook"
+    ]
+  }
+]

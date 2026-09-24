@@ -89,9 +89,8 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - SheetJS dan Font Awesome masih menggunakan CDN pada prototype; bundling lokal perlu dilakukan saat build/deployment pipeline tersedia.
 - Footer menampilkan `budife.psd`; hover menampilkan `Meet the maker`, dan klik membuka modal dengan tab `Profile` serta `Recent changes`.
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
-- Tab `Recent changes` juga menampilkan seluruh commit repository dengan hash, tanggal, dan message.
-- Commit list dapat digenerate dengan `node scripts/generate-recent-changes.js`; outputnya `recent-changes.json`.
-- Saat dijalankan melalui web server, Recent changes membaca `recent-changes.json` dan memakai fallback jika file belum tersedia.
+- Tab `Recent changes` menampilkan dropdown tanggal (maks 5 baris, scroll kalau lebih) + ringkasan manusiawi per versi di bawahnya; daftar commit mentah tidak lagi ditampilkan.
+- Ringkasan rilis dibaca dari `release-notes.json` dan memakai fallback bawaan jika file belum tersedia.
 - `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
