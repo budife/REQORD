@@ -233,6 +233,7 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
   try {
     const root = await window.showDirectoryPicker({ mode: 'read' });
     await root.requestPermission({ mode: 'read' });
+    await new Promise(r => setTimeout(r, 100));
     await saveFolderHandle(root);
     await scanFolderHandle(root);
   } catch (error) {
