@@ -7,8 +7,7 @@ const seedItems = [
   { id: 3, title: 'Review proposal dari tim desain', requestor: 'AR', type: 'project', status: 'ongoing', priority: 'normal', requestDate: '', date: '' },
   { id: 4, title: 'Kirim invoice project September', requestor: 'Saya', type: 'project', status: 'done', priority: 'low', requestDate: '', date: '' }
 ];
-localStorage.removeItem(STORAGE_KEY);
-let items = [];
+let items = loadItems();
 let doneVisibleLimit = 10;
 let openedFileHandle = null;
 let openedFileName = '';
@@ -28,7 +27,7 @@ function loadItems() { try { const current = JSON.parse(localStorage.getItem(STO
 function saveItems() { if (!isLoadingWorkbook) hasUnsavedChanges = true; persistDraft(); return items; }
 function loadDraftItems() { try { const current = JSON.parse(localStorage.getItem(STORAGE_KEY)); return Array.isArray(current) ? current.map(normalizeItem) : []; } catch { return []; } }
 function persistDraft() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); if (storageDatabase) { const transaction = storageDatabase.transaction('draft', 'readwrite'); transaction.objectStore('draft').put({ id: 'current', items, activities }); } } catch { showToast('Draft lokal tidak bisa disimpan di browser ini'); } }
-function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => request.result.createObjectStore('draft', { keyPath: 'id' }); request.onsuccess = () => { storageDatabase = request.result; const clear = storageDatabase.transaction('draft', 'readwrite').objectStore('draft').clear(); clear.onsuccess = () => { items = []; activities = []; renderActivities(); render(); }; }; }
+function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => request.result.createObjectStore('draft', { keyPath: 'id' }); request.onsuccess = () => { storageDatabase = request.result; const clear = storageDatabase.transaction('draft', 'readwrite').objectStore('draft').clear(); clear.onsuccess = () => { items = loadItems(); activities = []; renderActivities(); render(); }; }; }
 function addActivity(action, item = {}, details = '') { activities.unshift({ date: nowDateTime(), action, title: item.title || '', requestor: item.requestor || '', details }); persistDraft(); renderActivities(); }
 function renderActivities() { const list = document.querySelector('#activityList'); if (!list) return; list.innerHTML = activities.length ? activities.map(activity => `<div class="activity-item"><strong>${escapeHtml(activity.action)}</strong><span>${escapeHtml(activity.title || activity.details || 'REQORD')}</span><small>${escapeHtml(displayDate(activity.date, true))}${activity.requestor ? ` · ${escapeHtml(activity.requestor)}` : ''}</small></div>`).join('') : '<p class="activity-empty">Belum ada activity.</p>'; }
 function centerActionGroups() { document.querySelectorAll('.table-scroll td.row-actions').forEach(cell => { let group = cell.querySelector('.actions-inner'); if (!group) { group = document.createElement('div'); group.className = 'actions-inner'; while (cell.firstChild) group.append(cell.firstChild); cell.append(group); } const count = group.querySelectorAll('.action-button').length; group.dataset.count = String(count); group.style.setProperty('--action-count', Math.min(count, 3)); group.className = `actions-inner actions-count-${count}`; }); }
