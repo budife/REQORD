@@ -213,6 +213,21 @@ document.querySelector('#refreshFolderButton').addEventListener('click', async (
   } catch (e) { showToast(`Refresh gagal: ${e.message}`); }
 });
 
+document.querySelector('#resetButton').addEventListener('click', async () => {
+  const ok = await confirmModal('Hapus semua item dan reset draft?', { title: 'Reset?', confirmLabel: 'Reset' });
+  if (!ok) return;
+  items = [];
+  activities = [];
+  openedFileHandle = null;
+  openedFileName = '';
+  hasUnsavedChanges = false;
+  persistDraft();
+  renderActiveFile();
+  renderActivities();
+  render();
+  showToast('Draft direset');
+});
+
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
   try {
