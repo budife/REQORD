@@ -85,7 +85,6 @@ document.querySelector('#searchInput').addEventListener('input', render);
 document.querySelector('#priorityFilter').addEventListener('change', event => { priorityFilter = event.target.value; render(); });
 document.querySelector('#sortFilter').addEventListener('change', event => { sortFilter = event.target.value; render(); });
 document.querySelector('#loadMoreDoneButton').addEventListener('click', () => { doneVisibleLimit += 10; render(); });
-document.querySelector('#newButton').addEventListener('click', async () => { if (hasUnsavedChanges) { const okNew = await confirmModal('Perubahan belum disimpan. Buat draft baru?', { title: 'Buat draft baru?', confirmLabel: 'Buat baru' }); if (!okNew) return; } addActivity('New draft dibuat', {}, 'Workspace dikosongkan untuk draft baru'); items = []; openedFileHandle = null; openedFileName = ''; hasUnsavedChanges = false; persistDraft(); renderActiveFile(); renderActivities(); render(); showToast('Draft baru dibuat'); });
 document.querySelector('#exportButton').addEventListener('click', event => { if (isSaving) { event.stopImmediatePropagation(); return; } isSaving = true; event.currentTarget.disabled = true; });
 let editTargetId = null;
 const editDialog = document.querySelector('#editDialog');
@@ -212,6 +211,15 @@ function showUpdateFolderButton(hasPermission) {
   btn.title = hasPermission ? `Re-scan folder: ${name}` : `Klik untuk izinkan akses: ${name}`;
   btn.style.opacity = hasPermission ? '1' : '0.6';
 }
+
+document.querySelector('#refreshFolderButton').addEventListener('click', async () => {
+  if (!savedFolderHandle) { showToast('Belum ada folder yang disimpan. Gunakan Scan Folder dulu.'); return; }
+  try {
+    const perm = await savedFolderHandle.requestPermission({ mode: 'read' });
+    if (perm !== 'granted') { showToast('Izin folder ditolak'); return; }
+    await scanFolderHandle(savedFolderHandle);
+  } catch (e) { showToast(`Refresh gagal: ${e.message}`); }
+});
 
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
