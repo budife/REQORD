@@ -151,7 +151,7 @@ confirmDeleteButton.addEventListener('click', () => { if (confirmDeleteButton.di
 document.querySelector('#toast').addEventListener('click', () => { if (!deletedItem) return; items.splice(Math.max(0, deletedItem.index), 0, deletedItem.item); saveItems(); addActivity('Request dipulihkan', deletedItem.item); deletedItem = null; render(); showToast('Request dipulihkan'); });
 document.querySelector('#closeDeleteButton').addEventListener('click', closeDeleteDialog); document.querySelector('#cancelDeleteButton').addEventListener('click', closeDeleteDialog); deleteDialog.addEventListener('click', event => { if (event.target === deleteDialog) closeDeleteDialog(); });
 const confirmDialog = document.querySelector('#confirmDialog'); let confirmResolver = null;
-function confirmModal(message, options = {}) { return new Promise(resolve => { document.querySelector('#confirmDialogTitle').textContent = options.title || 'Yakin?'; document.querySelector('#confirmDialogEyebrow').textContent = options.eyebrow || 'CONFIRM'; document.querySelector('#confirmDialogMessage').textContent = message; document.querySelector('#acceptConfirmButton').textContent = options.confirmLabel || 'Ya, lanjutkan'; confirmResolver = resolve; confirmDialog.showModal(); }); }
+function confirmModal(message, options = {}) { return new Promise(resolve => { document.querySelector('#confirmDialogTitle').textContent = options.title || 'Yakin?'; document.querySelector('#confirmDialogEyebrow').textContent = options.eyebrow || 'CONFIRM'; document.querySelector('#confirmDialogMessage').innerHTML = escapeHtml(message).replace(/\n/g, '<br>'); document.querySelector('#acceptConfirmButton').textContent = options.confirmLabel || 'Ya, lanjutkan'; confirmResolver = resolve; confirmDialog.showModal(); }); }
 function resolveConfirm(value) { confirmDialog.close(); if (confirmResolver) { confirmResolver(value); confirmResolver = null; } }
 document.querySelector('#acceptConfirmButton').addEventListener('click', () => resolveConfirm(true)); document.querySelector('#cancelConfirmButton').addEventListener('click', () => resolveConfirm(false)); document.querySelector('#closeConfirmButton').addEventListener('click', () => resolveConfirm(false)); confirmDialog.addEventListener('click', event => { if (event.target === confirmDialog) resolveConfirm(false); });
 document.querySelector('.table-stack').addEventListener('click', event => { const button = event.target.closest('[data-row-action="edit"]'); if (button) { event.stopPropagation(); openEditDialog(button.dataset.id); } });
@@ -376,7 +376,7 @@ async function scanFolderHandle(root) {
     if (scanned.length === 0 && duplicates.length > 0) {
       showToast(`${duplicates.length} item sudah ada (duplikat)`);
       // Show modal listing duplicates
-      const msg = `Item berikut sudah ada di list:\\n\\n${duplicates.map(d => `• ${d}`).join('\\n')}`;
+      const msg = `Item berikut sudah ada di list:\n\n${duplicates.map(d => `• ${d}`).join('\n')}`;
       await confirmModal(msg, { title: 'Duplikat ditemukan', confirmLabel: 'OK' });
       return 0;
     }
