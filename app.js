@@ -27,7 +27,7 @@ function loadItems() { try { const current = JSON.parse(localStorage.getItem(STO
 function saveItems() { if (!isLoadingWorkbook) hasUnsavedChanges = true; persistDraft(); return items; }
 function loadDraftItems() { try { const current = JSON.parse(localStorage.getItem(STORAGE_KEY)); return Array.isArray(current) ? current.map(normalizeItem) : []; } catch { return []; } }
 function persistDraft() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); if (storageDatabase) { const transaction = storageDatabase.transaction('draft', 'readwrite'); transaction.objectStore('draft').put({ id: 'current', items, activities }); } } catch { showToast('Draft lokal tidak bisa disimpan di browser ini'); } }
-function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => request.result.createObjectStore('draft', { keyPath: 'id' }); request.onsuccess = () => { storageDatabase = request.result; const clear = storageDatabase.transaction('draft', 'readwrite').objectStore('draft').clear(); clear.onsuccess = () => { items = loadItems(); activities = []; renderActivities(); render(); }; }; }
+function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => { const db = request.result; db.createObjectStore('draft', { keyPath: 'id' }); db.createObjectStore('folderHandle', { keyPath: 'id' }); }; request.onsuccess = () => { storageDatabase = request.result; const clear = storageDatabase.transaction('draft', 'readwrite').objectStore('draft').clear(); clear.onsuccess = () => { items = loadItems(); activities = []; renderActivities(); render(); restoreFolderHandle(); }; }; }
 function addActivity(action, item = {}, details = '') { activities.unshift({ date: nowDateTime(), action, title: item.title || '', requestor: item.requestor || '', details }); persistDraft(); renderActivities(); }
 function renderActivities() { const list = document.querySelector('#activityList'); if (!list) return; list.innerHTML = activities.length ? activities.map(activity => `<div class="activity-item"><strong>${escapeHtml(activity.action)}</strong><span>${escapeHtml(activity.title || activity.details || 'REQORD')}</span><small>${escapeHtml(displayDate(activity.date, true))}${activity.requestor ? ` · ${escapeHtml(activity.requestor)}` : ''}</small></div>`).join('') : '<p class="activity-empty">Belum ada activity.</p>'; }
 function centerActionGroups() { document.querySelectorAll('.table-scroll td.row-actions').forEach(cell => { let group = cell.querySelector('.actions-inner'); if (!group) { group = document.createElement('div'); group.className = 'actions-inner'; while (cell.firstChild) group.append(cell.firstChild); cell.append(group); } const count = group.querySelectorAll('.action-button').length; group.dataset.count = String(count); group.style.setProperty('--action-count', Math.min(count, 3)); group.className = `actions-inner actions-count-${count}`; }); }
@@ -167,10 +167,71 @@ document.querySelector('.table-stack').addEventListener('click', event => { cons
 document.querySelector('.table-stack').addEventListener('click', event => { const button = event.target.closest('[data-row-action="complete"]'); if (button) { const item = findItem(button.dataset.id); if (item && !item.completedAt) item.completedAt = new Date().toISOString(); } }, true);
 async function loadWorkbook(file) { if (!window.XLSX) throw new Error('XLSX unavailable'); const workbook = XLSX.read(await file.arrayBuffer(), { type: 'array' }); const sourceSheets = workbook.SheetNames.filter(name => /request list|ongoing requests|done requests|project list|ongoing projects|done projects/i.test(name)); const dailySheet = workbook.SheetNames.find(name => /daily tasks/i.test(name)); const rows = (sourceSheets.length ? sourceSheets : workbook.SheetNames.slice(0, 1)).flatMap(sheetName => XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]).map(row => ({ ...row, __sheetStatus: sheetName }))); const imported = rows.map((row, index) => { const requestDate = normalizeDateValue(row.RequestDate || row.requestDate) || today(); const sheetStatus = /ongoing/i.test(row.__sheetStatus) ? 'ongoing' : /done/i.test(row.__sheetStatus) ? 'done' : 'list'; return normalizeItem({ id: Date.now() + index, title: row.Title || row.title || row.Name || `Imported request ${index + 1}`, requestor: row.Requestor || row.requestor || row.Owner || row.owner, type: 'project', status: row.Status ? normalizeStatus(row.Status) : sheetStatus, priority: normalizePriority(row.Priority), requestDate, date: normalizeDateValue(row.TargetDone || row.targetDone || row.Deadline || row.deadline) || dateAfterDays(3, requestDate) }); }); if (dailySheet) { const dailyRows = XLSX.utils.sheet_to_json(workbook.Sheets[dailySheet]); dailyRows.forEach((row, index) => imported.push(normalizeItem({ id: Date.now() + imported.length + index, title: row.Task || row.Title, requestor: row.Requestor, type: 'daily', status: 'daily', priority: normalizePriority(row.Priority), requestDate: normalizeDateValue(row.Date || row.RequestDate) || today(), date: dateAfterDays(3, normalizeDateValue(row.Date || row.RequestDate) || today()), done: String(row.Done || '').toLowerCase() === 'yes' || String(row.Done || '').toLowerCase() === 'true' }))); } if (!imported.length) throw new Error('empty'); items = imported; saveItems(); render(); document.querySelector('#exportButton').disabled = false; document.querySelector('#exportButton').title = `Save changes to ${openedFileName || 'this file'}`; showToast(`${imported.length} item loaded`); }
 document.querySelector('#importButton').addEventListener('click', async () => { if (hasUnsavedChanges) { const okLoad = await confirmModal('Perubahan belum disimpan akan diganti oleh workbook baru. Lanjutkan Load?', { title: 'Load workbook baru?', confirmLabel: 'Lanjutkan' }); if (!okLoad) return; } try { isLoadingWorkbook = true; if (window.showOpenFilePicker) { [openedFileHandle] = await window.showOpenFilePicker({ types: [{ description: 'Excel workbook', accept: { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] } }], multiple: false }); const file = await openedFileHandle.getFile(); openedFileName = file.name; renderActiveFile(); await loadActivitiesFromFile(file); await loadWorkbook(file); await mergeNotesFromWorkbook(file); hasUnsavedChanges = false; addActivity('Workbook di-load', {}, openedFileName); renderActiveFile(); showToast(`${openedFileName} · ${importReportMessage()}`); } else document.querySelector('#fileInput').click(); } catch (error) { if (error.name !== 'AbortError') showToast(`Load gagal: ${error.message || 'periksa file Excel'}`); } finally { isLoadingWorkbook = false; } });
+// --- Folder handle persistence ---
+let savedFolderHandle = null;
+async function saveFolderHandle(handle) {
+  if (!storageDatabase) return;
+  try {
+    const tx = storageDatabase.transaction('folderHandle', 'readwrite');
+    tx.objectStore('folderHandle').put({ id: 'current', handle });
+    savedFolderHandle = handle;
+    localStorage.setItem('reqord-folder-name', handle.name || '');
+  } catch { /* ignore */ }
+}
+async function restoreFolderHandle() {
+  if (!storageDatabase) return;
+  try {
+    const tx = storageDatabase.transaction('folderHandle', 'readonly');
+    const req = tx.objectStore('folderHandle').get('current');
+    req.onsuccess = async () => {
+      if (req.result?.handle) {
+        savedFolderHandle = req.result.handle;
+        // Check permission
+        const perm = await savedFolderHandle.queryPermission({ mode: 'read' });
+        if (perm === 'granted') {
+          showUpdateFolderButton(true);
+        } else {
+          showUpdateFolderButton(false); // needs re-permission
+        }
+      }
+    };
+  } catch { /* ignore */ }
+}
+function showUpdateFolderButton(hasPermission) {
+  let btn = document.querySelector('#updateFolderButton');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'updateFolderButton';
+    btn.className = 'secondary-button';
+    btn.textContent = 'Update Folder';
+    const actions = document.querySelector('.intro-actions');
+    if (actions) actions.insertBefore(btn, document.querySelector('#exportButton'));
+    btn.addEventListener('click', async () => {
+      if (!savedFolderHandle) { showToast('Belum ada folder yang disimpan'); return; }
+      try {
+        const perm = await savedFolderHandle.requestPermission({ mode: 'read' });
+        if (perm !== 'granted') { showToast('Izin folder ditolak'); return; }
+        await scanFolderHandle(savedFolderHandle);
+      } catch (e) { showToast(`Update gagal: ${e.message}`); }
+    });
+  }
+  const name = localStorage.getItem('reqord-folder-name') || '';
+  btn.title = hasPermission ? `Re-scan folder: ${name}` : `Klik untuk izinkan akses: ${name}`;
+  btn.style.opacity = hasPermission ? '1' : '0.6';
+}
+
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
   try {
     const root = await window.showDirectoryPicker({ mode: 'read' });
+    await saveFolderHandle(root);
+    await scanFolderHandle(root);
+  } catch (error) {
+    if (error.name !== 'AbortError') showToast(`Scan gagal: ${error.message || 'periksa akses folder'}`);
+  }
+});
+
+async function scanFolderHandle(root) {
     const scanned = [];
     // Scan 3 levels: root/year/month/campaignManager
     for await (const [yearName, yearHandle] of root.entries()) {
@@ -198,11 +259,7 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
     saveItems();
     render();
     showToast(`${scanned.length} item ditambahkan dari folder scan`);
-  } catch (error) {
-    if (error.name !== 'AbortError') showToast(`Scan gagal: ${error.message || 'periksa akses folder'}`);
-  }
-});
-
+}
 document.querySelector('#fileInput').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; openedFileHandle = null; openedFileName = file.name; renderActiveFile(); try { isLoadingWorkbook = true; await loadActivitiesFromFile(file); await loadWorkbook(file); await mergeNotesFromWorkbook(file); hasUnsavedChanges = false; addActivity('Workbook di-load', {}, openedFileName); renderActiveFile(); showToast(`${openedFileName} · ${importReportMessage()}`); } catch (error) { showToast(`Load gagal: ${error.message || 'periksa file Excel'}`); } finally { isLoadingWorkbook = false; } event.target.value = ''; });
 document.querySelector('#exportButton').addEventListener('click', () => { if (!window.XLSX) { showToast('Library XLSX belum tersedia'); return; } const rows = items.filter(item => item.type === 'project').map(item => ({ Title: item.title, Requestor: item.requestor, Status: groups[item.status], Priority: item.priority, RequestDate: item.requestDate || '', TargetDone: item.date })); const workbook = XLSX.utils.book_new(); const readMe = [['REQORD WORK ORDER FILE'], ['Edit file ini di Excel, lalu buka kembali dengan Open file di REQORD.'], [''], ['Kolom', 'Keterangan'], ['Title', 'Judul request atau daily task'], ['Requestor', 'Nama pengaju'], ['Status', 'Request list, Ongoing request, atau Done request'], ['Priority', 'High, Normal, atau Low'], ['RequestDate', 'Tanggal dan jam dibuat'], ['TargetDone', 'Target selesai otomatis tiga hari setelah RequestDate'], ['Daily Tasks', 'Task rutin; gunakan kolom Done bernilai Yes atau No']]; const sheets = { 'Request List': 'list', 'Ongoing Requests': 'ongoing', 'Done Requests': 'done' }; Object.entries(sheets).forEach(([sheetName, status]) => { const sheetRows = rows.filter(row => row.Status === groups[status]); const sheet = XLSX.utils.json_to_sheet(sheetRows, { header: ['Title', 'Requestor', 'Status', 'Priority', 'RequestDate', 'TargetDone'] }); sheet['!autofilter'] = { ref: `A1:F${Math.max(sheetRows.length + 1, 1)}` }; sheet['!cols'] = [{ wch: 48 }, { wch: 22 }, { wch: 20 }, { wch: 12 }, { wch: 22 }, { wch: 16 }]; XLSX.utils.book_append_sheet(workbook, sheet, sheetName); }); const dailyRows = items.filter(item => item.type === 'daily').map(task => ({ Task: task.title, Requestor: task.requestor, Date: task.requestDate, Priority: task.priority, Done: task.done ? 'Yes' : 'No' })); const dailySheet = XLSX.utils.json_to_sheet(dailyRows, { header: ['Task', 'Requestor', 'Date', 'Priority', 'Done'] }); dailySheet['!autofilter'] = { ref: `A1:E${Math.max(dailyRows.length + 1, 1)}` }; dailySheet['!cols'] = [{ wch: 48 }, { wch: 22 }, { wch: 22 }, { wch: 12 }, { wch: 10 }]; XLSX.utils.book_append_sheet(workbook, dailySheet, 'Daily Tasks'); XLSX.utils.book_append_sheet(workbook, XLSX.utils.aoa_to_sheet(readMe), 'Read me'); XLSX.writeFile(workbook, `reqord-work-orders-${new Date().toISOString().slice(0, 10)}.xlsx`); showToast(`${items.length} item disimpan ke Excel`); });
 window.addEventListener('beforeunload', event => { if (!hasUnsavedChanges) return; event.preventDefault(); event.returnValue = 'Perubahan belum disimpan. Simpan dulu sebelum keluar?'; });
