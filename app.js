@@ -28,7 +28,7 @@ function loadItems() { try { const current = JSON.parse(localStorage.getItem(STO
 function saveItems() { if (!isLoadingWorkbook) hasUnsavedChanges = true; persistDraft(); return items; }
 function loadDraftItems() { try { const current = JSON.parse(localStorage.getItem(STORAGE_KEY)); return Array.isArray(current) ? current.map(normalizeItem) : []; } catch { return []; } }
 function persistDraft() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch { showToast('Draft lokal tidak bisa disimpan di browser ini'); } }
-function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => { const db = request.result; db.createObjectStore('draft', { keyPath: 'id' }); db.createObjectStore('folderHandle', { keyPath: 'id' }); }; request.onsuccess = () => { storageDatabase = request.result; restoreFolderHandle(); }; }
+function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => { const db = request.result; db.createObjectStore('draft', { keyPath: 'id' }); db.createObjectStore('folderHandle', { keyPath: 'id' }); }; request.onsuccess = () => { storageDatabase = request.result; restoreFolderHandle().then(() => { if (savedFolderHandle) { savedFolderHandle.requestPermission({ mode: 'read' }).then(perm => { if (perm === 'granted') scanFolderHandle(savedFolderHandle); }); } }); }; }
 function addActivity(action, item = {}, details = '') { activities.unshift({ date: nowDateTime(), action, title: item.title || '', requestor: item.requestor || '', details }); persistDraft(); renderActivities(); }
 function renderActivities() { const list = document.querySelector('#activityList'); if (!list) return; list.innerHTML = activities.length ? activities.map(activity => `<div class="activity-item"><strong>${escapeHtml(activity.action)}</strong><span>${escapeHtml(activity.title || activity.details || 'REQORD')}</span><small>${escapeHtml(displayDate(activity.date, true))}${activity.requestor ? ` · ${escapeHtml(activity.requestor)}` : ''}</small></div>`).join('') : '<p class="activity-empty">Belum ada activity.</p>'; }
 function centerActionGroups() { document.querySelectorAll('.table-scroll td.row-actions').forEach(cell => { let group = cell.querySelector('.actions-inner'); if (!group) { group = document.createElement('div'); group.className = 'actions-inner'; while (cell.firstChild) group.append(cell.firstChild); cell.append(group); } const count = group.querySelectorAll('.action-button').length; group.dataset.count = String(count); group.style.setProperty('--action-count', Math.min(count, 3)); group.className = `actions-inner actions-count-${count}`; }); }
@@ -186,16 +186,20 @@ async function saveFolderHandle(handle) {
 }
 async function restoreFolderHandle() {
   if (!storageDatabase) return;
-  try {
-    const tx = storageDatabase.transaction('folderHandle', 'readonly');
-    const req = tx.objectStore('folderHandle').get('current');
-    req.onsuccess = () => {
-      if (req.result?.handle) {
-        savedFolderHandle = req.result.handle;
-        localStorage.setItem('reqord-folder-name', savedFolderHandle.name || '');
-      }
-    };
-  } catch { /* ignore */ }
+  return new Promise((resolve) => {
+    try {
+      const tx = storageDatabase.transaction('folderHandle', 'readonly');
+      const req = tx.objectStore('folderHandle').get('current');
+      req.onsuccess = () => {
+        if (req.result?.handle) {
+          savedFolderHandle = req.result.handle;
+          localStorage.setItem('reqord-folder-name', savedFolderHandle.name || '');
+        }
+        resolve();
+      };
+      req.onerror = () => resolve();
+    } catch { resolve(); }
+  });
 }
 document.querySelector('#refreshFolderButton').addEventListener('click', async () => {
   if (!savedFolderHandle) { showToast('Belum ada folder yang disimpan. Gunakan Scan Folder dulu.'); return; }
