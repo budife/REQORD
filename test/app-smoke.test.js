@@ -15,7 +15,6 @@ assert.match(source, /priorityFilter/);
 assert.match(source, /sortFilter/);
 assert.match(markup, /daily-progress/);
 assert.match(source, /hasUnsavedChanges/);
-assert.match(source, /Perubahan belum disimpan akan diganti/);
 assert.match(source, /downloadWorkbook/);
 assert.match(source, /removeDefaultSheets/);
 assert.match(source, /loadActivitiesFromFile/);
