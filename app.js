@@ -243,18 +243,30 @@ async function scanFolderHandle(root) {
     const scanned = [];
     // Scan 3 levels: root/year/month/campaignManager
     for await (const [yearName, yearHandle] of root.entries()) {
-      if (!yearHandle.kind === 'directory') continue;
+      if (yearHandle.kind !== 'directory') continue;
       for await (const [monthName, monthHandle] of yearHandle.entries()) {
-        if (!monthHandle.kind === 'directory') continue;
+        if (monthHandle.kind !== 'directory') continue;
         for await (const [campaignName, campaignHandle] of monthHandle.entries()) {
-          if (!campaignHandle.kind === 'directory') continue;
+          if (campaignHandle.kind !== 'directory') continue;
+          // Get folder modified date from files inside
+          let folderDate = '';
+          try {
+            let latest = 0;
+            for await (const [entryName, entryHandle] of campaignHandle.entries()) {
+              if (entryHandle.kind === 'file') {
+                const file = await entryHandle.getFile();
+                if (file.lastModified > latest) latest = file.lastModified;
+              }
+            }
+            if (latest) folderDate = new Date(latest).toISOString().slice(0, 16).replace('T', ' ');
+          } catch { /* ignore */ }
           // Dedup: check if already exists
           const exists = items.some(item => item.title === campaignName && item.requestor === monthName);
           if (exists) continue;
           // Also check similar (case-insensitive, trimmed)
           const similar = items.some(item => item.title.toLowerCase().trim() === campaignName.toLowerCase().trim());
           if (similar) continue;
-          scanned.push({ title: campaignName, requestor: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: '' });
+          scanned.push({ title: campaignName, requestor: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
         }
       }
     }
