@@ -378,6 +378,7 @@ async function scanFolderHandle(root) {
         }
         }
         addActivity('Debug after loop', {}, `scanned=${scanned.length}: ${scanned.map(s => s.title + '/' + s.requestor).join(', ')}`);
+    addActivity('Debug items', {}, `items=${items.length}: ${items.map(i => i.title + '/' + i.requestor + '/' + i.status).join(', ')}`);
         if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); addActivity('Debug scanned', {}, `scanned=${scanned.length}, items=${items.length}`); return 0; }
     const ok = await confirmModal(`Ditemukan ${scanned.length} campaign baru. Tambahkan ke list?`, { title: 'Scan folder', confirmLabel: 'Tambahkan' });
     if (!ok) return 0;
