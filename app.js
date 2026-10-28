@@ -228,6 +228,7 @@ document.querySelector('#resetButton').addEventListener('click', async () => {
 });
 
 document.querySelector('#exportJsonButton').addEventListener('click', () => {
+  if (!items.length) { showToast('Tidak ada data untuk diexport'); return; }
   const data = JSON.stringify({ items, activities, exportedAt: new Date().toISOString() }, null, 2);
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
