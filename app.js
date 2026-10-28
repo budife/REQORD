@@ -306,7 +306,7 @@ async function scanFolderHandle(root) {
       if (handle.kind === 'directory') topFolders.push({ name, handle });
     }
     showToast(`Ditemukan ${topFolders.length} folder top-level`);
-    addActivity('Scan top-level', {}, `${topFolders.length} folder ditemukan`);
+    addActivity('Scan top-level', {}, `${topFolders.length} folder: ${topFolders.map(f => f.name).join(', ')}`);
     
     // Build monthFolders list from both possible structures
     let allMonthFolders = [];
@@ -337,12 +337,14 @@ async function scanFolderHandle(root) {
       }
     }
     
+    addActivity('Scan months', {}, `${allMonthFolders.length} bulan: ${allMonthFolders.map(m => m.monthName).join(', ')}`);
     for (const { monthName, monthHandle } of allMonthFolders) {
       const campaignFolders = [];
       for await (const [name, handle] of monthHandle.entries()) {
         if (handle.kind === 'directory') campaignFolders.push({ name, handle });
       }
       showToast(`${monthName}: ${campaignFolders.length} campaign`);
+      addActivity('Scan month', {}, `${monthName}: ${campaignFolders.length} campaign [${campaignFolders.map(f => f.name).join(', ')}]`);
         for (const { name: campaignName, handle: campaignHandle } of campaignFolders) {
           // Parse folder name: "Requestor - Nama Campaign"
           const parts = campaignName.split(/\s*-\s*/);
