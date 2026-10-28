@@ -272,21 +272,40 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
 
 async function scanFolderHandle(root) {
     const scanned = [];
-    // Collect year folders first (force async iteration to complete)
-    const yearFolders = [];
+    showToast('Memulai scan...');
+    // Collect top-level folders
+    const topFolders = [];
     for await (const [name, handle] of root.entries()) {
-      if (handle.kind === 'directory') yearFolders.push({ name, handle });
+      if (handle.kind === 'directory') topFolders.push({ name, handle });
     }
-    for (const { name: yearName, handle: yearHandle } of yearFolders) {
-      const monthFolders = [];
-      for await (const [name, handle] of yearHandle.entries()) {
-        if (handle.kind === 'directory') monthFolders.push({ name, handle });
+    showToast(`Ditemukan ${topFolders.length} folder top-level`);
+    
+    // Detect structure: if top folders look like MMYY (4 digits), treat as 2-level (month/campaign)
+    // Otherwise treat as 3-level (year/month/campaign)
+    const isMonthLevel = topFolders.length > 0 && topFolders.every(f => /^\d{4}$/.test(f.name));
+    
+    let yearFolders = [];
+    if (isMonthLevel) {
+      // 2-level: top = month, inside = campaign
+      yearFolders = [{ name: '', handle: root, monthFolders: topFolders }];
+    } else {
+      // 3-level: top = year, inside = month, inside = campaign
+      for (const { name: yearName, handle: yearHandle } of topFolders) {
+        const monthFolders = [];
+        for await (const [name, handle] of yearHandle.entries()) {
+          if (handle.kind === 'directory') monthFolders.push({ name, handle });
+        }
+        yearFolders.push({ name: yearName, handle: yearHandle, monthFolders });
       }
+    }
+    
+    for (const { monthFolders } of yearFolders) {
       for (const { name: monthName, handle: monthHandle } of monthFolders) {
         const campaignFolders = [];
         for await (const [name, handle] of monthHandle.entries()) {
           if (handle.kind === 'directory') campaignFolders.push({ name, handle });
         }
+        showToast(`${monthName}: ${campaignFolders.length} campaign`);
         for (const { name: campaignName, handle: campaignHandle } of campaignFolders) {
           // Parse folder name: "Requestor - Nama Campaign"
           const parts = campaignName.split(/\s*-\s*/);
