@@ -291,32 +291,38 @@ async function scanFolderHandle(root) {
     }
     showToast(`Ditemukan ${topFolders.length} folder top-level`);
     
-    // Detect structure: if top folders look like MMYY (4 digits), treat as 2-level (month/campaign)
-    // Otherwise treat as 3-level (year/month/campaign)
-    const isMonthLevel = topFolders.length > 0 && topFolders.every(f => /^\d{4}$/.test(f.name));
+    // Build monthFolders list from both possible structures
+    let allMonthFolders = [];
     
-    let yearFolders = [];
-    if (isMonthLevel) {
-      // 2-level: top = month, inside = campaign
-      yearFolders = [{ name: '', handle: root, monthFolders: topFolders }];
-    } else {
-      // 3-level: top = year, inside = month, inside = campaign
-      for (const { name: yearName, handle: yearHandle } of topFolders) {
-        const monthFolders = [];
+    const monthLikeFolders = topFolders.filter(f => /^\d{4}$/.test(f.name));
+    
+    if (monthLikeFolders.length === topFolders.length && topFolders.length > 0) {
+      allMonthFolders = topFolders.map(f => ({ monthName: f.name, monthHandle: f.handle }));
+    } else if (monthLikeFolders.length > 0) {
+      allMonthFolders = monthLikeFolders.map(f => ({ monthName: f.name, monthHandle: f.handle }));
+      for (const { name: yearName, handle: yearHandle } of topFolders.filter(f => !/^\d{4}$/.test(f.name))) {
         for await (const [name, handle] of yearHandle.entries()) {
-          if (handle.kind === 'directory') monthFolders.push({ name, handle });
+          if (handle.kind === 'directory' && /^\d{4}$/.test(name)) {
+            allMonthFolders.push({ monthName: name, monthHandle: handle });
+          }
         }
-        yearFolders.push({ name: yearName, handle: yearHandle, monthFolders });
+      }
+    } else {
+      for (const { name: yearName, handle: yearHandle } of topFolders) {
+        for await (const [name, handle] of yearHandle.entries()) {
+          if (handle.kind === 'directory') {
+            allMonthFolders.push({ monthName: name, monthHandle: handle });
+          }
+        }
       }
     }
     
-    for (const { monthFolders } of yearFolders) {
-      for (const { name: monthName, handle: monthHandle } of monthFolders) {
-        const campaignFolders = [];
-        for await (const [name, handle] of monthHandle.entries()) {
-          if (handle.kind === 'directory') campaignFolders.push({ name, handle });
-        }
-        showToast(`${monthName}: ${campaignFolders.length} campaign`);
+    for (const { monthName, monthHandle } of allMonthFolders) {
+      const campaignFolders = [];
+      for await (const [name, handle] of monthHandle.entries()) {
+        if (handle.kind === 'directory') campaignFolders.push({ name, handle });
+      }
+      showToast(`${monthName}: ${campaignFolders.length} campaign`);
         for (const { name: campaignName, handle: campaignHandle } of campaignFolders) {
           // Parse folder name: "Requestor - Nama Campaign"
           const parts = campaignName.split(/\s*-\s*/);
@@ -352,7 +358,6 @@ async function scanFolderHandle(root) {
           scanned.push({ title, requestor, month: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
         }
       }
-    }
     if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); return 0; }
     const ok = await confirmModal(`Ditemukan ${scanned.length} campaign baru. Tambahkan ke list?`, { title: 'Scan folder', confirmLabel: 'Tambahkan' });
     if (!ok) return 0;
