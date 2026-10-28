@@ -273,9 +273,15 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
   try {
     const root = await window.showDirectoryPicker({ mode: 'read' });
     await root.requestPermission({ mode: 'read' });
-    await new Promise(r => setTimeout(r, 100));
+    await new Promise(r => setTimeout(r, 300));
     await saveFolderHandle(root);
-    await scanFolderHandle(root);
+    let found = await scanFolderHandle(root);
+    if (found === 0) {
+      // Retry once
+      await new Promise(r => setTimeout(r, 500));
+      found = await scanFolderHandle(root);
+      if (found === 0) showToast('Tidak ada folder ditemukan. Coba Refresh.');
+    }
   } catch (error) {
     if (error.name !== 'AbortError') showToast(`Scan gagal: ${error.message || 'periksa akses folder'}`);
   }
@@ -283,13 +289,22 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
 
 async function scanFolderHandle(root) {
     const scanned = [];
-    // Scan 3 levels: root/year/month/campaignManager
-    for await (const [yearName, yearHandle] of root.entries()) {
-      if (yearHandle.kind !== 'directory') continue;
-      for await (const [monthName, monthHandle] of yearHandle.entries()) {
-        if (monthHandle.kind !== 'directory') continue;
-        for await (const [campaignName, campaignHandle] of monthHandle.entries()) {
-          if (campaignHandle.kind !== 'directory') continue;
+    // Collect year folders first (force async iteration to complete)
+    const yearFolders = [];
+    for await (const [name, handle] of root.entries()) {
+      if (handle.kind === 'directory') yearFolders.push({ name, handle });
+    }
+    for (const { name: yearName, handle: yearHandle } of yearFolders) {
+      const monthFolders = [];
+      for await (const [name, handle] of yearHandle.entries()) {
+        if (handle.kind === 'directory') monthFolders.push({ name, handle });
+      }
+      for (const { name: monthName, handle: monthHandle } of monthFolders) {
+        const campaignFolders = [];
+        for await (const [name, handle] of monthHandle.entries()) {
+          if (handle.kind === 'directory') campaignFolders.push({ name, handle });
+        }
+        for (const { name: campaignName, handle: campaignHandle } of campaignFolders) {
           // Parse folder name: "Requestor - Nama Campaign"
           const parts = campaignName.split(/\s*-\s*/);
           const requestor = parts.length > 1 ? parts[0].trim() : monthName;
@@ -325,15 +340,16 @@ async function scanFolderHandle(root) {
         }
       }
     }
-    if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); return; }
+    if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); return 0; }
     const ok = await confirmModal(`Ditemukan ${scanned.length} campaign baru. Tambahkan ke list?`, { title: 'Scan folder', confirmLabel: 'Tambahkan' });
-    if (!ok) return;
+    if (!ok) return 0;
     const normalized = scanned.map(normalizeItem);
     items = [...items, ...normalized];
     normalized.forEach(item => addActivity('Folder scan', item, `${item.title} (${item.requestor})`));
     saveItems();
     render();
     showToast(`${scanned.length} item ditambahkan dari folder scan`);
+    return scanned.length;
 }
 document.querySelector('#fileInput').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; openedFileHandle = null; openedFileName = file.name; renderActiveFile(); try { isLoadingWorkbook = true; await loadActivitiesFromFile(file); await loadWorkbook(file); await mergeNotesFromWorkbook(file); hasUnsavedChanges = false; addActivity('Workbook di-load', {}, openedFileName); renderActiveFile(); showToast(`${openedFileName} · ${importReportMessage()}`); } catch (error) { showToast(`Load gagal: ${error.message || 'periksa file Excel'}`); } finally { isLoadingWorkbook = false; } event.target.value = ''; });
 window.addEventListener('beforeunload', event => { if (!hasUnsavedChanges) return; event.preventDefault(); event.returnValue = 'Perubahan belum disimpan. Simpan dulu sebelum keluar?'; });
