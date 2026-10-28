@@ -157,7 +157,6 @@ document.querySelector('#closeSubitemButton').addEventListener('click', () => su
 document.querySelector('.table-stack').addEventListener('click', event => { const title = event.target.closest('.title-cell.has-subitems'); if (title) openEditDialog(title.dataset.subitemId); }); document.querySelector('.table-stack').addEventListener('keydown', event => { const title = event.target.closest('.title-cell.has-subitems'); if (title && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openEditDialog(title.dataset.subitemId); } });
 document.querySelector('.table-stack').addEventListener('click', event => { const button = event.target.closest('[data-row-action="complete"]'); if (button) { const item = findItem(button.dataset.id); if (item && !item.completedAt) item.completedAt = new Date().toISOString(); } }, true);
 async function loadWorkbook(file) { if (!window.XLSX) throw new Error('XLSX unavailable'); const workbook = XLSX.read(await file.arrayBuffer(), { type: 'array' }); const sourceSheets = workbook.SheetNames.filter(name => /request list|ongoing requests|done requests|project list|ongoing projects|done projects/i.test(name)); const dailySheet = workbook.SheetNames.find(name => /daily tasks/i.test(name)); const rows = (sourceSheets.length ? sourceSheets : workbook.SheetNames.slice(0, 1)).flatMap(sheetName => XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]).map(row => ({ ...row, __sheetStatus: sheetName }))); const imported = rows.map((row, index) => { const requestDate = normalizeDateValue(row.RequestDate || row.requestDate) || today(); const sheetStatus = /ongoing/i.test(row.__sheetStatus) ? 'ongoing' : /done/i.test(row.__sheetStatus) ? 'done' : 'list'; return normalizeItem({ id: Date.now() + index, title: row.Title || row.title || row.Name || `Imported request ${index + 1}`, requestor: row.Requestor || row.requestor || row.Owner || row.owner, type: 'project', status: row.Status ? normalizeStatus(row.Status) : sheetStatus, priority: normalizePriority(row.Priority), requestDate, date: normalizeDateValue(row.TargetDone || row.targetDone || row.Deadline || row.deadline) || dateAfterDays(3, requestDate) }); }); if (dailySheet) { const dailyRows = XLSX.utils.sheet_to_json(workbook.Sheets[dailySheet]); dailyRows.forEach((row, index) => imported.push(normalizeItem({ id: Date.now() + imported.length + index, title: row.Task || row.Title, requestor: row.Requestor, type: 'daily', status: 'daily', priority: normalizePriority(row.Priority), requestDate: normalizeDateValue(row.Date || row.RequestDate) || today(), date: dateAfterDays(3, normalizeDateValue(row.Date || row.RequestDate) || today()), done: String(row.Done || '').toLowerCase() === 'yes' || String(row.Done || '').toLowerCase() === 'true' }))); } if (!imported.length) throw new Error('empty'); items = imported; saveItems(); render(); showToast(`${imported.length} item loaded`); }
-document.querySelector('#importButton').addEventListener('click', async () => { if (hasUnsavedChanges) { const okLoad = await confirmModal('Perubahan belum disimpan akan diganti oleh workbook baru. Lanjutkan Load?', { title: 'Load workbook baru?', confirmLabel: 'Lanjutkan' }); if (!okLoad) return; } try { isLoadingWorkbook = true; if (window.showOpenFilePicker) { [openedFileHandle] = await window.showOpenFilePicker({ types: [{ description: 'Excel workbook', accept: { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] } }], multiple: false }); const file = await openedFileHandle.getFile(); openedFileName = file.name; renderActiveFile(); await loadActivitiesFromFile(file); await loadWorkbook(file); await mergeNotesFromWorkbook(file); hasUnsavedChanges = false; addActivity('Workbook di-load', {}, openedFileName); renderActiveFile(); showToast(`${openedFileName} · ${importReportMessage()}`); } else document.querySelector('#fileInput').click(); } catch (error) { if (error.name !== 'AbortError') showToast(`Load gagal: ${error.message || 'periksa file Excel'}`); } finally { isLoadingWorkbook = false; } });
 // --- Folder handle persistence ---
 let savedFolderHandle = null;
 async function saveFolderHandle(handle) {
@@ -226,6 +225,46 @@ document.querySelector('#resetButton').addEventListener('click', async () => {
   renderActivities();
   render();
   showToast('Draft direset');
+});
+
+document.querySelector('#exportJsonButton').addEventListener('click', () => {
+  const data = JSON.stringify({ items, activities, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `reqord-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('JSON diexport');
+});
+
+document.querySelector('#importJsonButton').addEventListener('click', () => {
+  document.querySelector('#jsonFileInput').click();
+});
+
+document.querySelector('#jsonFileInput').addEventListener('change', async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (Array.isArray(data)) {
+      items = data.map(normalizeItem);
+    } else if (data.items && Array.isArray(data.items)) {
+      items = data.items.map(normalizeItem);
+      if (Array.isArray(data.activities)) activities = data.activities;
+    } else {
+      throw new Error('Format JSON tidak valid');
+    }
+    saveItems();
+    renderActivities();
+    render();
+    showToast(`${items.length} item diimport dari JSON`);
+  } catch (error) {
+    showToast(`Import JSON gagal: ${error.message}`);
+  }
+  event.target.value = '';
 });
 
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
