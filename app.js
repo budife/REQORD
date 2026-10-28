@@ -160,12 +160,17 @@ async function loadWorkbook(file) { if (!window.XLSX) throw new Error('XLSX unav
 // --- Folder handle persistence ---
 let savedFolderHandle = null;
 async function saveFolderHandle(handle) {
+  savedFolderHandle = handle;
+  localStorage.setItem('reqord-folder-name', handle.name || '');
   if (!storageDatabase) return;
   try {
     const tx = storageDatabase.transaction('folderHandle', 'readwrite');
-    tx.objectStore('folderHandle').put({ id: 'current', handle });
-    savedFolderHandle = handle;
-    localStorage.setItem('reqord-folder-name', handle.name || '');
+    const store = tx.objectStore('folderHandle');
+    store.put({ id: 'current', handle });
+    await new Promise((resolve, reject) => {
+      tx.oncomplete = resolve;
+      tx.onerror = reject;
+    });
   } catch { /* ignore */ }
 }
 async function restoreFolderHandle() {
@@ -173,36 +178,14 @@ async function restoreFolderHandle() {
   try {
     const tx = storageDatabase.transaction('folderHandle', 'readonly');
     const req = tx.objectStore('folderHandle').get('current');
-    req.onsuccess = async () => {
+    req.onsuccess = () => {
       if (req.result?.handle) {
         savedFolderHandle = req.result.handle;
+        localStorage.setItem('reqord-folder-name', savedFolderHandle.name || '');
       }
     };
   } catch { /* ignore */ }
 }
-function showUpdateFolderButton(hasPermission) {
-  let btn = document.querySelector('#updateFolderButton');
-  if (!btn) {
-    btn = document.createElement('button');
-    btn.id = 'updateFolderButton';
-    btn.className = 'secondary-button';
-    btn.textContent = 'Update Folder';
-    const actions = document.querySelector('.intro-actions');
-    if (actions) actions.append(btn);
-    btn.addEventListener('click', async () => {
-      if (!savedFolderHandle) { showToast('Belum ada folder yang disimpan'); return; }
-      try {
-        const perm = await savedFolderHandle.requestPermission({ mode: 'read' });
-        if (perm !== 'granted') { showToast('Izin folder ditolak'); return; }
-        await scanFolderHandle(savedFolderHandle);
-      } catch (e) { showToast(`Update gagal: ${e.message}`); }
-    });
-  }
-  const name = localStorage.getItem('reqord-folder-name') || '';
-  btn.title = hasPermission ? `Re-scan folder: ${name}` : `Klik untuk izinkan akses: ${name}`;
-  btn.style.opacity = hasPermission ? '1' : '0.6';
-}
-
 document.querySelector('#refreshFolderButton').addEventListener('click', async () => {
   if (!savedFolderHandle) { showToast('Belum ada folder yang disimpan. Gunakan Scan Folder dulu.'); return; }
   try {
