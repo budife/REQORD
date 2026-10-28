@@ -232,6 +232,7 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
   try {
     const root = await window.showDirectoryPicker({ mode: 'read' });
+    await root.requestPermission({ mode: 'read' });
     await saveFolderHandle(root);
     await scanFolderHandle(root);
   } catch (error) {
