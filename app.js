@@ -248,6 +248,10 @@ async function scanFolderHandle(root) {
         if (monthHandle.kind !== 'directory') continue;
         for await (const [campaignName, campaignHandle] of monthHandle.entries()) {
           if (campaignHandle.kind !== 'directory') continue;
+          // Parse folder name: "Requestor - Nama Campaign"
+          const parts = campaignName.split(/\s*-\s*/);
+          const requestor = parts.length > 1 ? parts[0].trim() : monthName;
+          const title = parts.length > 1 ? parts.slice(1).join(' - ').trim() : campaignName;
           // Get folder modified date from files inside
           let folderDate = '';
           try {
@@ -261,12 +265,12 @@ async function scanFolderHandle(root) {
             if (latest) folderDate = new Date(latest).toISOString().slice(0, 16).replace('T', ' ');
           } catch { /* ignore */ }
           // Dedup: check if already exists
-          const exists = items.some(item => item.title === campaignName && item.requestor === monthName);
+          const exists = items.some(item => item.title === title && item.requestor === requestor);
           if (exists) continue;
           // Also check similar (case-insensitive, trimmed)
-          const similar = items.some(item => item.title.toLowerCase().trim() === campaignName.toLowerCase().trim());
+          const similar = items.some(item => item.title.toLowerCase().trim() === title.toLowerCase().trim());
           if (similar) continue;
-          scanned.push({ title: campaignName, requestor: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
+          scanned.push({ title, requestor, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
         }
       }
     }
