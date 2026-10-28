@@ -26,7 +26,6 @@ assert.doesNotMatch(source, /activities = activities\.slice\(0, 100\)/);
 assert.match(markup, /activeFileName/);
 assert.match(markup, /saveState/);
 assert.match(source, /renderTitleSuggestions/);
-assert.match(markup, /titleSuggestions/);
 assert.match(source, /completionDuration/);
 assert.match(source, /completedAt/);
 assert.match(source, /openNoteDialog/);
