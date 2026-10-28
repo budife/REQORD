@@ -311,15 +311,18 @@ async function scanFolderHandle(root) {
     // Build monthFolders list from both possible structures
     let allMonthFolders = [];
     
-    const monthLikeFolders = topFolders.filter(f => /^\d{4}$/.test(f.name));
+    // Month folder: MMYY where MM is 01-12. Year folder: YYYY (20xx or 19xx)
+    const isMonthName = (name) => /^\d{4}$/.test(name) && Number(name.slice(0,2)) >= 1 && Number(name.slice(0,2)) <= 12;
+    const isYearName = (name) => /^\d{4}$/.test(name) && (name.startsWith('19') || name.startsWith('20')) && Number(name.slice(0,2)) > 12;
+    const monthLikeFolders = topFolders.filter(f => isMonthName(f.name));
     
-    if (monthLikeFolders.length === topFolders.length && topFolders.length > 0) {
+    if (monthLikeFolders.length === topFolders.length && topFolders.length > 0 && topFolders.length > 0 && monthLikeFolders.length > 0) {
       allMonthFolders = topFolders.map(f => ({ monthName: f.name, monthHandle: f.handle }));
     } else if (monthLikeFolders.length > 0) {
       allMonthFolders = monthLikeFolders.map(f => ({ monthName: f.name, monthHandle: f.handle }));
-      for (const { name: yearName, handle: yearHandle } of topFolders.filter(f => !/^\d{4}$/.test(f.name))) {
+      for (const { name: yearName, handle: yearHandle } of topFolders.filter(f => isYearName(f.name))) {
         for await (const [name, handle] of yearHandle.entries()) {
-          if (handle.kind === 'directory' && /^\d{4}$/.test(name)) {
+          if (handle.kind === 'directory' && isMonthName(name)) {
             allMonthFolders.push({ monthName: name, monthHandle: handle });
           }
         }
@@ -327,7 +330,7 @@ async function scanFolderHandle(root) {
     } else {
       for (const { name: yearName, handle: yearHandle } of topFolders) {
         for await (const [name, handle] of yearHandle.entries()) {
-          if (handle.kind === 'directory') {
+          if (handle.kind === 'directory' && isMonthName(name)) {
             allMonthFolders.push({ monthName: name, monthHandle: handle });
           }
         }
