@@ -205,8 +205,7 @@ document.querySelector('#refreshFolderButton').addEventListener('click', async (
     if (perm !== 'granted') { showToast('Izin folder ditolak'); addActivity('Refresh gagal', {}, 'Izin ditolak'); return; }
     const found = await scanFolderHandle(savedFolderHandle);
     if (found === 0) {
-      showToast('Tidak ada folder baru ditemukan');
-      addActivity('Refresh kosong', {}, 'Tidak ada campaign baru');
+      // Already handled by scanFolderHandle (duplicate modal or toast)
     } else {
       addActivity('Refresh selesai', {}, `${found} campaign ditemukan`);
     }
@@ -279,13 +278,7 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
     await saveFolderHandle(root);
     let found = await scanFolderHandle(root);
     if (found === 0) {
-      // Retry once
-      await new Promise(r => setTimeout(r, 500));
-      found = await scanFolderHandle(root);
-      if (found === 0) {
-        showToast('Tidak ada folder ditemukan. Coba Refresh.');
-        addActivity('Folder scan kosong', {}, 'Tidak ada campaign ditemukan');
-      }
+      // Already handled by scanFolderHandle (duplicate modal or toast)
     } else {
       addActivity('Folder scan selesai', {}, `${found} campaign ditemukan`);
     }
@@ -299,6 +292,7 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
 
 async function scanFolderHandle(root) {
     const scanned = [];
+    const duplicates = [];
     showToast('Memulai scan...');
     // Collect top-level folders
     const topFolders = [];
@@ -370,19 +364,26 @@ async function scanFolderHandle(root) {
           if (!folderDate) folderDate = new Date().toISOString().slice(0, 16).replace('T', ' ');
           // Dedup: check if already exists (exact title + requestor, case-insensitive)
           const exists = items.some(item => item.title.toLowerCase().trim() === title.toLowerCase().trim() && item.requestor.toLowerCase().trim() === requestor.toLowerCase().trim());
-          if (exists) continue;
+          if (exists) { duplicates.push(`${title} (${requestor})`); continue; }
           scanned.push({ title, requestor, month: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
         }
         }
-    if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); return 0; }
-    const ok = await confirmModal(`Ditemukan ${scanned.length} campaign baru. Tambahkan ke list?`, { title: 'Scan folder', confirmLabel: 'Tambahkan' });
+    if (scanned.length === 0 && duplicates.length === 0) { showToast('Tidak ada folder baru ditemukan'); return 0; }
+    if (scanned.length === 0 && duplicates.length > 0) {
+      showToast(`${duplicates.length} item sudah ada (duplikat)`);
+      // Show modal listing duplicates
+      const msg = `Item berikut sudah ada di list:\\n\\n${duplicates.map(d => `• ${d}`).join('\\n')}`;
+      await confirmModal(msg, { title: 'Duplikat ditemukan', confirmLabel: 'OK' });
+      return 0;
+    }
+    const ok = await confirmModal(`Ditemukan ${scanned.length} campaign baru${duplicates.length ? ` (${duplicates.length} duplikat di-skip)` : ''}. Tambahkan?`, { title: 'Scan folder', confirmLabel: 'Tambahkan' });
     if (!ok) return 0;
     const normalized = scanned.map(normalizeItem);
     items = [...items, ...normalized];
     normalized.forEach(item => addActivity('Folder scan', item, `${item.title} (${item.requestor})`));
     saveItems();
     render();
-    showToast(`${scanned.length} item ditambahkan dari folder scan`);
+    showToast(`${scanned.length} item ditambahkan${duplicates.length ? `, ${duplicates.length} duplikat di-skip` : ''}`);
     return scanned.length;
 }
 document.querySelector('#fileInput').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; openedFileHandle = null; openedFileName = file.name; renderActiveFile(); try { isLoadingWorkbook = true; await loadActivitiesFromFile(file); await loadWorkbook(file); await mergeNotesFromWorkbook(file); hasUnsavedChanges = false; addActivity('Workbook di-load', {}, openedFileName); renderActiveFile(); showToast(`${openedFileName} · ${importReportMessage()}`); } catch (error) { showToast(`Load gagal: ${error.message || 'periksa file Excel'}`); } finally { isLoadingWorkbook = false; } event.target.value = ''; });
