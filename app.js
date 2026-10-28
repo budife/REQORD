@@ -252,7 +252,7 @@ async function scanFolderHandle(root) {
           const parts = campaignName.split(/\s*-\s*/);
           const requestor = parts.length > 1 ? parts[0].trim() : monthName;
           const title = parts.length > 1 ? parts.slice(1).join(' - ').trim() : campaignName;
-          // Get folder modified date from files inside
+          // Get folder date: try files inside, then month folder name, then now
           let folderDate = '';
           try {
             let latest = 0;
@@ -264,6 +264,15 @@ async function scanFolderHandle(root) {
             }
             if (latest) folderDate = new Date(latest).toISOString().slice(0, 16).replace('T', ' ');
           } catch { /* ignore */ }
+          // Fallback: parse month name MMYY
+          if (!folderDate && /^\d{4}$/.test(monthName)) {
+            const mm = monthName.slice(0, 2);
+            const yy = monthName.slice(2);
+            const year = Number(yy) >= 50 ? `19${yy}` : `20${yy}`;
+            folderDate = `${year}-${mm}-01 00:00`;
+          }
+          // Fallback: now
+          if (!folderDate) folderDate = new Date().toISOString().slice(0, 16).replace('T', ' ');
           // Dedup: check if already exists
           const exists = items.some(item => item.title === title && item.requestor === requestor);
           if (exists) continue;
