@@ -371,12 +371,9 @@ async function scanFolderHandle(root) {
           }
           // Fallback: now
           if (!folderDate) folderDate = new Date().toISOString().slice(0, 16).replace('T', ' ');
-          // Dedup: check if already exists
-          const exists = items.some(item => item.title === title && item.requestor === requestor);
+          // Dedup: check if already exists (exact title + requestor, case-insensitive)
+          const exists = items.some(item => item.title.toLowerCase().trim() === title.toLowerCase().trim() && item.requestor.toLowerCase().trim() === requestor.toLowerCase().trim());
           if (exists) continue;
-          // Also check similar (case-insensitive, trimmed)
-          const similar = items.some(item => item.title.toLowerCase().trim() === title.toLowerCase().trim());
-          if (similar) continue;
           scanned.push({ title, requestor, month: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
         }
       }
