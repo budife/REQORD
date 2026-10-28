@@ -299,7 +299,6 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
 
 async function scanFolderHandle(root) {
     const scanned = [];
-    const skipped = [];
     showToast('Memulai scan...');
     // Collect top-level folders
     const topFolders = [];
@@ -307,7 +306,6 @@ async function scanFolderHandle(root) {
       if (handle.kind === 'directory') topFolders.push({ name, handle });
     }
     showToast(`Ditemukan ${topFolders.length} folder top-level`);
-    addActivity('Scan top-level', {}, `${topFolders.length} folder: ${topFolders.map(f => f.name).join(', ')}`);
     
     // Build monthFolders list from both possible structures
     let allMonthFolders = [];
@@ -338,14 +336,12 @@ async function scanFolderHandle(root) {
       }
     }
     
-    addActivity('Scan months', {}, `${allMonthFolders.length} bulan: ${allMonthFolders.map(m => m.monthName).join(', ')}`);
     for (const { monthName, monthHandle } of allMonthFolders) {
       const campaignFolders = [];
       for await (const [name, handle] of monthHandle.entries()) {
         if (handle.kind === 'directory') campaignFolders.push({ name, handle });
       }
       showToast(`${monthName}: ${campaignFolders.length} campaign`);
-      addActivity('Scan month', {}, `${monthName}: ${campaignFolders.length} campaign [${campaignFolders.map(f => f.name).join(', ')}]`);
         for (const { name: campaignName, handle: campaignHandle } of campaignFolders) {
           // Parse folder name: "Requestor - Nama Campaign"
           const parts = campaignName.split(/\s*-\s*/);
@@ -374,14 +370,11 @@ async function scanFolderHandle(root) {
           if (!folderDate) folderDate = new Date().toISOString().slice(0, 16).replace('T', ' ');
           // Dedup: check if already exists (exact title + requestor, case-insensitive)
           const exists = items.some(item => item.title.toLowerCase().trim() === title.toLowerCase().trim() && item.requestor.toLowerCase().trim() === requestor.toLowerCase().trim());
-          if (exists) { skipped.push(title + '/' + requestor); continue; }
+          if (exists) continue;
           scanned.push({ title, requestor, month: monthName, priority: 'normal', status: 'list', type: 'project', date: '', requestDate: folderDate || '' });
         }
         }
-        addActivity('Debug after loop', {}, `scanned=${scanned.length}: ${scanned.map(s => s.title + '/' + s.requestor).join(', ')}`);
-    addActivity('Debug skipped', {}, `skipped=${skipped.length}: ${skipped.join(', ')}`);
-    addActivity('Debug items', {}, `items=${items.length}: ${items.map(i => i.title + '/' + i.requestor + '/' + i.status).join(', ')}`);
-        if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); addActivity('Debug scanned', {}, `scanned=${scanned.length}, items=${items.length}`); return 0; }
+    if (scanned.length === 0) { showToast('Tidak ada folder baru ditemukan'); return 0; }
     const ok = await confirmModal(`Ditemukan ${scanned.length} campaign baru. Tambahkan ke list?`, { title: 'Scan folder', confirmLabel: 'Tambahkan' });
     if (!ok) return 0;
     const normalized = scanned.map(normalizeItem);
