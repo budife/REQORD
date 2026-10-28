@@ -8,6 +8,7 @@ const seedItems = [
   { id: 4, title: 'Kirim invoice project September', requestor: 'Saya', type: 'project', status: 'done', priority: 'low', requestDate: '', date: '' }
 ];
 let items = loadItems();
+console.log('REQORD app.js loaded, items:', items.length);
 let doneVisibleLimit = 10;
 let openedFileHandle = null;
 let openedFileName = '';
