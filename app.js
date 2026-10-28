@@ -200,10 +200,17 @@ async function restoreFolderHandle() {
 document.querySelector('#refreshFolderButton').addEventListener('click', async () => {
   if (!savedFolderHandle) { showToast('Belum ada folder yang disimpan. Gunakan Scan Folder dulu.'); return; }
   try {
+    addActivity('Refresh folder dimulai', {}, localStorage.getItem('reqord-folder-name') || '');
     const perm = await savedFolderHandle.requestPermission({ mode: 'read' });
-    if (perm !== 'granted') { showToast('Izin folder ditolak'); return; }
-    await scanFolderHandle(savedFolderHandle);
-  } catch (e) { showToast(`Refresh gagal: ${e.message}`); }
+    if (perm !== 'granted') { showToast('Izin folder ditolak'); addActivity('Refresh gagal', {}, 'Izin ditolak'); return; }
+    const found = await scanFolderHandle(savedFolderHandle);
+    if (found === 0) {
+      showToast('Tidak ada folder baru ditemukan');
+      addActivity('Refresh kosong', {}, 'Tidak ada campaign baru');
+    } else {
+      addActivity('Refresh selesai', {}, `${found} campaign ditemukan`);
+    }
+  } catch (e) { showToast(`Refresh gagal: ${e.message}`); addActivity('Refresh gagal', {}, e.message); }
 });
 
 document.querySelector('#resetButton').addEventListener('click', async () => {
@@ -265,6 +272,7 @@ document.querySelector('#jsonFileInput').addEventListener('change', async (event
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
   try {
+    addActivity('Folder scan dimulai', {}, 'Memilih folder...');
     const root = await window.showDirectoryPicker({ mode: 'read' });
     await root.requestPermission({ mode: 'read' });
     await new Promise(r => setTimeout(r, 300));
@@ -274,10 +282,18 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
       // Retry once
       await new Promise(r => setTimeout(r, 500));
       found = await scanFolderHandle(root);
-      if (found === 0) showToast('Tidak ada folder ditemukan. Coba Refresh.');
+      if (found === 0) {
+        showToast('Tidak ada folder ditemukan. Coba Refresh.');
+        addActivity('Folder scan kosong', {}, 'Tidak ada campaign ditemukan');
+      }
+    } else {
+      addActivity('Folder scan selesai', {}, `${found} campaign ditemukan`);
     }
   } catch (error) {
-    if (error.name !== 'AbortError') showToast(`Scan gagal: ${error.message || 'periksa akses folder'}`);
+    if (error.name !== 'AbortError') {
+      showToast(`Scan gagal: ${error.message || 'periksa akses folder'}`);
+      addActivity('Folder scan gagal', {}, error.message || 'periksa akses folder');
+    }
   }
 });
 
@@ -290,6 +306,7 @@ async function scanFolderHandle(root) {
       if (handle.kind === 'directory') topFolders.push({ name, handle });
     }
     showToast(`Ditemukan ${topFolders.length} folder top-level`);
+    addActivity('Scan top-level', {}, `${topFolders.length} folder ditemukan`);
     
     // Build monthFolders list from both possible structures
     let allMonthFolders = [];
