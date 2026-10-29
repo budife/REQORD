@@ -64,5 +64,3 @@ CREATE POLICY "Users can delete own work_orders"
 
 -- 5. Enable Realtime (optional)
 ALTER PUBLICATION supabase_realtime ADD TABLE work_orders;
-EOF
-echo "SQL file created"
