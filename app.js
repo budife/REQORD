@@ -1,4 +1,6 @@
-const STORAGE_KEY = 'reqord-request-work-orders';
+const SUPABASE_URL = 'https://htyfykkurammflwefxgw.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_iUul7iVeH-ReFlSxVT-ulQ_qhkgzPAz';
+const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const LEGACY_STORAGE_KEY = 'synaps-project-work-orders';
 const groups = { list: 'Request list', ongoing: 'Ongoing request', revision: 'On revision', preview: 'Preview', done: 'Done request' };
 const seedItems = [
@@ -46,7 +48,7 @@ function loadItems() {
     return seedItems.map(normalizeItem);
   }
 }
-function saveItems() { if (!isLoadingWorkbook) hasUnsavedChanges = true; persistDraft(); return items; }
+function saveItems() { if (!isLoadingWorkbook) hasUnsavedChanges = true; persistDraft(); sbSyncAll(); return items; }
 function loadDraftItems() { try { const current = JSON.parse(localStorage.getItem(STORAGE_KEY)); return Array.isArray(current) ? current.map(normalizeItem) : []; } catch { return []; } }
 function persistDraft() {
   try {
@@ -140,7 +142,7 @@ function openEditDialog(id) { const item = findItem(id); if (!item) return; edit
 function renderEditSubitems() { const item = findItem(editTargetId); const list = document.querySelector('#editSubitemList'); if (!list) return; if (!item) { list.innerHTML = ''; return; } item.subitems = Array.isArray(item.subitems) ? item.subitems : []; list.innerHTML = item.subitems.length ? item.subitems.map(subitem => `<div class="subitem-row"><label class="subitem-label"><input type="checkbox" data-edit-subitem-id="${subitem.id}" ${subitem.done ? 'checked' : ''}><span>${escapeHtml(subitem.title)}</span></label><button type="button" class="subitem-delete" data-delete-subitem-id="${subitem.id}" aria-label="Hapus subitem ${escapeHtml(subitem.title)}">×</button></div>`).join('') : '<p class="subitem-empty">Belum ada subitem. Tambahkan di bawah.</p>'; }
 function closeEditDialog() { editTargetId = null; editDialog.close(); }
 document.querySelector('#editForm').addEventListener('submit', event => { event.preventDefault(); const item = findItem(editTargetId); const title = editTitleInput.value.trim(); const requestor = editRequestorInput.value.trim(); const note = document.querySelector('#editNoteInput').value.trim(); const durationValue = document.querySelector('#editDurationValue').value; const durationUnit = document.querySelector('#editDurationUnit').value; if (!item || !title || !requestor) return; const nextCompletedAt = isCompletedRequest(item) && durationValue !== '' ? setCompletedAtFromDuration(item, durationValue, durationUnit) : item.completedAt; const changed = item.title !== title || item.requestor !== requestor || item.note !== note || nextCompletedAt !== item.completedAt; item.title = title; item.requestor = requestor; item.note = note; item.completedAt = nextCompletedAt; if (changed) { saveItems(); addActivity('Work order diedit', item, 'Title, requestor, Est., atau catatan diperbarui'); } closeEditDialog(); render(); showToast(changed ? 'Work order diperbarui' : 'Tidak ada perubahan'); });
-document.querySelector('#deleteFromEditButton').addEventListener('click', async () => { const item = findItem(editTargetId); if (!item) return; const okDelete = await confirmModal(`Request "${item.title}" akan dihapus permanen.`, { title: 'Delete request?', eyebrow: 'PERMANENT ACTION', confirmLabel: 'Delete' }); if (!okDelete) return; deletedItem = { item, index: items.indexOf(item) }; items = items.filter(candidate => candidate.id !== item.id); saveItems(); addActivity('Request dihapus', item); closeEditDialog(); render(); showToast('Request dihapus · klik Undo dalam 5 detik'); setTimeout(() => { deletedItem = null; }, 5000); });
+document.querySelector('#deleteFromEditButton').addEventListener('click', async () => { const item = findItem(editTargetId); if (!item) return; const okDelete = await confirmModal(`Request "${item.title}" akan dihapus permanen.`, { title: 'Delete request?', eyebrow: 'PERMANENT ACTION', confirmLabel: 'Delete' }); if (!okDelete) return; deletedItem = { item, index: items.indexOf(item) }; items = items.filter(candidate => candidate.id !== item.id); sbDeleteItem(item.id); saveItems(); addActivity('Request dihapus', item); closeEditDialog(); render(); showToast('Request dihapus · klik Undo dalam 5 detik'); setTimeout(() => { deletedItem = null; }, 5000); });
 document.querySelector('#closeEditButton').addEventListener('click', closeEditDialog); document.querySelector('#cancelEditButton').addEventListener('click', closeEditDialog); editDialog.addEventListener('click', event => { if (event.target === editDialog) closeEditDialog(); });
 document.querySelector('#editSubitemInput').addEventListener('keydown', event => { if (event.key !== 'Enter') return; event.preventDefault(); const title = event.currentTarget.value.trim(); const item = findItem(editTargetId); if (!item || !title) return; item.subitems = Array.isArray(item.subitems) ? item.subitems : []; item.subitems.push({ id: `${item.id}-${Date.now()}`, title, done: false, order: item.subitems.length }); saveItems(); addActivity('Subitem ditambahkan', item, title); event.currentTarget.value = ''; renderEditSubitems(); render(); });
 document.querySelector('#editSubitemList').addEventListener('change', event => { const checkbox = event.target.closest('[data-edit-subitem-id]'); const item = findItem(editTargetId); const subitem = item?.subitems.find(candidate => String(candidate.id) === String(checkbox?.dataset.editSubitemId)); if (!subitem) return; subitem.done = checkbox.checked; saveItems(); addActivity(subitem.done ? 'Subitem selesai' : 'Subitem dibuka lagi', item, subitem.title); renderEditSubitems(); render(); });
@@ -179,7 +181,7 @@ function openDeleteDialog(id) { deleteTargetId = id; deleteConfirmInput.value = 
 function closeDeleteDialog() { deleteTargetId = null; deleteDialog.close(); }
 document.querySelector('.table-stack').addEventListener('click', event => { const button = event.target.closest('[data-row-action]'); if (!button) return; const item = findItem(button.dataset.id); if (!item) return; if (button.dataset.rowAction === 'daily-done') { item.dailyDoneDate = isDailyDone(item) ? '' : today(); saveItems(); addActivity(item.dailyDoneDate ? 'Daily task selesai hari ini' : 'Daily task dibuka lagi', item); render(); showToast(item.dailyDoneDate ? 'Daily task selesai hari ini' : 'Daily task dibuka lagi'); return; } if (button.dataset.rowAction === 'take') { item.status = 'ongoing'; item.type = 'project'; item.done = false; saveItems(); addActivity('Request mulai dikerjakan', item); render(); showToast('Saya kerjain request ini'); return; } if (button.dataset.rowAction === 'complete') { item.status = 'done'; item.type = 'project'; item.done = true; saveItems(); addActivity('Request selesai', item); render(); showToast('Request ditandai selesai'); return; } if (button.dataset.rowAction === 'revision') { item.status = 'ongoing'; item.type = 'project'; item.done = false; saveItems(); addActivity('Request dikembalikan untuk revisi', item); render(); showToast('Request dikembalikan untuk revisi'); return; } if (button.dataset.rowAction === 'delete') openDeleteDialog(item.id); });
 deleteConfirmInput.addEventListener('input', () => { confirmDeleteButton.disabled = deleteConfirmInput.value.trim().toLowerCase() !== 'saya sudah pikirin'; });
-confirmDeleteButton.addEventListener('click', () => { if (confirmDeleteButton.disabled || deleteTargetId === null) return; const item = findItem(deleteTargetId); deletedItem = { item, index: items.indexOf(item) }; items = items.filter(candidate => candidate.id !== deleteTargetId); saveItems(); addActivity('Request dihapus', item); closeDeleteDialog(); render(); showToast('Request dihapus · klik Undo dalam 5 detik'); setTimeout(() => { deletedItem = null; }, 5000); });
+confirmDeleteButton.addEventListener('click', () => { if (confirmDeleteButton.disabled || deleteTargetId === null) return; const item = findItem(deleteTargetId); deletedItem = { item, index: items.indexOf(item) }; items = items.filter(candidate => candidate.id !== deleteTargetId); sbDeleteItem(deleteTargetId); saveItems(); addActivity('Request dihapus', item); closeDeleteDialog(); render(); showToast('Request dihapus · klik Undo dalam 5 detik'); setTimeout(() => { deletedItem = null; }, 5000); });
 document.querySelector('#toast').addEventListener('click', () => { if (!deletedItem) return; items.splice(Math.max(0, deletedItem.index), 0, deletedItem.item); saveItems(); addActivity('Request dipulihkan', deletedItem.item); deletedItem = null; render(); showToast('Request dipulihkan'); });
 document.querySelector('#closeDeleteButton').addEventListener('click', closeDeleteDialog); document.querySelector('#cancelDeleteButton').addEventListener('click', closeDeleteDialog); deleteDialog.addEventListener('click', event => { if (event.target === deleteDialog) closeDeleteDialog(); });
 const confirmDialog = document.querySelector('#confirmDialog'); let confirmResolver = null;
@@ -456,3 +458,197 @@ loadWorkbook = async file => { const result = await parseWorkbook(file); items =
 function setFormDates() { document.querySelector('#requestDateInput').value = nowDateTime(); }
 console.log('[reqord] init: items =', items.length);
 openDraftDatabase(); renderActiveFile(); renderActivities(); render(); scheduleDailyReset();
+// Check auth and load from Supabase if logged in
+if (supabase) {
+  sbGetUser().then(user => {
+    if (user) {
+      console.log('[reqord] init: user logged in:', user.email);
+      sbLoadItems();
+      updateAuthUI();
+    } else {
+      console.log('[reqord] init: no user, using localStorage');
+      updateAuthUI();
+    }
+  });
+}
+
+// === Supabase Auth & Sync ===
+async function sbSignUp(email, password) {
+  if (!supabase) { showToast('Supabase tidak tersedia'); return null; }
+  const { data, error } = await supabase.auth.signUp({ email, password });
+  if (error) { showToast('Register gagal: ' + error.message); return null; }
+  showToast('Register berhasil. Cek email untuk konfirmasi.');
+  return data;
+}
+
+async function sbSignIn(email, password) {
+  if (!supabase) { showToast('Supabase tidak tersedia'); return null; }
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) { showToast('Login gagal: ' + error.message); return null; }
+  showToast('Login berhasil');
+  await sbLoadItems();
+  return data;
+}
+
+async function sbSignOut() {
+  if (!supabase) return;
+  await supabase.auth.signOut();
+  items = [];
+  persistDraft();
+  render();
+  showToast('Logout berhasil');
+}
+
+async function sbGetUser() {
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getUser();
+  return data?.user || null;
+}
+
+async function sbLoadItems() {
+  if (!supabase) return;
+  const user = await sbGetUser();
+  if (!user) return;
+  const { data, error } = await supabase
+    .from('work_orders')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+  if (error) { showToast('Load gagal: ' + error.message); console.error('[reqord] sbLoadItems error:', error); return; }
+  items = (data || []).map(sbToItem);
+  persistDraft();
+  render();
+  console.log('[reqord] sbLoadItems: loaded', items.length, 'items from Supabase');
+}
+
+function sbToItem(row) {
+  return normalizeItem({
+    id: row.id,
+    title: row.title,
+    requestor: row.requestor,
+    month: row.month,
+    priority: row.priority,
+    status: row.status,
+    type: row.type,
+    date: row.date ? row.date.replace('T', ' ').slice(0, 16) : '',
+    requestDate: row.request_date ? row.request_date.replace('T', ' ').slice(0, 16) : '',
+    done: row.done,
+    completedAt: row.completed_at ? row.completed_at.replace('T', ' ').slice(0, 16) : '',
+    dailyDoneDate: row.daily_done_date,
+    subitems: row.subitems || [],
+    note: row.note
+  });
+}
+
+function itemToSb(item, userId) {
+  return {
+    id: item.id,
+    user_id: userId,
+    title: item.title,
+    requestor: item.requestor,
+    month: item.month,
+    priority: item.priority,
+    status: item.status,
+    type: item.type,
+    date: item.date ? item.date.replace(' ', 'T') : null,
+    request_date: item.requestDate ? item.requestDate.replace(' ', 'T') : null,
+    done: item.done,
+    completed_at: item.completedAt ? item.completedAt.replace(' ', 'T') : null,
+    daily_done_date: item.dailyDoneDate,
+    subitems: item.subitems || [],
+    note: item.note
+  };
+}
+
+async function sbUpsertItem(item) {
+  if (!supabase) return;
+  const user = await sbGetUser();
+  if (!user) return;
+  const { error } = await supabase
+    .from('work_orders')
+    .upsert(itemToSb(item, user.id));
+  if (error) { showToast('Sync gagal: ' + error.message); console.error('[reqord] sbUpsertItem error:', error); }
+}
+
+async function sbDeleteItem(id) {
+  if (!supabase) return;
+  const { error } = await supabase
+    .from('work_orders')
+    .delete()
+    .eq('id', id);
+  if (error) { showToast('Delete sync gagal: ' + error.message); console.error('[reqord] sbDeleteItem error:', error); }
+}
+
+async function sbSyncAll() {
+  if (!supabase) return;
+  const user = await sbGetUser();
+  if (!user) return;
+  for (const item of items) {
+    await sbUpsertItem(item);
+  }
+  console.log('[reqord] sbSyncAll: synced', items.length, 'items');
+}
+
+// Auth state listener
+if (supabase) {
+  supabase.auth.onAuthStateChange(async (event, session) => {
+    console.log('[reqord] auth state:', event, session?.user?.email);
+    if (event === 'SIGNED_IN') {
+      await sbLoadItems();
+    } else if (event === 'SIGNED_OUT') {
+      items = [];
+      persistDraft();
+      render();
+    }
+  });
+}
+
+// === Auth UI ===
+let authMode = 'login';
+const authButton = document.querySelector('#authButton');
+const authDialog = document.querySelector('#authDialog');
+const authEmail = document.querySelector('#authEmail');
+const authPassword = document.querySelector('#authPassword');
+const authSubmitButton = document.querySelector('#authSubmitButton');
+const authToggleMode = document.querySelector('#authToggleMode');
+const authDialogTitle = document.querySelector('#authDialogTitle');
+const authStatus = document.querySelector('#authStatus');
+
+function updateAuthUI() {
+  if (!supabase) { authButton.textContent = 'No Supabase'; return; }
+  sbGetUser().then(user => {
+    if (user) {
+      authButton.textContent = user.email.split('@')[0];
+      authButton.onclick = () => { if (confirm('Logout?')) sbSignOut(); };
+    } else {
+      authButton.textContent = 'Login';
+      authButton.onclick = () => authDialog.showModal();
+    }
+  });
+}
+
+authToggleMode.addEventListener('click', () => {
+  authMode = authMode === 'login' ? 'register' : 'login';
+  authDialogTitle.textContent = authMode === 'login' ? 'Login' : 'Register';
+  authSubmitButton.textContent = authMode === 'login' ? 'Login' : 'Register';
+  authToggleMode.textContent = authMode === 'login' ? 'Register' : 'Login';
+});
+
+authSubmitButton.addEventListener('click', async () => {
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+  if (!email || !password) { authStatus.textContent = 'Email dan password wajib diisi'; return; }
+  authStatus.textContent = 'Memproses...';
+  if (authMode === 'login') {
+    const result = await sbSignIn(email, password);
+    if (result) { authDialog.close(); authEmail.value = ''; authPassword.value = ''; updateAuthUI(); }
+  } else {
+    const result = await sbSignUp(email, password);
+    if (result) { authStatus.textContent = 'Cek email untuk konfirmasi, lalu login.'; }
+  }
+});
+
+document.querySelector('#closeAuthButton').addEventListener('click', () => authDialog.close());
+
+// Update auth UI on load
+setTimeout(updateAuthUI, 500);
