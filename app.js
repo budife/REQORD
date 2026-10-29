@@ -326,21 +326,26 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
   // Ask for code (Supabase auth) only if not already logged in
   if (supabase) {
-    const user = await sbGetUser();
-    if (!user) {
-      let code = prompt('Masukkan kode akses:');
-      if (!code) { showToast('Kode wajib diisi'); return; }
-      code = code.trim();
-      const email = code + '@reqord.local';
-      let { data, error } = await supabase.auth.signInWithPassword({ email, password: code });
-      if (error) {
-        const res = await supabase.auth.signUp({ email, password: code });
-        if (res.error) { showToast('Auth gagal: ' + res.error.message); return; }
-        showToast('Kode baru terdaftar');
-      } else {
-        showToast('Kode valid');
+    try {
+      const user = await sbGetUser();
+      if (!user) {
+        let code = prompt('Masukkan kode akses:');
+        if (!code) { showToast('Kode wajib diisi'); return; }
+        code = code.trim();
+        const email = code + '@reqord.local';
+        let { data, error } = await supabase.auth.signInWithPassword({ email, password: code });
+        if (error) {
+          const res = await supabase.auth.signUp({ email, password: code });
+          if (res.error) { showToast('Auth gagal: ' + res.error.message); console.error('[reqord] auth error:', res.error); return; }
+          showToast('Kode baru terdaftar');
+        } else {
+          showToast('Kode valid');
+        }
+        await sbLoadItems();
       }
-      await sbLoadItems();
+    } catch (e) {
+      console.error('[reqord] auth error:', e);
+      showToast('Auth error: ' + (e.message || 'unknown'));
     }
   }
   try {
