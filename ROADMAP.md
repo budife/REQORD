@@ -1,4 +1,4 @@
-# REQORD Roadmap
+# reqord Roadmap
 
 Roadmap ini adalah urutan kerja awal. Detail teknis dapat berubah setelah stack dan model data dipilih.
 

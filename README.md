@@ -1,10 +1,10 @@
-# REQORD
+# reqord
 
-REQORD adalah spreadsheet sederhana untuk mengelola work order. Pengguna menambahkan title pekerjaan, requestor, priority, dan tanggal request, lalu item otomatis tampil di salah satu dari tiga tabel: `Request list`, `Ongoing requests`, atau `Done requests`.
+reqord adalah spreadsheet sederhana untuk mengelola work order. Pengguna menambahkan title pekerjaan, requestor, priority, dan tanggal request, lalu item otomatis tampil di salah satu dari tiga tabel: `Request list`, `Ongoing requests`, atau `Done requests`.
 
 [Dibuat oleh Budi Indra Ilham](https://www.linkedin.com/in/budife/).
 
-Fokus utama REQORD adalah memberi gambaran cepat tentang request yang baru masuk, sedang dikerjakan, dan sudah selesai, dengan pengalaman ringan seperti Monday.com.
+Fokus utama reqord adalah memberi gambaran cepat tentang request yang baru masuk, sedang dikerjakan, dan sudah selesai, dengan pengalaman ringan seperti Monday.com.
 
 ## Dokumen Utama
 
@@ -53,7 +53,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 
 ### XLSX
 
-- `Load` memuat workbook yang dipilih; REQORD membaca sheet `Request List`, `Ongoing Requests`, `Done Requests`, dan `Daily Tasks`.
+- `Load` memuat workbook yang dipilih; reqord membaca sheet `Request List`, `Ongoing Requests`, `Done Requests`, dan `Daily Tasks`.
 - Draft lokal tidak mengganggu file environment di workspace; artefak agent dikecualikan lewat `.gitignore`.
 - Setelah file berhasil dimuat di Chrome/Edge, `Save` menulis kembali ke file XLSX yang sama.
 - `Save` dapat menyimpan draft atau replace workbook yang sudah di-Load.
@@ -68,7 +68,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Toolbar menampilkan status `Draft lokal`, `Unsaved changes`, atau `Saved to workbook`.
 - Tabel mendukung filter priority, sorting, dan edit cepat Title/Requestor; delete menyediakan Undo selama beberapa detik.
 - Title dan Requestor sekarang diedit melalui icon edit di Actions dan modal `Edit work order`.
-- Saat mengetik Title, REQORD menampilkan work order yang judulnya mirip untuk membantu mencegah data duplikat.
+- Saat mengetik Title, reqord menampilkan work order yang judulnya mirip untuk membantu mencegah data duplikat.
 - Request list dan Ongoing requests hanya menampilkan Request date; saat request selesai, Done requests menampilkan `Est.` dari Request date sampai selesai.
 - Done request dapat mengubah `Est.` melalui modal Edit work order.
 - Catatan disimpan di workbook dan dibuka melalui klik Title yang memiliki note, lalu diedit dari modal Edit work order; kolom Catatan tidak ditampilkan di tabel.
@@ -91,7 +91,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 - Tab `Recent changes` di modal maker menampilkan ringkasan perubahan terbaru; riwayat lengkap tetap berada di `CHANGELOG.md` pada repository GitHub.
 - Tab `Recent changes` menampilkan dropdown tanggal (maks 5 baris, scroll kalau lebih) + ringkasan manusiawi per versi di bawahnya; daftar commit mentah tidak lagi ditampilkan.
 - Ringkasan rilis dibaca dari `release-notes.json` dan memakai fallback bawaan jika file belum tersedia.
-- `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet REQORD.
+- `Settings` menyediakan `Download table template` untuk membuat workbook kosong dengan struktur sheet reqord.
 - `History & Activity` tersedia sebagai panel di topbar sebelah kanan, mencatat add, status, priority, complete, daily done, revision, dan delete.
 - Saat `Save`, history diekspor ke sheet `Activity` dan dapat dibaca kembali saat workbook dibuka.
 - `History & Activity` menyimpan audit log lengkap tanpa batas 100 item, termasuk lifecycle New/Load/Save, edit, status, priority, daily done, delete, dan Undo.
@@ -104,7 +104,7 @@ Satu tempat untuk mengubah pekerjaan mentah menjadi pipeline yang terstruktur, d
 
 ### UI
 
-- Tampilan flat minimal REQORD dengan palet hijau matcha, garis tipis samar, dan aksen seperlunya.
+- Tampilan flat minimal reqord dengan palet hijau matcha, garis tipis samar, dan aksen seperlunya.
 - Menu `Settings` menyediakan profile maker, LinkedIn, changelog, dan history aktivitas.
 - Responsive untuk desktop dan mobile.
 

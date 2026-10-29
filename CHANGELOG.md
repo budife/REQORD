@@ -11,7 +11,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Merombak tab `Recent changes`: dropdown tanggal + ringkasan manusiawi per versi dari `release-notes.json`.
 - Menggabungkan subitems ke modal `Work order details`; Title diklik membuka detail penuh.
 - Menormalisasi ukuran baris subitem + tombol × hapus pakai konfirmasi modal.
-- Mengganti semua prompt browser (`New`, `Load`, hapus request, hapus subitem) dengan modal konfirmasi gaya REQORD.
+- Mengganti semua prompt browser (`New`, `Load`, hapus request, hapus subitem) dengan modal konfirmasi gaya reqord.
 
 ## [0.2.0] - 2026-09-21
 
@@ -36,10 +36,10 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Melengkapi History & Activity menjadi audit log tanpa batas 100 item dengan lifecycle workbook, detail aksi, dan kolom `Details` pada sheet Activity.
 - Memperbaiki risiko file XLSX menjadi 0 byte dengan memvalidasi hasil serialisasi sebelum membuka writer file.
 - Menambahkan save-state indicator, filter priority, sorting, inline edit Title/Requestor, Undo delete, dan progress Daily tasks.
-- Menghapus sheet default `Sheet1`/`Sheet 2`/`Sheet 3` saat Save agar workbook hanya berisi sheet REQORD.
+- Menghapus sheet default `Sheet1`/`Sheet 2`/`Sheet 3` saat Save agar workbook hanya berisi sheet reqord.
 - Menambahkan ringkasan hasil Load workbook pada toast agar jumlah row yang dimuat terlihat.
 - Mengganti footer menjadi `budife.psd` dengan modal `Meet the maker` berisi tab `Profile` dan `Changelog`.
-- Mengisi tab `Changelog` pada modal maker dengan seluruh milestone utama REQORD.
+- Mengisi tab `Changelog` pada modal maker dengan seluruh milestone utama reqord.
 - Mengganti tab modal maker menjadi `Recent changes`; changelog lengkap tetap dipelihara di repository GitHub.
 - Menampilkan seluruh commit repository di tab `Recent changes` beserta hash, tanggal, dan message.
 - Merombak tab `Recent changes` menjadi dropdown tanggal (maks 5 baris, scroll kalau lebih) + ringkasan manusiawi per versi dari `release-notes.json`.
@@ -70,12 +70,12 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Membatasi tampilan `Done requests` menjadi 10 item per batch dengan tombol `Load more done works`.
 - Daily task kini memakai label `Today` dan `Done today`; tanggal mengikuti hari berjalan, judul dicoret saat checkbox selesai hari ini aktif, dan status reset pada hari berikutnya.
 - Memperbaiki `Save changes / Replace` agar meminta izin file tujuan dan menulis workbook kembali ke file yang dipilih, bukan menganggap download sebagai replace.
-- Menambahkan tombol `Download table template` di `Settings` untuk mengunduh workbook Excel kosong dengan seluruh sheet REQORD.
+- Menambahkan tombol `Download table template` di `Settings` untuk mengunduh workbook Excel kosong dengan seluruh sheet reqord.
 - Mengubah penyimpanan menjadi file-first: list kosong sebelum `Open file`, tanpa autosave ke `localStorage`, dan `Save changes` hanya aktif setelah workbook dibuka.
 
 - Menambahkan dokumentasi dasar untuk AI agent dan handoff antar-model.
 - Menambahkan `AGENT.md`, `README.md`, `STYLE.md`, dan `MEMORY.md`.
- - Menambahkan product brief REQORD sebagai spreadsheet work order tiga tabel.
+ - Menambahkan product brief reqord sebagai spreadsheet work order tiga tabel.
 - Menambahkan requirement Project list, Ongoing projects, Done projects, dan status yang memindahkan item otomatis.
 - Menambahkan `ROADMAP.md` untuk tahapan MVP hingga automation.
 - Menambahkan prototype spreadsheet browser-first dengan form add work order, tiga tabel, inline status/priority editing, dan tema glassmorphism.
@@ -91,7 +91,7 @@ Semua perubahan penting pada repository ini dicatat di sini. Format mengikuti ka
 - Menambahkan modern interaction layer: entrance animation, row transition, hover/focus state, sticky header, shortcut keyboard, smooth scroll, dan reduced-motion support.
 - Audit memperbaiki migrasi data lama `Owner` ke `Requestor` serta normalisasi tanggal serial dari Excel.
 - Mengganti istilah `Project` menjadi `Request` pada tabel, status, workbook Excel, dan UI.
-- Mengganti workspace label menjadi `REQORD / Work order manager` dan menambahkan credit LinkedIn Budi Indra Ilham.
+- Mengganti workspace label menjadi `reqord / Work order manager` dan menambahkan credit LinkedIn Budi Indra Ilham.
 - Mengubah flow Excel menjadi Open file lalu Save changes ke file yang sama memakai File System Access API di Chrome/Edge.
 - Menambahkan tabel Daily tasks di atas Request list dengan add task, date, priority, checkbox selesai, dan penyimpanan lokal terpisah.
 - Menyatukan Daily task ke form Add work order dan satu data store; perubahan status ke Daily task otomatis memindahkan item ke tabel Daily.

@@ -6,7 +6,7 @@ Dokumen ini adalah panduan utama untuk AI agent yang bekerja di repository ini. 
 
 - Pahami konteks proyek sebelum membuat asumsi.
 - Buat perubahan sekecil mungkin yang menyelesaikan kebutuhan pengguna.
-- Ingat bahwa REQORD adalah aplikasi request/work order dengan import dan export XLSX.
+- Ingat bahwa reqord adalah aplikasi request/work order dengan import dan export XLSX.
 - Prioritaskan alur status pekerjaan: planned, in progress, blocked, dan done.
 - Pertahankan pengalaman flat minimal dengan palet hijau matcha tanpa mengorbankan keterbacaan, performa, atau aksesibilitas.
 - Jangan menghapus atau menimpa perubahan pengguna tanpa izin.

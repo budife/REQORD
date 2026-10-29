@@ -4,7 +4,7 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Project Snapshot
 
-- Nama aplikasi: `REQORD`.
+- Nama aplikasi: `reqord`.
 - Creator: Budi Indra Ilham, LinkedIn: https://www.linkedin.com/in/budife/.
 - Header menu memakai label `Settings` untuk profile maker, changelog, dan history.
 - Lokasi kerja: root repository.
@@ -15,7 +15,7 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 
 ## Current State
 
-- Produk: REQORD adalah spreadsheet work order sederhana dengan tiga tabel: Request list, Ongoing requests, dan Done requests.
+- Produk: reqord adalah spreadsheet work order sederhana dengan tiga tabel: Request list, Ongoing requests, dan Done requests.
 - Kebutuhan inti: input title, requestor, target done, priority, status, tabel work order, inline editing, search, dan perpindahan tabel berdasarkan status.
 - Aturan input: work order baru selalu masuk `Request list`; requestor wajib diisi, dapat diketik bebas dengan rekomendasi nama yang mirip dari data yang sudah ada; target done otomatis tiga hari setelah tanggal request.
 - Integrasi data wajib: import dan export `.xlsx` dengan kolom Title, Status, Requestor, RequestDate, TargetDone, dan Priority.
@@ -203,7 +203,7 @@ Dokumen ini menyimpan konteks kerja yang perlu diketahui oleh AI agent berikutny
 ### 2026-09-20 (Product Definition)
 
 - Agent/model: OpenCode.
-- Klarifikasi pengguna: proyek REQORD ditujukan untuk membuat dan memantau request/work order, mirip Monday.com, dengan penyimpanan otomatis ke XLSX serta kemampuan import/export.
+- Klarifikasi pengguna: proyek reqord ditujukan untuk membuat dan memantau request/work order, mirip Monday.com, dengan penyimpanan otomatis ke XLSX serta kemampuan import/export.
 - Keputusan produk: scope mencakup pipeline, board/table views, status pekerjaan, custom fields, collaboration, dashboard, XLSX data flow, dan visual premium glassmorphism.
 - Perubahan: memperbarui `README.md`, `AGENT.md`, `STYLE.md`, `CHANGELOG.md`, `MEMORY.md`, dan menambahkan `ROADMAP.md`.
 - Validasi: dokumentasi dibaca ulang; belum ada implementasi atau test yang dapat dijalankan.

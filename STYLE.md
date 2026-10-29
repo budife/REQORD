@@ -29,7 +29,7 @@
 - Jangan melakukan refactor besar sebagai bagian dari perubahan kecil tanpa alasan.
 - Tangani error pada batas sistem dan pertahankan pesan error yang berguna.
 
-## Produk Dan UX REQORD
+## Produk Dan UX reqord
 
 - Gunakan istilah yang konsisten: workspace, project, pipeline, item, status, requestor, target done, dan custom field.
 - Status pekerjaan harus terlihat jelas tanpa bergantung pada warna saja; gunakan label, ikon, atau teks tambahan.
@@ -41,7 +41,7 @@
 ## Visual Glassmorphism
 
 - Gunakan blur dan transparansi sebagai lapisan pendukung, bukan fondasi yang membuat konten sulit dibaca.
-- Gunakan primary color hijau matcha yang tenang untuk aksi utama, status aktif, dan identitas REQORD.
+- Gunakan primary color hijau matcha yang tenang untuk aksi utama, status aktif, dan identitas reqord.
 - Pertahankan layout minimal dengan whitespace yang cukup dan jumlah aksen visual yang terbatas.
 - Gunakan palet hampir monokrom; jangan mencampur banyak warna aksen dalam satu layar.
 - Gunakan flat style dengan permukaan solid, border sederhana, dan shadow sangat ringan.
