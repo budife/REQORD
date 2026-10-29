@@ -62,7 +62,7 @@ function persistDraft() {
     return false;
   }
 }
-function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => { const db = request.result; db.createObjectStore('draft', { keyPath: 'id' }); db.createObjectStore('folderHandle', { keyPath: 'id' }); }; request.onsuccess = () => { storageDatabase = request.result; restoreFolderHandle().then(() => { if (savedFolderHandle) { savedFolderHandle.requestPermission({ mode: 'read' }).then(perm => { if (perm === 'granted') scanFolderHandle(savedFolderHandle); }); } }); }; }
+function openDraftDatabase() { if (!window.indexedDB) return; const request = indexedDB.open('reqord-storage', 1); request.onupgradeneeded = () => { const db = request.result; db.createObjectStore('draft', { keyPath: 'id' }); db.createObjectStore('folderHandle', { keyPath: 'id' }); }; request.onsuccess = () => { storageDatabase = request.result; restoreFolderHandle(); }; }
 function addActivity(action, item = {}, details = '') { activities.unshift({ date: nowDateTime(), action, title: item.title || '', requestor: item.requestor || '', details }); persistDraft(); renderActivities(); }
 function renderActivities() { const list = document.querySelector('#activityList'); if (!list) return; list.innerHTML = activities.length ? activities.map(activity => `<div class="activity-item"><strong>${escapeHtml(activity.action)}</strong><span>${escapeHtml(activity.title || activity.details || 'reqord')}</span><small>${escapeHtml(displayDate(activity.date, true))}${activity.requestor ? ` · ${escapeHtml(activity.requestor)}` : ''}</small></div>`).join('') : '<p class="activity-empty">Belum ada activity.</p>'; }
 function centerActionGroups() { document.querySelectorAll('.table-scroll td.row-actions').forEach(cell => { let group = cell.querySelector('.actions-inner'); if (!group) { group = document.createElement('div'); group.className = 'actions-inner'; while (cell.firstChild) group.append(cell.firstChild); cell.append(group); } const count = group.querySelectorAll('.action-button').length; group.dataset.count = String(count); group.style.setProperty('--action-count', Math.min(count, 3)); group.className = `actions-inner actions-count-${count}`; }); }
@@ -324,6 +324,25 @@ document.querySelector('#jsonFileInput').addEventListener('change', async (event
 
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
+  // Ask for code (Supabase auth) only if not already logged in
+  if (supabase) {
+    const user = await sbGetUser();
+    if (!user) {
+      let code = prompt('Masukkan kode akses:');
+      if (!code) { showToast('Kode wajib diisi'); return; }
+      code = code.trim();
+      const email = code + '@reqord.local';
+      let { data, error } = await supabase.auth.signInWithPassword({ email, password: code });
+      if (error) {
+        const res = await supabase.auth.signUp({ email, password: code });
+        if (res.error) { showToast('Auth gagal: ' + res.error.message); return; }
+        showToast('Kode baru terdaftar');
+      } else {
+        showToast('Kode valid');
+      }
+      await sbLoadItems();
+    }
+  }
   try {
     addActivity('Folder scan dimulai', {}, 'Memilih folder...');
     const root = await window.showDirectoryPicker({ mode: 'read' });
@@ -605,50 +624,10 @@ if (supabase) {
 
 // === Auth UI ===
 let authMode = 'login';
-const authButton = document.querySelector('#authButton');
-const authDialog = document.querySelector('#authDialog');
-const authEmail = document.querySelector('#authEmail');
-const authPassword = document.querySelector('#authPassword');
-const authSubmitButton = document.querySelector('#authSubmitButton');
-const authToggleMode = document.querySelector('#authToggleMode');
-const authDialogTitle = document.querySelector('#authDialogTitle');
-const authStatus = document.querySelector('#authStatus');
+// Auth UI removed; code-based auth via scanFolderButton
 
 function updateAuthUI() {
-  if (!supabase) { authButton.textContent = 'No Supabase'; return; }
-  sbGetUser().then(user => {
-    if (user) {
-      authButton.textContent = user.email.split('@')[0];
-      authButton.onclick = () => { if (confirm('Logout?')) sbSignOut(); };
-    } else {
-      authButton.textContent = 'Login';
-      authButton.onclick = () => authDialog.showModal();
-    }
-  });
+  // No auth button in UI anymore; code-based auth via scan
 }
 
-authToggleMode.addEventListener('click', () => {
-  authMode = authMode === 'login' ? 'register' : 'login';
-  authDialogTitle.textContent = authMode === 'login' ? 'Login' : 'Register';
-  authSubmitButton.textContent = authMode === 'login' ? 'Login' : 'Register';
-  authToggleMode.textContent = authMode === 'login' ? 'Register' : 'Login';
-});
 
-authSubmitButton.addEventListener('click', async () => {
-  const email = authEmail.value.trim();
-  const password = authPassword.value;
-  if (!email || !password) { authStatus.textContent = 'Email dan password wajib diisi'; return; }
-  authStatus.textContent = 'Memproses...';
-  if (authMode === 'login') {
-    const result = await sbSignIn(email, password);
-    if (result) { authDialog.close(); authEmail.value = ''; authPassword.value = ''; updateAuthUI(); }
-  } else {
-    const result = await sbSignUp(email, password);
-    if (result) { authStatus.textContent = 'Cek email untuk konfirmasi, lalu login.'; }
-  }
-});
-
-document.querySelector('#closeAuthButton').addEventListener('click', () => authDialog.close());
-
-// Update auth UI on load
-setTimeout(updateAuthUI, 500);
