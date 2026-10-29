@@ -3,7 +3,7 @@
 
 -- 1. Tabel work_orders
 CREATE TABLE IF NOT EXISTS work_orders (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
   title TEXT NOT NULL,
   requestor TEXT NOT NULL,
