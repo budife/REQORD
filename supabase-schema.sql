@@ -62,5 +62,8 @@ CREATE POLICY "Users can delete own work_orders"
   ON work_orders FOR DELETE
   USING (auth.uid() = user_id);
 
--- 5. Enable Realtime (optional)
-ALTER PUBLICATION supabase_realtime ADD TABLE work_orders;
+-- 5. Enable Realtime (optional, skip if already added)
+DO $$ BEGIN
+  ALTER PUBLICATION supabase_realtime ADD TABLE work_orders;
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
