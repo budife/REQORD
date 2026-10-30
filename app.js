@@ -1,6 +1,7 @@
 const SUPABASE_URL = 'https://htyfykkurammflwefxgw.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_iUul7iVeH-ReFlSxVT-ulQ_qhkgzPAz';
 const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const STORAGE_KEY = 'reqord-request-work-orders';
 const LEGACY_STORAGE_KEY = 'synaps-project-work-orders';
 const groups = { list: 'Request list', ongoing: 'Ongoing request', revision: 'On revision', preview: 'Preview', done: 'Done request' };
 const seedItems = [
