@@ -1,7 +1,7 @@
 console.log('[reqord] app.js loading...');
 const SUPABASE_URL = 'https://htyfykkurammflwefxgw.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_iUul7iVeH-ReFlSxVT-ulQ_qhkgzPAz';
-const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 const STORAGE_KEY = 'reqord-request-work-orders';
 const LEGACY_STORAGE_KEY = 'synaps-project-work-orders';
 const groups = { list: 'Request list', ongoing: 'Ongoing request', revision: 'On revision', preview: 'Preview', done: 'Done request' };
@@ -327,7 +327,7 @@ document.querySelector('#jsonFileInput').addEventListener('change', async (event
 document.querySelector('#scanFolderButton').addEventListener('click', async () => {
   if (!window.showDirectoryPicker) { showToast('Browser tidak mendukung folder scan. Gunakan Chrome/Edge.'); return; }
   // Ask for code (Supabase auth) only if not already logged in
-  if (supabase) {
+  if (supabaseClient) {
     try {
       const user = await sbGetUser();
       if (!user) {
@@ -335,9 +335,9 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
         if (!code) { showToast('Kode wajib diisi'); return; }
         code = code.trim();
         const email = code + '@reqord.local';
-        let { data, error } = await supabase.auth.signInWithPassword({ email, password: code });
+        let { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: code });
         if (error) {
-          const res = await supabase.auth.signUp({ email, password: code });
+          const res = await supabaseClient.auth.signUp({ email, password: code });
           if (res.error) { showToast('Auth gagal: ' + res.error.message); console.error('[reqord] auth error:', res.error); return; }
           showToast('Kode baru terdaftar');
         } else {
@@ -485,7 +485,7 @@ function setFormDates() { const el = document.querySelector('#requestDateInput')
 console.log('[reqord] init: items =', items.length);
 openDraftDatabase(); renderActiveFile(); renderActivities(); render(); scheduleDailyReset();
 // Check auth and load from Supabase if logged in
-if (supabase) {
+if (supabaseClient) {
   sbGetUser().then(user => {
     if (user) {
       console.log('[reqord] init: user logged in:', user.email);
@@ -500,16 +500,16 @@ if (supabase) {
 
 // === Supabase Auth & Sync ===
 async function sbSignUp(email, password) {
-  if (!supabase) { showToast('Supabase tidak tersedia'); return null; }
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  if (!supabaseClient) { showToast('Supabase tidak tersedia'); return null; }
+  const { data, error } = await supabaseClient.auth.signUp({ email, password });
   if (error) { showToast('Register gagal: ' + error.message); return null; }
   showToast('Register berhasil. Cek email untuk konfirmasi.');
   return data;
 }
 
 async function sbSignIn(email, password) {
-  if (!supabase) { showToast('Supabase tidak tersedia'); return null; }
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (!supabaseClient) { showToast('Supabase tidak tersedia'); return null; }
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
   if (error) { showToast('Login gagal: ' + error.message); return null; }
   showToast('Login berhasil');
   await sbLoadItems();
@@ -517,8 +517,8 @@ async function sbSignIn(email, password) {
 }
 
 async function sbSignOut() {
-  if (!supabase) return;
-  await supabase.auth.signOut();
+  if (!supabaseClient) return;
+  await supabaseClient.auth.signOut();
   items = [];
   persistDraft();
   render();
@@ -526,16 +526,16 @@ async function sbSignOut() {
 }
 
 async function sbGetUser() {
-  if (!supabase) return null;
-  const { data } = await supabase.auth.getUser();
+  if (!supabaseClient) return null;
+  const { data } = await supabaseClient.auth.getUser();
   return data?.user || null;
 }
 
 async function sbLoadItems() {
-  if (!supabase) return;
+  if (!supabaseClient) return;
   const user = await sbGetUser();
   if (!user) return;
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('work_orders')
     .select('*')
     .eq('user_id', user.id)
@@ -587,18 +587,18 @@ function itemToSb(item, userId) {
 }
 
 async function sbUpsertItem(item) {
-  if (!supabase) return;
+  if (!supabaseClient) return;
   const user = await sbGetUser();
   if (!user) return;
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from('work_orders')
     .upsert(itemToSb(item, user.id));
   if (error) { showToast('Sync gagal: ' + error.message); console.error('[reqord] sbUpsertItem error:', error); }
 }
 
 async function sbDeleteItem(id) {
-  if (!supabase) return;
-  const { error } = await supabase
+  if (!supabaseClient) return;
+  const { error } = await supabaseClient
     .from('work_orders')
     .delete()
     .eq('id', id);
@@ -606,7 +606,7 @@ async function sbDeleteItem(id) {
 }
 
 async function sbSyncAll() {
-  if (!supabase) return;
+  if (!supabaseClient) return;
   const user = await sbGetUser();
   if (!user) return;
   for (const item of items) {
@@ -616,8 +616,8 @@ async function sbSyncAll() {
 }
 
 // Auth state listener
-if (supabase) {
-  supabase.auth.onAuthStateChange(async (event, session) => {
+if (supabaseClient) {
+  supabaseClient.auth.onAuthStateChange(async (event, session) => {
     console.log('[reqord] auth state:', event, session?.user?.email);
     if (event === 'SIGNED_IN') {
       await sbLoadItems();
