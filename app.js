@@ -1,3 +1,4 @@
+console.log('[reqord] app.js loading...');
 const SUPABASE_URL = 'https://htyfykkurammflwefxgw.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_iUul7iVeH-ReFlSxVT-ulQ_qhkgzPAz';
 const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
