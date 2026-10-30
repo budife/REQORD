@@ -334,7 +334,7 @@ document.querySelector('#scanFolderButton').addEventListener('click', async () =
         let code = prompt('Masukkan kode akses:');
         if (!code) { showToast('Kode wajib diisi'); return; }
         code = code.trim();
-        const email = code + '@reqord.local';
+        const email = code + '@reqord.com';
         let { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: code });
         if (error) {
           const res = await supabaseClient.auth.signUp({ email, password: code });
